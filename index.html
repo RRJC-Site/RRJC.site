@@ -4,190 +4,220 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RRJC | Riju Rincy Jolly Company</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-navy: #0a192f;
-            --accent-gold: #c5a059;
-            --text-light: #f8f9fa;
-            --text-dark: #333333;
-            --bg-soft: #f4f4f4;
+            --primary: #1a2a6c;
+            --accent: #f1c40f;
+            --light: #f8f9fa;
+            --text: #2d3436;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
             line-height: 1.6;
-            color: var(--text-dark);
-            background-color: var(--bg-soft);
+            overflow-x: hidden;
         }
 
-        /* Hero Section */
+        /* --- Hero Section --- */
         header {
-            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.85)), 
-                        url('https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-position: center;
-            height: 70vh;
+            height: 100vh;
+            background: linear-gradient(rgba(26, 42, 108, 0.7), rgba(26, 42, 108, 0.7)), 
+                        url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&q=80&w=1600') no-repeat center center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: var(--text-light);
+            color: white;
             padding: 20px;
         }
 
-        .brand-name {
+        h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            letter-spacing: 4px;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             margin-bottom: 10px;
-            color: var(--accent-gold);
+            letter-spacing: 2px;
         }
 
-        .full-name {
+        .subtitle {
             font-size: 1.2rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--accent);
         }
 
-        /* Scripture Banner */
-        .scripture-banner {
-            background: linear-gradient(rgba(197, 160, 89, 0.2), rgba(197, 160, 89, 0.2)), 
-                        url('https://images.unsplash.com/photo-1507434965515-61970f2bd7c6?auto=format&fit=crop&q=80&w=2000');
-            background-size: cover;
-            background-attachment: fixed;
-            padding: 100px 20px;
+        /* --- Bible Verse Section --- */
+        .verse-box {
+            max-width: 900px;
+            margin: -50px auto 50px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             text-align: center;
-            color: white;
-            margin: 40px 0;
+            position: relative;
+            z-index: 10;
         }
 
         .verse-text {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            max-width: 800px;
-            margin: 0 auto 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--primary);
         }
 
-        .verse-ref {
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-        }
+        /* --- Content Grid --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 50px 20px; }
 
-        /* Content Sections */
-        .container {
-            max-width: 1000px;
-            margin: -50px auto 50px;
-            background: white;
-            padding: 60px;
-            border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+        .section-title {
             text-align: center;
             margin-bottom: 40px;
-            color: var(--primary-navy);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
         .card {
-            padding: 30px;
-            border: 1px solid #eee;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
             transition: transform 0.3s ease;
-            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-gold);
+        .card:hover { transform: translateY(-10px); }
+
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+
+        .card-content { padding: 20px; }
+
+        /* --- Video Section --- */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-top: 15px;
         }
 
-        .card i {
-            display: block;
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: var(--accent-gold);
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         footer {
+            background: var(--primary);
+            color: white;
             text-align: center;
-            padding: 60px 20px;
-            background: var(--primary-navy);
-            color: var(--text-light);
+            padding: 40px 20px;
             margin-top: 50px;
         }
 
-        @media (max-width: 768px) {
-            .brand-name { font-size: 2.5rem; }
-            .container { margin: 20px; padding: 25px; }
-            .verse-text { font-size: 1.5rem; }
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: 0.3s;
         }
+
+        .btn:hover { background: #d4ac0d; }
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="brand-name">RRJC</div>
-        <div class="full-name">Riju Rincy Jolly Company</div>
-        <div style="width: 60px; height: 2px; background: var(--accent-gold); margin: 20px 0;"></div>
-        <p style="font-size: 1.2rem; font-weight: 300; max-width: 600px;">
-            Professional Excellence. Eternal Foundations.
-        </p>
+        <p class="subtitle">Welcome to</p>
+        <h1>RRJC</h1>
+        <p style="font-size: 1.5rem;">Riju Rincy Jolly Company</p>
+        <a href="#sermons" class="btn">Watch Sermons</a>
     </header>
 
+    <div class="verse-box">
+        <p class="verse-text">"Your word is a lamp to my feet and a light to my path."</p>
+        <p style="margin-top: 10px; font-weight: 600;">— Psalm 119:105</p>
+    </div>
+
     <main class="container">
-        <h2>Our Divine Foundation</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Savior of the World</h3>
-                <p>We honor Jesus Christ as the beacon of hope and the source of salvation for all mankind.</p>
+        
+        <section id="about">
+            <h2 class="section-title">Our Mission</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 50px;">
+                RRJC is dedicated to sharing the word of God, providing useful spiritual resources, 
+                and building a community rooted in faith, worship, and truth.
+            </p>
+        </section>
+
+        <section id="worship">
+            <h2 class="section-title">Worship & Spirit</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1515162305285-0293e4767cc2?auto=format&fit=crop&q=80&w=800" alt="Worship">
+                    <div class="card-content">
+                        <h3>Community Worship</h3>
+                        <p>Join us as we lift our voices in praise and honor.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1507434965515-61970f2bd7c6?auto=format&fit=crop&q=80&w=800" alt="Bible Study">
+                    <div class="card-content">
+                        <h3>Bible Study</h3>
+                        <p>Deep dive into the scriptures with our weekly study guides.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>King of Kings</h3>
-                <p>Acknowledging His supreme authority over all nations and hearts.</p>
-                <small class="verse-ref">— Revelation 19:16</small>
+        </section>
+
+        <section id="sermons" style="margin-top: 80px;">
+            <h2 class="section-title">Latest Sermons</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h3>The Power of Faith</h3>
+                        <p>An inspiring message on trusting God's timing.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="card-content">
+                        <h3>Grace Abounds</h3>
+                        <p>Understanding the depth of unconditional love.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>Lord of Lords</h3>
-                <p>Building our business on the principles of truth, grace, and divine leadership.</p>
-            </div>
-        </div>
+        </section>
+
     </main>
 
-    <section class="scripture-banner">
-        <p class="verse-text">"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."</p>
-        <p class="verse-ref">John 3:16</p>
-    </section>
-
-    <section style="max-width: 800px; margin: 80px auto; text-align: center; padding: 0 20px;">
-        <h2 style="font-size: 2rem;">The RRJC Mission</h2>
-        <p>RRJC (Riju Rincy Jolly Company) stands as a testament to faith-driven professionalism. We believe that by honoring the King of Kings in our daily operations, we provide service that transcends the ordinary.</p>
-    </section>
-
     <footer>
-        <p>&copy; 2026 Riju Rincy Jolly Company (RRJC)</p>
-        <p style="font-size: 0.8rem; margin-top: 10px; color: #888;">Spreading the Light of Christ through Professionalism</p>
+        <p><strong>RRJC | Riju Rincy Jolly Company</strong></p>
+        <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px;">&copy; 2026 All Rights Reserved.</p>
     </footer>
 
 </body>
