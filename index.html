@@ -1,350 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RRJC | Riju Rincy Jolly Company</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #d4af37;
-            --deep-navy: #0a0f29;
-            --ivory: #fdfbf7;
-            --overlay: rgba(10, 15, 41, 0.85);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Lora', serif;
-            background-color: var(--ivory);
-            color: var(--deep-navy);
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
-
-        /* --- Sticky Top Verse --- */
-        .top-verse-bar {
-            background: var(--gold);
-            color: white;
-            text-align: center;
-            padding: 12px 20px;
-            font-family: 'Cinzel', serif;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
-        }
-
-        /* --- Split Hero Entrance --- */
-        .hero {
-            display: flex;
-            height: 90vh;
-            width: 100%;
-            background: var(--deep-navy);
-            color: white;
-        }
-
-        .hero-left {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(var(--overlay), var(--overlay)), 
-                        url('https://images.unsplash.com/photo-1544427928-c49cddee69a2?auto=format&fit=crop&q=80&w=800');
-            background-size: cover;
-            border-right: 4px solid var(--gold);
-            padding: 40px;
-            text-align: center;
-        }
-
-        .hero-right {
-            flex: 1.2;
-            padding: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: var(--deep-navy);
-        }
-
-        .brand-name {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(3rem, 10vw, 6rem);
-            color: var(--gold);
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .brand-subtext {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
-
-        .intro-heading {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            margin-bottom: 25px;
-            color: var(--gold);
-        }
-
-        .intro-text {
-            font-size: 1.2rem;
-            font-weight: 300;
-            opacity: 0.9;
-            max-width: 600px;
-        }
-
-        /* --- Mission Section --- */
-        .mission-section {
-            background: white;
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .mission-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
-            color: var(--deep-navy);
-            margin-bottom: 20px;
-        }
-
-        .section-title::after {
-            content: ''; display: block; width: 60px; height: 3px; background: var(--gold); margin: 20px auto;
-        }
-
-        /* --- Trinity Grid --- */
-        .trinity-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
-        }
-
-        .trinity-card {
-            padding: 50px 30px;
-            background: var(--ivory);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 15px;
-            transition: 0.3s;
-        }
-
-        .trinity-card:hover { 
-            transform: translateY(-10px);
-            border-color: var(--gold);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-        }
-
-        .trinity-card h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        /* --- Gospel Art Gallery --- */
-        .gallery-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 20px;
-        }
-
-        .gospel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .gospel-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-
-        .gospel-card img {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .gospel-card:hover img { transform: scale(1.05); }
-
-        .gospel-info {
-            padding: 25px;
-            text-align: center;
-        }
-
-        .gospel-info h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--deep-navy);
-            margin-bottom: 10px;
-        }
-
-        /* --- Videos Section --- */
-        .video-section {
-            background: #f0f0f5;
-            padding: 100px 20px;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .video-box {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        }
-
-        .video-box iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--deep-navy);
-            color: white;
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 15px;
-        }
-
-        @media (max-width: 900px) {
-            .hero { flex-direction: column; height: auto; }
-            .hero-left { border-right: none; border-bottom: 4px solid var(--gold); padding: 80px 20px; }
-            .hero-right { padding: 60px 20px; }
-            .video-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RRJC | Riju Rincy Jolly Company</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      margin: 0;
+      background: linear-gradient(to right, #fdfcfb, #e2d1c3);
+      color: #333;
+    }
+    header {
+      background: #4a2c2a;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+      font-style: italic;
+    }
+    .container {
+      display: flex;
+      padding: 20px;
+    }
+    .brand {
+      flex: 1;
+      text-align: left;
+      font-size: 2em;
+      font-weight: bold;
+      color: #4a2c2a;
+    }
+    .intro {
+      flex: 2;
+      padding-left: 20px;
+      font-size: 1.2em;
+    }
+    section {
+      padding: 40px 20px;
+      border-top: 2px solid #ddd;
+    }
+    h2 {
+      color: #4a2c2a;
+      margin-bottom: 10px;
+    }
+    .images {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .images img {
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .videos iframe {
+      width: 400px;
+      height: 225px;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    footer {
+      background: #4a2c2a;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 1em;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="top-verse-bar">
-        "In the beginning was the Word, and the Word was with God, and the Word was God." — John 1:1
+  <!-- Bible Verse at the Top -->
+  <header>
+    "The Lord is my shepherd; I shall not want." – Psalm 23:1
+  </header>
+
+  <!-- Brand and Introduction -->
+  <div class="container">
+    <div class="brand">RRJC | Riju Rincy Jolly Company</div>
+    <div class="intro">
+      <p>Welcome to RRJC, a spiritual space dedicated to sharing the Word of God, uplifting resources, and encouraging worship. Our mission is to inspire hope, faith, and love through the Bible and meaningful content.</p>
     </div>
+  </div>
 
-    <header class="hero">
-        <div class="hero-left">
-            <div class="brand-name">RRJC</div>
-            <p class="brand-subtext">Riju Rincy Jolly Company</p>
-        </div>
-        <div class="hero-right">
-            <h2 class="intro-heading">Welcome to the Sanctuary</h2>
-            <p class="intro-text">
-                RRJC is a digital sanctuary dedicated to the Gospel. We provide spiritual resources, biblical insights, and a community space for those seeking to deepen their relationship with God through the Father, the Son, and the Holy Spirit.
-            </p>
-        </div>
-    </header>
+  <!-- Mission and Purpose -->
+  <section>
+    <h2>Mission & Purpose</h2>
+    <p>Our purpose is to spread the light of the Gospel, encourage believers, and provide useful sources for spiritual growth. We aim to create a lively and engaging platform where faith meets creativity.</p>
+    <blockquote>"For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future." – Jeremiah 29:11</blockquote>
+  </section>
 
-    <section class="mission-section">
-        <div class="mission-container">
-            <h2 class="section-title">Mission & Purpose</h2>
-            <p>
-                Our purpose is to bridge the gap between ancient scripture and modern living. We believe that the Bible is a living, breathing guide. Through curated sermons, worship music, and theological resources, we aim to equip believers to share the light of Christ with the world.
-            </p>
+  <!-- Sources and Images -->
+  <section>
+    <h2>Sources & Images</h2>
+    <div class="images">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Bible_open.jpg" alt="Open Bible">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Church_worship.jpg" alt="People Worshiping">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Acoustic_guitar.jpg" alt="Musical Instrument">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Bible_books.jpg" alt="Bible Books">
+    </div>
+  </section>
 
-            <div class="trinity-grid">
-                <div class="trinity-card">
-                    <h3>God the Father</h3>
-                    <p>The Almighty Creator and source of all love, who calls us His children.</p>
-                </div>
-                <div class="trinity-card">
-                    <h3>Jesus the Son</h3>
-                    <p>The Word made flesh, our Savior who bridged the gap through the Cross.</p>
-                </div>
-                <div class="trinity-card">
-                    <h3>The Holy Spirit</h3>
-                    <p>Our Comforter and Guide, the indwelling presence that leads us into all truth.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Videos -->
+  <section>
+    <h2>Worship Videos</h2>
+    <div class="videos">
+      <iframe src="https://www.youtube.com/embed/9SeQKSWAAK8" frameborder="0" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/zvoq7SL_BXg" frameborder="0" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/kw-FIy8Shk0" frameborder="0" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/rEfKzlE5XAQ" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
 
-    <section class="gallery-container">
-        <div style="text-align: center; margin-bottom: 60px;">
-            <h2 class="section-title">The Gospel in Art</h2>
-            <p>Visual resources for spiritual reflection</p>
-        </div>
-        
-        <div class="gospel-grid">
-            <div class="gospel-card">
-                <img src="Gemini_Generated_Image_ldljenldljenldlj.png" alt="Worship">
-                <div class="gospel-info">
-                    <h4>The Confession</h4>
-                    <p><i>"If you confess with your mouth that Jesus is Lord..."</i> — Romans 10:9</p>
-                </div>
-            </div>
-            <div class="gospel-card">
-                <img src="Gemini_Generated_Image_xlb70uxlb70uxlb7.png" alt="Cross">
-                <div class="gospel-info">
-                    <h4>The Sacrifice</h4>
-                    <p><i>"For God so loved the world..."</i> — John 3:16</p>
-                </div>
-            </div>
-            <div class="gospel-card">
-                <img src="Gemini_Generated_Image_44iab644iab644ia.png" alt="Glory">
-                <div class="gospel-info">
-                    <h4>The Exaltation</h4>
-                    <p><i>"That at the name of Jesus every knee should bow..."</i> — Philippians 2:9-11</p>
-                </div>
-            </div>
-            <div class="gospel-card">
-                <img src="Gemini_Generated_Image_qm6vtvqm6vtvqm6v.png" alt="Way">
-                <div class="gospel-info">
-                    <h4>The Way</h4>
-                    <p><i>"Salvation is found in no one else..."</i> — Acts 4:12</p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Other Details -->
+  <section>
+    <h2>Encouragement & Hope</h2>
+    <p>We believe in the power of Scripture to uplift and transform lives. Here are some verses to inspire you:</p>
+    <ul>
+      <li>"I can do all things through Christ who strengthens me." – Philippians 4:13</li>
+      <li>"The Lord is my light and my salvation—whom shall I fear?" – Psalm 27:1</li>
+      <li>"Come to me, all you who are weary and burdened, and I will give you rest." – Matthew 11:28</li>
+      <li>"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." – Joshua 1:9</li>
+    </ul>
+  </section>
 
-    <section class="video-section">
-        <div style="text-align: center; margin-bottom: 60px;">
-            <h2 class="section-title">Worship & Sermons</h2>
-        </div>
-        <div class="video-grid">
-            <div class="video-box"><iframe src="https://www.youtube.com/embed/9SeQKSWAAK8" allowfullscreen></iframe></div>
-            <div class="video-box"><iframe src="https://www.youtube.com/embed/zvoq7SL_BXg" allowfullscreen></iframe></div>
-            <div class="video-box"><iframe src="https://www.youtube.com/embed/kw-FIy8Shk0" allowfullscreen></iframe></div>
-            <div class="video-box"><iframe src="https://www.youtube.com/embed/rEfKzlE5XAQ" allowfullscreen></iframe></div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-logo">RRJC</div>
-        <p>Riju Rincy Jolly Company</p>
-        <p style="margin-top: 20px; opacity: 0.7; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Dedicated to sharing the light of the Word, the grace of the Son, and the fellowship of the Spirit.
-        </p>
-        <p style="margin-top: 40px; font-size: 0.8rem; opacity: 0.4;">&copy; 2026 RRJC. Built for His Glory.</p>
-    </footer>
+  <!-- Footer -->
+  <footer>
+    © 2026 RRJC | Riju Rincy Jolly Company – Sharing Faith, Hope, and Love
+  </footer>
 
 </body>
 </html>
