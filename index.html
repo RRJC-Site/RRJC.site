@@ -1,428 +1,369 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RRJC | Riju Rincy Jolly Company</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-gold: #D4AF37;
-            --royal-purple: #2E1A47;
-            --text-dark: #2C3E50;
-            --light-bg: #F9F9F9;
-            --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RRJC | Riju Rincy Jolly in Christ</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
+  <style>
+    :root{
+      --primary-gold:#D4AF37;
+      --royal-purple:#2E1A47;
+      --ink:#2C3E50;
+      --bg:#0e0a16;            /* deeper background for drama */
+      --surface:#12101b;
+      --muted:#a9b0bd;
+      --card-shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:14px;
+      --ring:0 0 0 1.5px rgba(212,175,55,.35), 0 0 0 8px rgba(212,175,55,.08);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif; color:#f4f4f6; background:radial-gradient(1200px 600px at 10% -10%, rgba(212,175,55,.08), transparent 60%),
+      radial-gradient(1200px 600px at 110% 0%, rgba(93,63,138,.25), transparent 60%), var(--bg);
+      overflow-x:hidden;
+    }
 
-        /* --- 1. Top Spiritual Banner --- */
-        .top-verse-banner {
-            background: linear-gradient(90deg, var(--royal-purple), #4a2c70);
-            color: var(--primary-gold);
-            text-align: center;
-            padding: 12px 20px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-        }
+    /* --- Top faith banner --- */
+    .top-banner{position:relative; z-index:30; text-align:center; padding:10px 16px; color:var(--primary-gold); background:linear-gradient(90deg, var(--royal-purple), #43286c); font-family:'Playfair Display', serif; font-size:1.05rem; letter-spacing:.4px}
+    .top-banner .sparkle{display:inline-block; margin:0 .35rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,.25)); animation: twinkle 2.8s infinite ease-in-out}
+    @keyframes twinkle{0%,100%{opacity:.65; transform:scale(.95)} 50%{opacity:1; transform:scale(1)}}
 
-        /* --- 2. Hero Section (Brand Left / Intro Right) --- */
-        .hero {
-            display: flex;
-            flex-wrap: wrap;
-            min-height: 70vh;
-            position: relative;
-            background: url('https://images.unsplash.com/photo-1490730141103-6ac27d020028?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            align-items: center;
-        }
+    /* --- Header / Nav --- */
+    .nav{
+      position:sticky; top:0; z-index:40; backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg, rgba(18,16,27,.8), rgba(18,16,27,.35));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:12px 20px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.6px}
+    .brand .logo{
+      width:40px; height:40px; border-radius:10px; background:conic-gradient(from 210deg at 50% 50%, #f6e7b3, #b17b00, #7b5cb0, #f6e7b3);
+      box-shadow:0 6px 18px rgba(212,175,55,.25);
+    }
+    .brand span{font-family:'Playfair Display', serif; font-size:1.15rem}
+    .nav a{color:#eef; text-decoration:none; margin-left:18px; font-weight:600; opacity:.9}
+    .nav a:hover{color:var(--primary-gold)}
 
-        /* Overlay to ensure text readability */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(46, 26, 71, 0.75); /* Purple overlay */
-        }
+    /* --- Hero --- */
+    .hero{position:relative; isolation:isolate;}
+    .hero-canvas{position:absolute; inset:0; z-index:0; opacity:.65}
+    .hero-wrap{position:relative; z-index:1; max-width:1200px; margin:auto; min-height:78vh; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; padding:60px 20px}
+    .kicker{color:var(--primary-gold); text-transform:uppercase; font-weight:700; letter-spacing:3px; font-size:.85rem}
+    .display{
+      font-family:'Playfair Display', serif; font-size:clamp(38px, 6vw, 76px); line-height:1.05; margin:.35rem 0 1rem; text-shadow:0 10px 30px rgba(0,0,0,.35)
+    }
+    .lede{color:#d8d9e0; max-width:55ch}
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            padding: 0 10%;
-            gap: 50px;
-        }
+    .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:26px}
+    .btn{appearance:none; border:none; padding:12px 18px; border-radius:12px; font-weight:700; cursor:pointer}
+    .btn.gold{background:linear-gradient(180deg,#f7d98a,#c49a17); color:#221a09; box-shadow:inset 0 1px 0 rgba(255,255,255,.45), 0 10px 20px rgba(196,154,23,.25)}
+    .btn.ghost{background:transparent; color:#fff; border:1px solid rgba(255,255,255,.25)}
 
-        .brand-area {
-            flex: 1;
-            min-width: 300px;
-            border-left: 6px solid var(--primary-gold);
-            padding-left: 30px;
-        }
+    .glass{
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.1); border-radius:var(--radius); padding:22px; box-shadow:var(--card-shadow)
+    }
 
-        .brand-area h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            color: #fff;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
+    /* --- Sections --- */
+    section{padding:86px 20px}
+    .container{max-width:1200px; margin:auto}
+    .section-title{font-family:'Playfair Display', serif; font-size:clamp(26px,4vw,40px); margin:0 0 16px; color:#fff}
+    .section-sub{color:var(--primary-gold); font-style:italic; margin-bottom:34px}
 
-        .brand-area span {
-            color: var(--primary-gold);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 600;
-        }
+    /* Mission cards */
+    .grid{display:grid; gap:22px}
+    .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .grid.cols-3{grid-template-columns:repeat(3, minmax(0,1fr))}
+    @media (max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
 
-        .intro-area {
-            flex: 1;
-            min-width: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 10px;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+    .card{background:linear-gradient(180deg,#171323,#0f0c19); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:28px; position:relative; overflow:hidden; box-shadow:var(--card-shadow); transform-style:preserve-3d; transition:transform .35s ease, box-shadow .35s ease}
+    .card:hover{transform:translateY(-6px); box-shadow:0 18px 50px rgba(0,0,0,.45)}
+    .card .shine{position:absolute; inset:0; background:radial-gradient(400px 200px at var(--mx, 0%) var(--my, 0%), rgba(212,175,55,.18), transparent 60%); pointer-events:none}
+    .card h3{font-family:'Playfair Display', serif; color:var(--primary-gold); margin:0 0 10px}
+    .card p{color:#d3d6df; margin:0}
 
-        .intro-area h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-gold);
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-        }
+    /* Majesty / verses */
+    .masonry{column-count:3; column-gap:22px}
+    @media (max-width:1100px){.masonry{column-count:2}}
+    @media (max-width:700px){.masonry{column-count:1}}
+    .verse{display:inline-block; width:100%; margin:0 0 22px; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.06); box-shadow:var(--card-shadow)}
+    .verse img{width:100%; height:220px; object-fit:cover; display:block; filter:saturate(1.05) contrast(1.05)}
+    .verse .v-body{padding:16px 18px; background:linear-gradient(180deg,#151224,#120f1d)}
+    .verse h4{margin:0 0 6px; font-family:'Playfair Display', serif; color:#fff}
+    .verse .txt{font-style:italic; color:#c7cada}
+    .verse .ref{display:block; margin-top:8px; color:var(--primary-gold); font-weight:800; font-size:.8rem; letter-spacing:.6px}
 
-        /* --- 3. Mission Section --- */
-        .section-padding { padding: 80px 10%; }
-        
-        .mission-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
+    /* Video gallery */
+    .video-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px}
+    @media (max-width:900px){.video-grid{grid-template-columns:1fr}}
+    .video{position:relative; aspect-ratio:16/9; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.08); box-shadow:var(--card-shadow)}
+    .video iframe{position:absolute; inset:0; width:100%; height:100%}
 
-        .info-card {
-            background: #fff;
-            padding: 40px;
-            border-top: 4px solid var(--royal-purple);
-            border-radius: 8px;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s;
-        }
-        .info-card:hover { transform: translateY(-5px); }
-        
-        .info-card h3 { color: var(--royal-purple); margin-bottom: 15px; font-family: 'Playfair Display', serif; }
+    /* Image gallery with lightbox */
+    .gallery{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:14px}
+    @media (max-width:1100px){.gallery{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:800px){.gallery{grid-template-columns:repeat(2,1fr)}}
+    .gallery img{width:100%; height:220px; object-fit:cover; border-radius:12px; transition:transform .25s ease, filter .25s ease}
+    .gallery img:hover{transform:scale(1.03); filter:brightness(1.1)}
 
-        /* --- 4. Majesty of Christ (10 Verses) --- */
-        .majesty-section {
-            background: #fff;
-            padding-bottom: 100px;
-        }
+    .lightbox{position:fixed; inset:0; background:rgba(8,6,12,.85); display:none; align-items:center; justify-content:center; z-index:60}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:min(92vw,1200px); max-height:86vh; border-radius:12px; border:1px solid rgba(255,255,255,.15)}
 
-        .majesty-title {
-            text-align: center;
-            margin: 60px 0;
-        }
-        .majesty-title h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--royal-purple);
-        }
-        .majesty-title p { color: var(--primary-gold); font-style: italic; }
+    /* Footer */
+    footer{padding:46px 20px 70px; text-align:center; color:#cfd3df; background:linear-gradient(180deg,#0f0c19,#0a0811)}
+    footer .bless{color:#fff; font-size:1.1rem; margin:0 0 14px; font-family:'Playfair Display', serif}
 
-        .verse-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 0 10%;
-        }
+    /* Scroll reveal */
+    .reveal{opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s ease}
+    .reveal.in{opacity:1; transform:none}
 
-        .verse-card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-        }
-
-        .verse-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .verse-content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .verse-content h4 {
-            color: var(--royal-purple);
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .verse-text {
-            font-size: 0.9rem;
-            color: #555;
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-
-        .verse-ref {
-            display: block;
-            color: var(--primary-gold);
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        /* --- 5. Videos Section --- */
-        .video-section {
-            background: var(--royal-purple);
-            color: #fff;
-            padding: 80px 10%;
-        }
-        .video-section h2 { text-align: center; margin-bottom: 40px; font-family: 'Playfair Display', serif; color: var(--primary-gold); font-size: 2.5rem; }
-
-        .video-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 2px solid var(--primary-gold);
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        /* --- 6. Gallery Section --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            padding: 60px 10%;
-            background: #f4f4f4;
-        }
-        .gallery-grid img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .gallery-grid img:hover { transform: scale(1.03); filter: brightness(1.1); }
-
-        /* --- Footer --- */
-        footer {
-            background: #222;
-            color: #aaa;
-            text-align: center;
-            padding: 40px;
-            border-top: 3px solid var(--primary-gold);
-        }
-        
-        @media (max-width: 768px) {
-            .brand-area h1 { font-size: 3rem; }
-            .hero-content { flex-direction: column; gap: 30px; }
-            .brand-area { border-left: none; border-bottom: 4px solid var(--primary-gold); padding-bottom: 20px; }
-            .video-wrapper { grid-template-columns: 1fr; }
-        }
-    </style>
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .card, .gallery img{transition:none}
+      .reveal{transition:none}
+      .hero-canvas{display:none}
+    }
+  </style>
 </head>
 <body>
+  <div class="top-banner">
+    <span class="sparkle">✦</span>
+    "He is the Rock, his works are perfect, and all his ways are just." — Deuteronomy 32:4
+    <span class="sparkle">✦</span>
+  </div>
 
-    <div class="top-verse-banner">
-        "He is the Rock, his works are perfect, and all his ways are just." — Deuteronomy 32:4
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>RRJC | Riju Rincy Jolly in Christ</span>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#mission">Mission</a>
+        <a href="#majesty">Majesty</a>
+        <a href="#videos">Videos</a>
+        <a href="#gallery">Gallery</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero with subtle animated particle canvas (no external libs) -->
+  <section class="hero" aria-label="Welcome">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-wrap container">
+      <div>
+        <div class="kicker">Welcome to the Sanctuary</div>
+        <h1 class="display">Exalting the Name of <span style="color:var(--primary-gold)">Jesus</span> with Design & Word</h1>
+        <p class="lede">We are a digital ministry creating beautiful, accessible experiences for worship, reflection, and spiritual growth—where technology meets timeless Truth.</p>
+        <div class="cta-row">
+          <a class="btn gold" href="#mission">Explore our calling</a>
+          <a class="btn ghost" href="#videos">Watch worship</a>
+        </div>
+      </div>
+      <aside class="glass reveal" style="align-self:start">
+        <h3 class="section-title" style="margin-top:0">Today's Verse</h3>
+        <p style="margin:0;color:#d9dbea">“Peace I leave with you; my peace I give you.” <strong style="color:var(--primary-gold)">John 14:27</strong></p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="mission" class="container">
+    <h2 class="section-title">Our Calling</h2>
+    <p class="section-sub">Rooted in love and truth—expressed through excellence.</p>
+
+    <div class="grid cols-2">
+      <article class="card reveal">
+        <div class="shine" aria-hidden="true"></div>
+        <h3>Mission</h3>
+        <p>To proclaim the everlasting Gospel through accessible digital media, fostering a global community anchored in Christ.</p>
+      </article>
+      <article class="card reveal">
+        <div class="shine" aria-hidden="true"></div>
+        <h3>Purpose</h3>
+        <p>To equip believers with resources for worship and study, ensuring the message of Hope and Salvation reaches the ends of the earth.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="majesty" class="container">
+    <h2 class="section-title">The Majesty of Christ</h2>
+    <p class="section-sub">Reflecting on His Divine Attributes</p>
+
+    <div class="masonry">
+      <!-- Repeatable verse cards (images are the same as your original to keep content) -->
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1484557985045-6f5c0ea8f9bd?auto=format&fit=crop&w=1200&q=80" alt="Sheep in pasture" loading="lazy">
+        <div class="v-body">
+          <h4>The Good Shepherd</h4>
+          <p class="txt">“I am the good shepherd; I know my sheep and my sheep know me.”</p>
+          <span class="ref">John 10:14</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80" alt="Majestic sky" loading="lazy">
+        <div class="v-body">
+          <h4>The Only God</h4>
+          <p class="txt">“I am the First and the Last; apart from me there is no God.”</p>
+          <span class="ref">Isaiah 44:6</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1200&q=80" alt="Hands raised in worship" loading="lazy">
+        <div class="v-body">
+          <h4>Worthy of Praise</h4>
+          <p class="txt">“Great is the LORD and most worthy of praise; his greatness no one can fathom.”</p>
+          <span class="ref">Psalm 145:3</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=1200&q=80" alt="Holy Bible light" loading="lazy">
+        <div class="v-body">
+          <h4>The Holy One</h4>
+          <p class="txt">“Exalt the LORD our God and worship at his holy mountain, for the LORD our God is holy.”</p>
+          <span class="ref">Psalm 99:9</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1505307773236-6997a3c31671?auto=format&fit=crop&w=1200&q=80" alt="Calm water at sunset" loading="lazy">
+        <div class="v-body">
+          <h4>Prince of Peace</h4>
+          <p class="txt">“Peace I leave with you; my peace I give you.”</p>
+          <span class="ref">John 14:27</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1605806616949-1e87b487bc2a?auto=format&fit=crop&w=1200&q=80" alt="Crown imagery" loading="lazy">
+        <div class="v-body">
+          <h4>King of Kings</h4>
+          <p class="txt">“On his robe and on his thigh he has this name written: KING OF KINGS.”</p>
+          <span class="ref">Revelation 19:16</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" alt="Highest mountain peak" loading="lazy">
+        <div class="v-body">
+          <h4>Above All</h4>
+          <p class="txt">“For you, LORD, are the Most High over all the earth.”</p>
+          <span class="ref">Psalm 97:9</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=1200&q=80" alt="Cross silhouette" loading="lazy">
+        <div class="v-body">
+          <h4>The Saviour</h4>
+          <p class="txt">“Today in the town of David a Savior has been born to you; he is the Messiah.”</p>
+          <span class="ref">Luke 2:11</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80" alt="Breaking bread" loading="lazy">
+        <div class="v-body">
+          <h4>Bread of Life</h4>
+          <p class="txt">“I am the bread of life. Whoever comes to me will never go hungry.”</p>
+          <span class="ref">John 6:35</span>
+        </div>
+      </div>
+      <div class="verse reveal">
+        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80" alt="Pathway" loading="lazy">
+        <div class="v-body">
+          <h4>The Way</h4>
+          <p class="txt">“I am the way and the truth and the life.”</p>
+          <span class="ref">John 14:6</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos" class="container">
+    <h2 class="section-title">Worship Experiences</h2>
+    <p class="section-sub">Be still and watch—let praise lead the way.</p>
+
+    <div class="video-grid">
+      <div class="video reveal"><iframe loading="lazy" src="https://www.youtube.com/embed/9SeQKSWAAK8" title="Worship 1" frameborder="0" allowfullscreen></iframe></div>
+      <div class="video reveal"><iframe loading="lazy" src="https://www.youtube.com/embed/zvoq7SL_BXg" title="Worship 2" frameborder="0" allowfullscreen></iframe></div>
+      <div class="video reveal"><iframe loading="lazy" src="https://www.youtube.com/embed/kw-FIy8Shk0" title="Worship 3" frameborder="0" allowfullscreen></iframe></div>
+      <div class="video reveal"><iframe loading="lazy" src="https://www.youtube.com/embed/rEfKzlE5XAQ" title="Worship 4" frameborder="0" allowfullscreen></iframe></div>
+    </div>
+  </section>
+
+  <section id="gallery" class="container">
+    <h2 class="section-title">Spiritual Sources</h2>
+    <p class="section-sub">Moments of faith captured in time</p>
+
+    <div class="gallery">
+      <img class="reveal" src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1000&q=80" alt="Guitar worship" loading="lazy">
+      <img class="reveal" src="https://images.unsplash.com/photo-1515162305285-0293e4767cc2?auto=format&fit=crop&w=1000&q=80" alt="Church interior" loading="lazy">
+      <img class="reveal" src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1000&q=80" alt="Bible study" loading="lazy">
+      <img class="reveal" src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&w=1000&q=80" alt="Praying hands" loading="lazy">
     </div>
 
-    <header class="hero">
-        <div class="hero-content">
-            <div class="brand-area">
-                <h1>RRJC</h1>
-                <span>Riju Rincy Jolly Company</span>
-            </div>
-            <div class="intro-area">
-                <h3>Welcome to the Sanctuary</h3>
-                <p>We are a digital ministry dedicated to exalting the name of Jesus. Through technology, design, and the Word, we create spaces for worship, reflection, and spiritual growth. Discover the power of the Gospel in a new light.</p>
-            </div>
-        </div>
-    </header>
+    <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Image viewer">
+      <img alt="Expanded view">
+    </div>
+  </section>
 
-    <section class="section-padding">
-        <h2 style="text-align: center; color: var(--royal-purple); font-family: 'Playfair Display'; font-size: 2.5rem; margin-bottom: 40px;">Our Calling</h2>
-        <div class="mission-grid">
-            <div class="info-card">
-                <h3>Mission</h3>
-                <p>To proclaim the everlasting Gospel to every nation, tribe, and people through accessible digital media, fostering a global community rooted in love and truth.</p>
-            </div>
-            <div class="info-card">
-                <h3>Purpose</h3>
-                <p>To equip believers with resources for worship and study, ensuring that the message of Hope and Salvation reaches the furthest corners of the earth.</p>
-            </div>
-        </div>
-    </section>
+  <footer>
+    <p class="bless">“Fear not, for I am with you; be not dismayed, for I am your God.” — Isaiah 41:10</p>
+    <small>© 2025 RRJC | Riju Rincy Jolly in Christ · Built for His Glory.</small>
+  </footer>
 
-    <section class="majesty-section">
-        <div class="majesty-title">
-            <h2>The Majesty of Christ</h2>
-            <p>Reflecting on His Divine Attributes</p>
-        </div>
-        
-        <div class="verse-grid">
-            
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1484557985045-6f5c0ea8f9bd?auto=format&fit=crop&w=600&q=80" alt="Sheep in pasture">
-                <div class="verse-content">
-                    <h4>The Good Shepherd</h4>
-                    <p class="verse-text">"I am the good shepherd; I know my sheep and my sheep know me."</p>
-                    <span class="verse-ref">John 10:14</span>
-                </div>
-            </div>
+  <script>
+    // Parallax-ish particles on hero
+    (function(){
+      const c = document.getElementById('heroCanvas');
+      const ctx = c.getContext('2d');
+      let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const particles = Array.from({length: 60}, () => ({x:Math.random(), y:Math.random(), r:Math.random()*2+0.5, s:Math.random()*0.6+0.2}));
+      function resize(){ w = c.clientWidth; h = c.clientHeight; c.width = w*dpr; c.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+      function draw(t){
+        ctx.clearRect(0,0,w,h);
+        for(const p of particles){
+          const x = p.x*w + Math.sin((t*0.0002 + p.x)*6)*8;
+          const y = (p.y*h + (t*0.03*p.s)) % h;
+          const g = ctx.createRadialGradient(x,y,0,x,y,p.r*8);
+          g.addColorStop(0, 'rgba(212,175,55,.75)');
+          g.addColorStop(1, 'rgba(212,175,55,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,p.r*3,0,Math.PI*2); ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      const ro = new ResizeObserver(resize); ro.observe(c);
+      resize(); requestAnimationFrame(draw);
+    })();
 
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Majestic Sky">
-                <div class="verse-content">
-                    <h4>The Only God</h4>
-                    <p class="verse-text">"I am the First and the Last; apart from me there is no God."</p>
-                    <span class="verse-ref">Isaiah 44:6</span>
-                </div>
-            </div>
+    // Intersection Observer for reveal animations
+    (function(){
+      const io = new IntersectionObserver((entries) => {
+        for(const e of entries){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }
+      }, {threshold: .15});
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
 
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=600&q=80" alt="Hands raised in worship">
-                <div class="verse-content">
-                    <h4>Worthy of Praise</h4>
-                    <p class="verse-text">"Great is the LORD and most worthy of praise; his greatness no one can fathom."</p>
-                    <span class="verse-ref">Psalm 145:3</span>
-                </div>
-            </div>
+    // Card shine follow
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('pointermove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const mx = ((e.clientX - r.left)/r.width)*100; const my = ((e.clientY - r.top)/r.height)*100;
+        card.style.setProperty('--mx', mx+'%'); card.style.setProperty('--my', my+'%');
+      });
+    });
 
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=600&q=80" alt="Holy Bible Light">
-                <div class="verse-content">
-                    <h4>The Holy One</h4>
-                    <p class="verse-text">"Exalt the LORD our God and worship at his holy mountain, for the LORD our God is holy."</p>
-                    <span class="verse-ref">Psalm 99:9</span>
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1505307773236-6997a3c31671?auto=format&fit=crop&w=600&q=80" alt="Calm Water at Sunset">
-                <div class="verse-content">
-                    <h4>Prince of Peace</h4>
-                    <p class="verse-text">"Peace I leave with you; my peace I give you."</p>
-                    <span class="verse-ref">John 14:27</span>
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1605806616949-1e87b487bc2a?auto=format&fit=crop&w=600&q=80" alt="Crown Imagery (Light)">
-                <div class="verse-content">
-                    <h4>King of Kings</h4>
-                    <p class="verse-text">"On his robe and on his thigh he has this name written: KING OF KINGS."</p>
-                    <span class="verse-ref">Revelation 19:16</span>
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" alt="Highest Mountain Peak">
-                <div class="verse-content">
-                    <h4>Above All</h4>
-                    <p class="verse-text">"For you, LORD, are the Most High over all the earth."</p>
-                    <span class="verse-ref">Psalm 97:9</span>
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=600&q=80" alt="Cross silhouette">
-                <div class="verse-content">
-                    <h4>The Saviour</h4>
-                    <p class="verse-text">"Today in the town of David a Savior has been born to you; he is the Messiah."</p>
-                    <span class="verse-ref">Luke 2:11</span>
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="Breaking Bread">
-                <div class="verse-content">
-                    <h4>Bread of Life</h4>
-                    <p class="verse-text">"I am the bread of life. Whoever comes to me will never go hungry."</p>
-                    <span class="verse-ref">John 6:35</span>
-                </div>
-            </div>
-
-            <div class="verse-card">
-                <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=600&q=80" alt="Pathway">
-                <div class="verse-content">
-                    <h4>The Way</h4>
-                    <p class="verse-text">"I am the way and the truth and the life."</p>
-                    <span class="verse-ref">John 14:6</span>
-                </div>
-            </div>
-            
-        </div>
-    </section>
-
-    <section class="video-section">
-        <h2>Worship Experiences</h2>
-        <div class="video-wrapper">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/9SeQKSWAAK8" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/zvoq7SL_BXg" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/kw-FIy8Shk0" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/rEfKzlE5XAQ" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div style="text-align: center; padding-top: 60px;">
-            <h2 style="color: var(--royal-purple); font-family: 'Playfair Display';">Spiritual Sources</h2>
-            <p>Moments of faith captured in time</p>
-        </div>
-        <div class="gallery-grid">
-            <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=500&q=80" alt="Guitar Worship">
-            <img src="https://images.unsplash.com/photo-1515162305285-0293e4767cc2?auto=format&fit=crop&w=500&q=80" alt="Church Interior">
-            <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=500&q=80" alt="Bible Study">
-            <img src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&w=500&q=80" alt="Praying Hands">
-        </div>
-    </section>
-
-    <footer>
-        <p style="font-size: 1.2rem; margin-bottom: 20px; color: #fff;">
-            "Fear not, for I am with you; be not dismayed, for I am your God." — Isaiah 41:10
-        </p>
-        <p>&copy; 2025 RRJC | Riju Rincy Jolly Company. Built for His Glory.</p>
-    </footer>
-
+    // Lightbox
+    (function(){
+      const lb = document.getElementById('lightbox');
+      const img = lb.querySelector('img');
+      document.querySelectorAll('.gallery img').forEach(g => g.addEventListener('click', ()=>{ img.src = g.src; img.alt = g.alt; lb.classList.add('open'); }));
+      lb.addEventListener('click', ()=> lb.classList.remove('open'));
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+    })();
+  </script>
 </body>
 </html>
