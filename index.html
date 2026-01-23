@@ -22,198 +22,171 @@
       --gold:#f5c05b;
       --gold2:#d8a84a;
       --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --shadow2: 0 10px 22px rgba(0,0,0,.35);
-      --radius: 18px;
-      --max: 1180px;
+      --shadow2: 0 8px 32px rgba(0,0,0,.3);
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    /* GLOBAL */
+    *{ margin:0; padding:0; box-sizing:border-box; }
     body{
-      margin:0;
-      position:relative;
-      font-family:Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1100px 600px at 10% 0%, rgba(245,192,91,.10), transparent 60%),
-        radial-gradient(1000px 600px at 90% 10%, rgba(95,62,145,.20), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      background-attachment: fixed;
-      overflow-x:hidden;
+      background: var(--bg0);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a{ color: inherit; text-decoration: none; transition: .3s ease; }
+    ul{ list-style: none; }
+    img{ max-width: 100%; height: auto; display: block; }
+
+    .container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section{ padding: 100px 0; position: relative; }
+    
+    .h2{
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      margin-bottom: 24px;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+    .sub{
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 48px;
+      font-weight: 400;
     }
 
-    /* Background layers (fixed, behind content) */
-    .bg-layer, .grain-layer{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
+    /* NAV */
+    header{
+      position: fixed; top:0; left:0; width:100%; z-index:1000;
+      padding: 20px 0;
+      background: linear-gradient(to bottom, var(--bg0), transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--stroke);
     }
-    .bg-layer{z-index:-2; background:
-        radial-gradient(900px 500px at 50% 120%, rgba(52,195,255,.10), transparent 60%),
-        radial-gradient(600px 420px at 70% 30%, rgba(255,111,174,.08), transparent 60%);
-      opacity:.9;
+    .nav-flex{ display: flex; justify-content: space-between; align-items: center; }
+    .logo{ font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); }
+    nav a{ margin-left: 30px; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+    nav a:hover, nav a.active{ color: var(--gold); }
+
+    /* GRID & CARDS */
+    .grid{ display: grid; gap: 30px; }
+    .cols-2{ grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .cols-3{ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    
+    .card{
+      background: var(--surface);
+      border: 1px solid var(--stroke);
+      padding: 40px;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .4s cubic-bezier(0.165, 0.84, 0.44, 1), background .3s;
     }
-    .grain-layer{z-index:-1;
-      background-image:
-        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0, rgba(255,255,255,.03) 1px, transparent 1px, transparent 3px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0, rgba(255,255,255,.02) 1px, transparent 1px, transparent 4px);
-      mix-blend-mode: overlay;
-      opacity:.18;
+    .card:hover{ transform: translateY(-10px); background: var(--surface2); }
+    /* Shine effect */
+    .card .shine{
+      position: absolute; top:0; left:0; width:100%; height:100%;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.06), transparent 60%);
+      pointer-events: none; opacity: 0; transition: opacity .3s;
     }
+    .card:hover .shine{ opacity: 1; }
+    
+    .card .icon{ font-size: 2.5rem; margin-bottom: 20px; display: block; }
+    .card h3{ font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 16px; color: var(--text); }
+    .card p{ color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
 
-    header, main, footer{position:relative; z-index:1}
-
-    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
-    section{padding:84px 0}
-
-    /* Top banner */
-    .top{
-      position:relative;
-      z-index:50;
-      text-align:center;
-      padding:12px 16px;
-      font-family:'Playfair Display', serif;
-      background: linear-gradient(90deg, rgba(245,192,91,.12), rgba(95,62,145,.20), rgba(245,192,91,.10));
-      border-bottom:1px solid rgba(255,255,255,.10);
-      color: rgba(238,242,255,.95);
+    /* FOLDER & FILE STYLES */
+    details > summary {
+      list-style: none;
+      cursor: pointer;
+      outline: none;
     }
-    .top b{color:var(--gold)}
-
-    /* Nav */
-    .nav{
-      position:sticky;
-      top:0;
-      z-index:60;
-      backdrop-filter: blur(12px) saturate(140%);
-      background: rgba(11,15,25,.62);
-      border-bottom:1px solid rgba(255,255,255,.10);
+    details > summary::-webkit-details-marker { display: none; }
+    
+    .folder-content {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--stroke);
+      animation: fadeIn 0.5s ease;
     }
-    .nav-inner{max-width:var(--max); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 20px}
-    .brand{display:flex; align-items:center; gap:12px; font-weight:800}
-    .logo{
-      width:44px; height:44px; border-radius:14px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.60), rgba(255,255,255,0) 40%),
-                  linear-gradient(135deg, rgba(245,192,91,.95), rgba(95,62,145,.92));
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.10);
-      display:grid; place-items:center;
-      flex:0 0 auto;
+    .file-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      transition: background 0.3s;
     }
-    .logo span{font-weight:900; color:#1b132c;}
-    .brand-title{font-family:'Playfair Display', serif; font-size:1.05rem; letter-spacing:.2px}
-
-    .nav nav{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:10px}
-    .nav a{ text-decoration:none; font-weight:800; color:rgba(238,242,255,.92); padding:10px 12px; border-radius:12px; position:relative; }
-    .nav a::after{content:""; position:absolute; left:12px; right:12px; bottom:6px; height:2px; background:linear-gradient(90deg, var(--gold), rgba(245,192,91,0)); transform:scaleX(0); transform-origin:left; transition:transform .22s ease}
-    .nav a:hover{background:rgba(255,255,255,.06)}
-    .nav a:hover::after{transform:scaleX(1)}
-
-    /* Hero */
-    .hero{position:relative; isolation:isolate;}
-    .hero-media{position:absolute; inset:0; z-index:-1; overflow:hidden}
-    .hero-media img{width:100%; height:100%; object-fit:cover; transform:scale(1.05); opacity:.22; filter:contrast(1.05) saturate(.95)}
-    .hero-media::before{content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,15,25,.55), rgba(11,15,25,.92));}
-
-    .hero-wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:34px; align-items:center; padding:64px 0}
-    @media (max-width: 960px){
-      .hero-wrap{grid-template-columns:1fr; padding:44px 0 56px}
-      .nav nav{justify-content:flex-start}
-      .brand-title{font-size:1rem}
+    .file-row:hover { background: rgba(255,255,255,0.08); }
+    .file-name { font-size: 0.9rem; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 10px; overflow-wrap: anywhere;}
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .kicker{display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); box-shadow: var(--shadow2); width:max-content; font-weight:800}
-    .kicker .dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg, var(--gold), rgba(95,62,145,.9))}
+    /* BUTTONS */
+    .btn{
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border: none;
+    }
+    .btn.primary{ background: var(--gold); color: var(--bg0); box-shadow: 0 10px 20px rgba(245,192,91,.2); }
+    .btn.primary:hover{ background: var(--gold2); transform: translateY(-2px); }
+    .btn.ghost{ border: 2px solid var(--stroke); color: var(--text); background:transparent;}
+    .btn.ghost:hover{ border-color: var(--gold); color: var(--gold); }
+    
+    .btn-sm { padding: 8px 16px; font-size: 0.75rem; border-width: 1px; }
 
-    h1{font-family:'Playfair Display', serif; font-size:clamp(34px, 5.0vw, 68px); line-height:1.06; margin:14px 0 12px}
-    .lede{color:rgba(182,191,211,.96); max-width:62ch; font-weight:600}
+    /* REVEAL */
+    .reveal{ opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1); }
+    .reveal.active{ opacity: 1; transform: translateY(0); }
 
-    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:22px}
-    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:14px; font-weight:900; text-decoration:none; border:1px solid rgba(255,255,255,.12); box-shadow: var(--shadow2); transition: transform .2s ease, box-shadow .2s ease}
-    .btn.primary{background: linear-gradient(135deg, var(--gold), var(--gold2)); color:#24180a; border-color: transparent}
-    .btn.ghost{background: rgba(255,255,255,.06); color:rgba(238,242,255,.95)}
-    .btn:hover{transform: translateY(-2px); box-shadow: 0 20px 55px rgba(0,0,0,.5)}
+    /* GALLERY */
+    .gallery{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+    .gallery img{ width: 100%; height: 300px; object-fit: cover; border-radius: 16px; cursor: pointer; transition: transform .3s; filter: grayscale(40%); }
+    .gallery img:hover{ transform: scale(1.03); filter: grayscale(0%); z-index: 2; }
 
-    .panel{background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05)); border:1px solid rgba(255,255,255,.10); border-radius: var(--radius); box-shadow: var(--shadow); padding:22px}
+    /* LIGHTBOX */
+    .lightbox{
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,.9); z-index: 2000;
+      display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .lightbox.open{ opacity: 1; pointer-events: all; }
+    .lightbox img{ max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,.8); }
 
-    .meta{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-top:18px}
-    @media (max-width:780px){.meta{grid-template-columns:1fr}}
-    .pill{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:14px}
-    .pill b{color:var(--gold); font-size:1.25rem}
-    .pill span{display:block; margin-top:6px; color:rgba(182,191,211,.96); font-weight:700}
-
-    .h2{font-family:'Playfair Display', serif; font-size:clamp(26px, 3.6vw, 44px); margin:0 0 10px}
-    .sub{margin:0 0 26px; color:rgba(182,191,211,.96); font-weight:700}
-
-    .grid{display:grid; gap:18px}
-    .grid.cols-3{grid-template-columns:repeat(3, minmax(0,1fr))}
-    .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
-    @media (max-width:960px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
-
-    .card{position:relative; background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05)); border:1px solid rgba(255,255,255,.10); border-radius: var(--radius); padding:22px; box-shadow: var(--shadow2); overflow:hidden; transition: transform .25s ease, box-shadow .25s ease}
-    .card:hover{transform: translateY(-6px); box-shadow: 0 26px 70px rgba(0,0,0,.55)}
-    .card .shine{position:absolute; inset:-1px; background: radial-gradient(280px 160px at var(--mx, 0%) var(--my, 0%), rgba(245,192,91,.22), transparent 65%); pointer-events:none}
-    .icon{width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background: rgba(245,192,91,.16); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-size:22px; margin-bottom:10px}
-
-    .masonry{column-count:3; column-gap:18px}
-    @media (max-width:1100px){.masonry{column-count:2}}
-    @media (max-width:760px){.masonry{column-count:1}}
-
-    .verse{display:inline-block; width:100%; margin:0 0 18px; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.06); box-shadow: var(--shadow2)}
-    .verse img{width:100%; height:220px; object-fit:cover; display:block; background:#0b0f19}
-    .vbody{padding:16px 16px 18px}
-    .vbody h4{margin:0 0 6px; font-family:'Playfair Display', serif}
-    .vbody p{margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600}
-    .ref{display:inline-flex; margin-top:10px; padding:7px 10px; border-radius:999px; background: rgba(245,192,91,.14); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-weight:900; font-size:.82rem; letter-spacing:.3px}
-
-    .video-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px}
-    @media (max-width:960px){.video-grid{grid-template-columns:1fr}}
-    .video{position:relative; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.10); box-shadow: var(--shadow2); background: rgba(255,255,255,.06); aspect-ratio:16/9}
-    .video iframe{position:absolute; inset:0; width:100%; height:100%}
-
-    .gallery{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px}
-    @media (max-width:1100px){.gallery{grid-template-columns:repeat(3,1fr)}}
-    @media (max-width:820px){.gallery{grid-template-columns:repeat(2,1fr)}}
-    .gallery img{width:100%; height:220px; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.10); box-shadow: var(--shadow2); background:#0b0f19; transition: transform .2s ease, filter .2s ease}
-    .gallery img:hover{transform: scale(1.03); filter: brightness(1.06)}
-
-    .lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.72); z-index:120; padding:22px}
-    .lightbox.open{display:flex}
-    .lightbox img{max-width:min(92vw, 1200px); max-height:86vh; border-radius:18px; border:1px solid rgba(255,255,255,.18)}
-
-    footer{padding:54px 0 74px}
-    .foot{text-align:center; padding:24px; border-radius:22px; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); box-shadow: var(--shadow2)}
-    .foot p{margin:0 0 10px; font-family:'Playfair Display', serif; font-size:1.15rem}
-    .foot small{color:rgba(182,191,211,.96); font-weight:700}
-
-    .reveal{opacity:0; transform: translateY(16px); transition: opacity .85s ease, transform .85s ease}
-    .reveal.in{opacity:1; transform:none}
-
-    .progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--gold), rgba(95,62,145,.9)); z-index:99}
-
-    @media (prefers-reduced-motion: reduce){
-      html{scroll-behavior:auto}
-      .reveal{transition:none}
-      .btn,.card{transition:none}
+    /* FOOTER */
+    footer{ padding: 60px 0; border-top: 1px solid var(--stroke); text-align: center; color: var(--muted); font-size: 0.9rem; }
+    
+    @media(max-width: 768px){
+      .h2{ font-size: 2.5rem; }
+      .nav-flex{ flex-direction: column; gap: 20px; }
+      nav a{ margin: 0 10px; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-layer" aria-hidden="true"></div>
-  <div class="grain-layer" aria-hidden="true"></div>
-  <div class="progress" id="progress" aria-hidden="true"></div>
 
-  <div class="top">“He is the Rock, his works are perfect, and all his ways are just.” — <b>Deuteronomy 32:4</b></div>
-
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"><span>✚</span></div>
-        <div class="brand-title">RRJC | Riju Rincy Jolly in Christ</div>
-      </div>
+  <header>
+    <div class="container nav-flex">
+      <div class="logo">RRJC</div>
       <nav aria-label="Primary">
         <a href="#mission">Mission</a>
         <a href="#word">Bible Word</a>
         <a href="#worship">Worship</a>
+        <a href="#resources">Resources</a> 
         <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -221,163 +194,181 @@
   </header>
 
   <main>
-    <section class="hero" aria-label="Welcome">
-      <div class="hero-media" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=2000&q=80" alt="" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%E2%9C%9D%20Welcome%20Beloved%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EBible%20Word%20Source%20%26%20Amazing%20Worship%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-      </div>
-
-      <div class="container hero-wrap">
+    <section id="mission" class="section" style="padding-top:200px; text-align:center;">
+      <div class="container">
+        <h1 class="h2 reveal">Riju Rincy Jolly in Christ</h1>
+        <p class="sub reveal" style="margin: 0 auto 40px;">Dedicated to spreading the Word and worshiping in Spirit and Truth.</p>
         <div class="reveal">
-          <div class="kicker"><span class="dot"></span> Welcome Beloved</div>
-          <h1>Bible Word source &amp; amazing worship</h1>
-          <p class="lede">A calm, modern ministry page designed for clarity and devotion—premium typography and subtle motion, without harsh bright colors.</p>
-          <div class="cta">
-            <a class="btn primary" href="#word">Explore Bible Word</a>
-            <a class="btn ghost" href="#worship">Amazing Worship</a>
-            <a class="btn ghost" href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">Visit Website</a>
-          </div>
-
-          <div class="meta">
-            <div class="pill"><b data-count="10">0</b><span>Bible reflections</span></div>
-            <div class="pill"><b data-count="4">0</b><span>Worship videos</span></div>
-            <div class="pill"><b data-count="8">0</b><span>Gallery moments</span></div>
-          </div>
+          <a href="#resources" class="btn primary">View Resources</a>
         </div>
-
-        <aside class="panel reveal">
-          <div class="h2" style="margin:0 0 10px">Today’s Verse</div>
-          <p style="margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600">“Peace I leave with you; my peace I give you.”</p>
-          <span class="ref">John 14:27</span>
-          <div style="height:14px"></div>
-          <p style="margin:0; color:rgba(182,191,211,.96); font-weight:600">Background layers stay behind content and never cover sections.</p>
-        </aside>
       </div>
     </section>
 
-    <section id="mission">
+    <section id="word" class="section">
       <div class="container">
-        <h2 class="h2 reveal">Our Calling</h2>
-        <p class="sub reveal">Faith-first content, organized layout, and premium readability.</p>
-
+        <h2 class="h2 reveal">Bible Word</h2>
+        <p class="sub reveal">Daily inspirations from the Scripture to guide your path.</p>
         <div class="grid cols-3">
-          <article class="card reveal"><div class="shine" aria-hidden="true"></div><div class="icon">🎯</div><h3 style="margin:0 0 8px; font-family:'Playfair Display', serif">Mission</h3><p style="margin:0; color:rgba(182,191,211,.96); font-weight:600">To share the Bible Word worldwide through accessible digital media and design excellence.</p></article>
-          <article class="card reveal"><div class="shine" aria-hidden="true"></div><div class="icon">📖</div><h3 style="margin:0 0 8px; font-family:'Playfair Display', serif">Bible Word Source</h3><p style="margin:0; color:rgba(182,191,211,.96); font-weight:600">Daily verses and reflections—simple, clear, and centered on Christ.</p></article>
-          <article class="card reveal"><div class="shine" aria-hidden="true"></div><div class="icon">🎶</div><h3 style="margin:0 0 8px; font-family:'Playfair Display', serif">Amazing Worship</h3><p style="margin:0; color:rgba(182,191,211,.96); font-weight:600">Worship experiences that encourage prayer, praise, and peace in His presence.</p></article>
-        </div>
-
-        <div style="height:22px"></div>
-
-        <div class="panel reveal" style="display:grid; grid-template-columns: 1fr 1fr; gap:18px; align-items:center">
-          <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1800&q=80" alt="Bible" style="width:100%; height:320px; object-fit:cover; border-radius:16px; border:1px solid rgba(255,255,255,.10); background:#0b0f19" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%93%96%20Bible%20Word%20Source%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3ECalm%20%E2%80%A2%20premium%20%E2%80%A2%20readable%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <div>
-            <h3 style="margin:0 0 10px; font-family:'Playfair Display', serif; font-size:1.6rem">Premium look, controlled palette</h3>
-            <p style="margin:0; color:rgba(182,191,211,.96); font-weight:600">Deep navy base + restrained gold accents = premium feel without bright colors.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="word">
-      <div class="container">
-        <h2 class="h2 reveal">Bible Word Source</h2>
-        <p class="sub reveal">Verses with themed images. If an image fails to load, it switches to a clean fallback (no branding).</p>
-
-        <div class="masonry">
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1484557985045-6f5c0ea8f9bd?auto=format&fit=crop&w=1400&q=80" alt="Sheep" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%90%91%20The%20Good%20Shepherd%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EJohn%2010%3A14%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>The Good Shepherd</h4><p>“I am the good shepherd; I know my sheep and my sheep know me.”</p><span class="ref">John 10:14</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1400&q=80" alt="Sky" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%E2%9C%A8%20The%20Only%20God%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EIsaiah%2044%3A6%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>The Only God</h4><p>“I am the First and the Last; apart from me there is no God.”</p><span class="ref">Isaiah 44:6</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1400&q=80" alt="Worship" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%8E%B6%20Worthy%20of%20Praise%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EPsalm%20145%3A3%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>Worthy of Praise</h4><p>“Great is the LORD and most worthy of praise; his greatness no one can fathom.”</p><span class="ref">Psalm 145:3</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=1400&q=80" alt="Bible" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%93%96%20The%20Holy%20One%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EPsalm%2099%3A9%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>The Holy One</h4><p>“Worship at his holy mountain, for the LORD our God is holy.”</p><span class="ref">Psalm 99:9</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1505307773236-6997a3c31671?auto=format&fit=crop&w=1400&q=80" alt="Water" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%95%8A%20Prince%20of%20Peace%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EJohn%2014%3A27%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>Prince of Peace</h4><p>“Peace I leave with you; my peace I give you.”</p><span class="ref">John 14:27</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1605806616949-1e87b487bc2a?auto=format&fit=crop&w=1400&q=80" alt="Crown" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%91%91%20King%20of%20Kings%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3ERevelation%2019%3A16%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>King of Kings</h4><p>“KING OF KINGS.”</p><span class="ref">Revelation 19:16</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80" alt="Mountain" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%E2%9B%B0%20Above%20All%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EPsalm%2097%3A9%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>Above All</h4><p>“For you, LORD, are the Most High over all the earth.”</p><span class="ref">Psalm 97:9</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1544427920-c49ccfb85579?auto=format&fit=crop&w=1400&q=80" alt="Cross" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%E2%9C%9D%20The%20Saviour%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3ELuke%202%3A11%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>The Saviour</h4><p>“A Savior has been born to you; he is the Messiah.”</p><span class="ref">Luke 2:11</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1400&q=80" alt="Bread" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%8D%9E%20Bread%20of%20Life%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EJohn%206%3A35%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>Bread of Life</h4><p>“Whoever comes to me will never go hungry.”</p><span class="ref">John 6:35</span></div></div>
-          <div class="verse reveal"><img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80" alt="Path" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%9B%A4%20The%20Way%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EJohn%2014%3A6%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" /><div class="vbody"><h4>The Way</h4><p>“I am the way and the truth and the life.”</p><span class="ref">John 14:6</span></div></div>
+          <article class="card reveal">
+            <div class="shine" aria-hidden="true"></div>
+            <div class="icon">📖</div>
+            <h3>Daily Verse</h3>
+            <p>"Thy word is a lamp unto my feet, and a light unto my path." - Psalm 119:105</p>
+          </article>
+          <article class="card reveal">
+            <div class="shine" aria-hidden="true"></div>
+            <div class="icon">🕊️</div>
+            <h3>Holy Spirit</h3>
+            <p>Embracing the guidance and comfort of the Holy Spirit in our daily walk.</p>
+          </article>
+          <article class="card reveal">
+            <div class="shine" aria-hidden="true"></div>
+            <div class="icon">✝️</div>
+            <h3>Salvation</h3>
+            <p>Understanding the gift of grace and the eternal promise of salvation.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="worship">
+    <section id="worship" class="section">
       <div class="container">
         <h2 class="h2 reveal">Amazing Worship</h2>
-        <p class="sub reveal">Playable worship videos (YouTube).</p>
-        <div class="video-grid">
-          <div class="video reveal"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/9SeQKSWAAK8" title="Worship video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-          <div class="video reveal"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/zvoq7SL_BXg" title="Worship video 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-          <div class="video reveal"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/kw-FIy8Shk0" title="Worship video 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-          <div class="video reveal"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/rEfKzlE5XAQ" title="Worship video 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <p class="sub reveal">Join us in lifting His name high through songs of praise.</p>
+        <div class="grid cols-2">
+          <article class="card reveal" style="display:flex; align-items:center; gap:20px;">
+             <div style="flex:1;">
+               <h3>Sunday Service</h3>
+               <p>Live worship sessions every Sunday at 10:00 AM.</p>
+               <button class="btn ghost">Watch Live</button>
+             </div>
+          </article>
+          <article class="card reveal">
+             <h3>Worship Playlist</h3>
+             <p>Curated songs for your personal prayer time.</p>
+             <button class="btn ghost">Listen Now</button>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="gallery">
+    <section id="resources" class="section">
+      <div class="container">
+        <h2 class="h2 reveal">Digital Library</h2>
+        <p class="sub reveal">Access our collection of documents and sermons.</p>
+
+        <div class="grid cols-2">
+            
+            <article class="card reveal">
+                <div class="shine" aria-hidden="true"></div>
+                <details>
+                    <summary>
+                        <div class="icon">📖</div>
+                        <h3 style="display:inline-block; margin:0; margin-bottom:5px;">Bible Books & Studies</h3>
+                        <p style="margin:0; font-size:0.8rem; color:var(--gold);">Click to view files</p>
+                    </summary>
+                    
+                    <div class="folder-content">
+                        <div class="file-row">
+                            <div class="file-name">📄 Genesis 1-11 Full Study</div>
+                            <a href="documents/genesis_1-11_full.pdf" target="_blank" class="btn ghost btn-sm">View</a>
+                        </div>
+                        <div class="file-row">
+                            <div class="file-name">📄 Joshua, Judges, and Ruth</div>
+                            <a href="documents/the-books-of-joshua-judgesand-ruth.pdf" target="_blank" class="btn ghost btn-sm">View</a>
+                        </div>
+                    </div>
+                </details>
+            </article>
+
+            <article class="card reveal">
+                <div class="shine" aria-hidden="true"></div>
+                <details>
+                    <summary>
+                        <div class="icon">🎙️</div>
+                        <h3 style="display:inline-block; margin:0; margin-bottom:5px;">Sermon Notes</h3>
+                        <p style="margin:0; font-size:0.8rem; color:var(--gold);">Click to view notes</p>
+                    </summary>
+                    
+                    <div class="folder-content">
+                        <div class="file-row">
+                            <div class="file-name">📄 Sermon: Isaiah 61:10 (Dec 2008)</div>
+                            <a href="documents/December_14_2008_Isaiah61_10.pdf" target="_blank" class="btn ghost btn-sm">View</a>
+                        </div>
+                        <div class="file-row">
+                            <div class="file-name">📄 Parable of the Moneylender</div>
+                            <a href="documents/The-Parable-of-the-Moneylender-Pharisee-and-Tax-Collector-sermon-notes.pdf" target="_blank" class="btn ghost btn-sm">View</a>
+                        </div>
+                    </div>
+                </details>
+            </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section">
       <div class="container">
         <h2 class="h2 reveal">Gallery</h2>
-        <p class="sub reveal">Click any image to view larger.</p>
-
-        <div class="gallery">
-          <img class="reveal" src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=1400&q=80" alt="Worship" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%8E%B8%20Worship%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3ELift%20up%20your%20voice%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <img class="reveal" src="https://images.unsplash.com/photo-1515162305285-0293e4767cc2?auto=format&fit=crop&w=1400&q=80" alt="Gathering" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%E2%9B%AA%20Gathering%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EWhere%20two%20or%20three%E2%80%A6%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <img class="reveal" src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1400&q=80" alt="Scripture" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%93%96%20Scripture%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3ELamp%20to%20my%20feet%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <img class="reveal" src="https://images.unsplash.com/photo-1507646227500-4d389b0012be?auto=format&fit=crop&w=1400&q=80" alt="Prayer" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%99%8F%20Prayer%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EPeace%20in%20His%20presence%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <img class="reveal" src="https://images.unsplash.com/photo-1490730141103-6ac27d020028?auto=format&fit=crop&w=1400&q=80" alt="Light" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%8C%85%20Light%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3ENew%20mercies%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <img class="reveal" src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=1400&q=80" alt="Hope" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%92%9B%20Hope%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EHold%20fast%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <img class="reveal" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80" alt="Path" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%F0%9F%9B%A4%20Path%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EStep%20by%20step%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-          <img class="reveal" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80" alt="Mountains" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%221600%22%20height%3D%22900%22%20viewBox%3D%220%200%201600%20900%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b0f19%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232a1a47%22/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%22r%22%20cx%3D%2228%25%22%20cy%3D%2228%25%22%20r%3D%2275%25%22%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%22.30%22/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5c05b%22%20stop-opacity%3D%220%22/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%20%20%3Cfilter%20id%3D%22s%22%20x%3D%22-20%25%22%20y%3D%22-20%25%22%20width%3D%22140%25%22%20height%3D%22140%25%22%3E%0A%20%20%20%20%20%20%20%20%3CfeDropShadow%20dx%3D%220%22%20dy%3D%2218%22%20stdDeviation%3D%2224%22%20flood-color%3D%22%23000%22%20flood-opacity%3D%22.35%22/%3E%0A%20%20%20%20%20%20%3C/filter%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%221600%22%20height%3D%22900%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22520%22%20cy%3D%22260%22%20r%3D%22520%22%20fill%3D%22url%28%23r%29%22/%3E%0A%20%20%20%20%3Cg%20filter%3D%22url%28%23s%29%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%22120%22%20y%3D%22140%22%20width%3D%221360%22%20height%3D%22620%22%20rx%3D%2236%22%20fill%3D%22rgba%28255%2C255%2C255%2C.07%29%22%20stroke%3D%22rgba%28245%2C192%2C91%2C.22%29%22/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22330%22%20font-family%3D%22Montserrat%2C%20Arial%22%20font-size%3D%2286%22%20font-weight%3D%22800%22%20fill%3D%22%23f8fafc%22%3E%E2%9B%B0%20Mountains%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%22210%22%20y%3D%22415%22%20font-family%3D%22Playfair%20Display%2C%20Georgia%22%20font-size%3D%2242%22%20font-style%3D%22italic%22%20fill%3D%22%23f8fafc%22%20opacity%3D%22.85%22%3EFaith%20moves%3C/text%3E%0A%20%20%20%20%3C/svg%3E';" />
-        </div>
-
-        <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer"><img alt="Expanded view"></div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <h2 class="h2 reveal">Contact</h2>
-        <p class="sub reveal">Reach us anytime.</p>
-        <div class="grid cols-2">
-          <div class="card reveal"><div class="shine" aria-hidden="true"></div><div class="icon">✉</div><h3 style="margin:0 0 8px; font-family:'Playfair Display', serif">Email</h3><p style="margin:0; color:rgba(182,191,211,.96); font-weight:600"><a href="mailto:riju@rrjc.site">riju@rrjc.site</a></p></div>
-          <div class="card reveal"><div class="shine" aria-hidden="true"></div><div class="icon">🔗</div><h3 style="margin:0 0 8px; font-family:'Playfair Display', serif">Links</h3><p style="margin:0; color:rgba(182,191,211,.96); font-weight:600"><a href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">https://rrjc-site.github.io/RRJC.site/</a></p></div>
+        <p class="sub reveal">Moments of fellowship and joy captured in frames.</p>
+        <div class="gallery reveal">
+          <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=600&q=80" alt="Worship">
+          <img src="https://images.unsplash.com/photo-1510915361408-9b2c7248b52d?auto=format&fit=crop&w=600&q=80" alt="Bible Study">
+          <img src="https://images.unsplash.com/photo-1507643179173-61b0453d362b?auto=format&fit=crop&w=600&q=80" alt="Community">
+          <img src="https://images.unsplash.com/photo-1478147427282-58a87a120781?auto=format&fit=crop&w=600&q=80" alt="Prayer">
         </div>
       </div>
     </section>
 
-    <footer>
-      <div class="container">
-        <div class="foot reveal">
-          <p>“Fear not, for I am with you; be not dismayed, for I am your God.” — Isaiah 41:10</p>
-          <small>© 2025 RRJC | Riju Rincy Jolly in Christ · Built for His Glory.</small>
+    <section id="contact" class="section">
+      <div class="container" style="text-align:center;">
+        <h2 class="h2 reveal">Get in Touch</h2>
+        <p class="sub reveal" style="margin:0 auto 40px;">We would love to hear from you.</p>
+        
+        <div class="grid cols-3 reveal" style="text-align:left; max-width:900px; margin:0 auto;">
+          <div class="card">
+            <div class="icon">📍</div>
+            <h3>Visit Us</h3>
+            <p>123 Faith Avenue, Grace City</p>
+          </div>
+          <div class="card">
+            <div class="icon">📧</div>
+            <h3>Email</h3>
+            <p>riju@rrjc.site</p>
+          </div>
+          <div class="card">
+            <div class="icon">🔗</div>
+            <h3>Website</h3>
+            <p>rrjc-site.github.io/RRJC.site</p>
+          </div>
         </div>
       </div>
-    </footer>
+    </section>
   </main>
 
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 RRJC | Riju Rincy Jolly in Christ. Built for His Glory.</p>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox">
+    <img src="" alt="Zoomed Image">
+  </div>
+
   <script>
-    // Progress bar
-    (function(){
-      const bar = document.getElementById('progress');
-      const onScroll = () => {
-        const h = document.documentElement;
-        const sc = h.scrollTop || document.body.scrollTop;
-        const max = (h.scrollHeight - h.clientHeight) || 1;
-        bar.style.width = (sc / max) * 100 + '%';
-      };
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
-    })();
+    // Reveal Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add('active');
+      });
+    }, { threshold: 0.1 });
 
-    // Reveal
-    (function(){
-      const io = new IntersectionObserver((entries)=>{
-        for(const e of entries){
-          if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-        }
-      }, {threshold:.14});
-      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-    })();
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Card shine (visual only)
-    document.querySelectorAll('.card').forEach(card=>{
-      card.addEventListener('pointermove', (e)=>{
+    // Card Hover Effect (Mouse tracking)
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
         const r = card.getBoundingClientRect();
         const mx = ((e.clientX - r.left)/r.width)*100;
         const my = ((e.clientY - r.top)/r.height)*100;
@@ -386,7 +377,7 @@
       });
     });
 
-    // Lightbox
+    // Lightbox Logic
     (function(){
       const lb = document.getElementById('lightbox');
       const big = lb.querySelector('img');
@@ -398,26 +389,15 @@
       window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
     })();
 
-    // Count-up
-    (function(){
-      const nums = document.querySelectorAll('[data-count]');
-      const run = (el)=>{
-        const target = parseInt(el.getAttribute('data-count'), 10) || 0;
-        const dur = 900;
-        const t0 = performance.now();
-        const step = (t)=>{
-          const p = Math.min((t - t0)/dur, 1);
-          const eased = 1 - Math.pow(1-p, 3);
-          el.textContent = Math.round(target*eased);
-          if(p<1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-      };
-      const io = new IntersectionObserver((entries)=>{
-        for(const e of entries){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } }
-      }, {threshold:.85});
-      nums.forEach(n=>io.observe(n));
-    })();
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if(target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
+
 </body>
 </html>
