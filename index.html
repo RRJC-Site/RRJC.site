@@ -1,10 +1,11 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RRJC | Riju Rincy Jolly in Christ</title>
-  <meta name="description" content="RRJC — Bible Word source and amazing worship." />
+  <meta name="description" content="RRJC — Bible Word Source & Amazing Worship. Digital resources for study and devotion." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,232 +13,606 @@
 
   <style>
     :root{
-      --bg0:#0b0f19;
+      --bg0:#0a0e18;
       --bg1:#0f1626;
-      --surface:rgba(255,255,255,.06);
-      --surface2:rgba(255,255,255,.08);
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.09);
       --stroke:rgba(255,255,255,.10);
+      --stroke2:rgba(245,192,91,.28);
       --text:#eef2ff;
       --muted:#b6bfd3;
       --gold:#f5c05b;
       --gold2:#d8a84a;
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --shadow2: 0 8px 32px rgba(0,0,0,.3);
+      --shadow: 0 18px 50px rgba(0,0,0,.50);
+      --shadow2: 0 10px 24px rgba(0,0,0,.40);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1180px;
+      --navH: 76px;
     }
 
-    /* GLOBAL */
-    *{ margin:0; padding:0; box-sizing:border-box; }
+    /* --- Base --- */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
-      background: var(--bg0);
-      color: var(--text);
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    a{ color: inherit; text-decoration: none; transition: .3s ease; }
-    ul{ list-style: none; }
-    img{ max-width: 100%; height: auto; display: block; }
-
-    .container{ max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    .section{ padding: 100px 0; position: relative; }
-    
-    .h2{
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      margin-bottom: 24px;
-      line-height: 1.1;
-      font-weight: 700;
-    }
-    .sub{
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 600px;
-      margin-bottom: 48px;
-      font-weight: 400;
+      margin:0;
+      color:var(--text);
+      font-family:Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 12% 10%, rgba(245,192,91,.12), transparent 60%),
+        radial-gradient(1000px 700px at 90% 0%, rgba(120,86,180,.22), transparent 60%),
+        radial-gradient(900px 600px at 55% 110%, rgba(52,195,255,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      background-attachment: fixed;
+      overflow-x:hidden;
     }
 
-    /* NAV */
+    /* Separate fixed layers (no overlap, no scroll height) */
+    .bg-layer, .grain-layer{position:fixed; inset:0; pointer-events:none;}
+    .bg-layer{z-index:-2; opacity:.95;
+      background:
+        radial-gradient(700px 520px at 25% 85%, rgba(255,111,174,.08), transparent 60%),
+        radial-gradient(900px 540px at 85% 35%, rgba(245,192,91,.10), transparent 60%);
+    }
+    .grain-layer{z-index:-1; opacity:.18; mix-blend-mode:overlay;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0, rgba(255,255,255,.03) 1px, transparent 1px, transparent 3px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0, rgba(255,255,255,.02) 1px, transparent 1px, transparent 4px);
+    }
+
+    a{color:inherit; text-decoration:none}
+    a:hover{color:var(--gold)}
+
+    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+    section{padding:88px 0}
+
+    /* --- Top verse strip --- */
+    .top-verse{
+      position:relative; z-index:50;
+      text-align:center;
+      padding:12px 16px;
+      font-family:'Playfair Display', serif;
+      background: linear-gradient(90deg, rgba(245,192,91,.14), rgba(120,86,180,.18), rgba(245,192,91,.10));
+      border-bottom:1px solid rgba(255,255,255,.10);
+      color: rgba(238,242,255,.96);
+    }
+    .top-verse b{color:var(--gold)}
+
+    /* --- Nav --- */
     header{
-      position: fixed; top:0; left:0; width:100%; z-index:1000;
-      padding: 20px 0;
-      background: linear-gradient(to bottom, var(--bg0), transparent);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--stroke);
+      position:sticky;
+      top:0;
+      z-index:60;
+      backdrop-filter: blur(12px) saturate(140%);
+      background: rgba(10,14,24,.70);
+      border-bottom:1px solid rgba(255,255,255,.10);
     }
-    .nav-flex{ display: flex; justify-content: space-between; align-items: center; }
-    .logo{ font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--gold); }
-    nav a{ margin-left: 30px; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-    nav a:hover, nav a.active{ color: var(--gold); }
-
-    /* GRID & CARDS */
-    .grid{ display: grid; gap: 30px; }
-    .cols-2{ grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-    
-    .card{
-      background: var(--surface);
-      border: 1px solid var(--stroke);
-      padding: 40px;
-      border-radius: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: transform .4s cubic-bezier(0.165, 0.84, 0.44, 1), background .3s;
+    .nav{
+      height: var(--navH);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
-    .card:hover{ transform: translateY(-10px); background: var(--surface2); }
-    .card .icon{ font-size: 2.5rem; margin-bottom: 20px; display: block; }
-
-    /* FOLDER & FILE STYLES */
-    details > summary {
-      list-style: none;
-      cursor: pointer;
-      outline: none;
+    .brand{display:flex; align-items:center; gap:12px}
+    .mark{
+      width:44px; height:44px; border-radius:14px;
+      display:grid; place-items:center;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.62), rgba(255,255,255,0) 40%),
+        linear-gradient(135deg, rgba(245,192,91,.95), rgba(120,86,180,.92));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      flex:0 0 auto;
     }
-    details > summary::-webkit-details-marker { display: none; }
-    
-    .folder-content {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid var(--stroke);
-      animation: fadeIn 0.5s ease;
-    }
-    .file-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 8px;
-      margin-bottom: 8px;
-      transition: background 0.3s;
-    }
-    .file-row:hover { background: rgba(255,255,255,0.08); }
-    .file-name { font-size: 0.85rem; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 10px; overflow-wrap: anywhere; max-width: 70%;}
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* BUTTONS */
-    .btn{
-      display: inline-block;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.9rem;
+    .mark span{font-weight:900; color:#1b132c}
+    .brand-title{font-family:'Playfair Display', serif; letter-spacing:.2px; font-size:1.05rem}
+    nav{display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end}
+    nav a{
+      font-weight:800;
+      color:rgba(238,242,255,.90);
+      padding:10px 12px;
+      border-radius:12px;
+      position:relative;
+      transition: background .2s ease, color .2s ease;
       text-transform: uppercase;
       letter-spacing: 1px;
-      cursor: pointer;
-      border: none;
+      font-size:.82rem;
     }
-    .btn.primary{ background: var(--gold); color: var(--bg0); }
-    .btn.ghost{ border: 1px solid var(--stroke); color: var(--text); background:transparent;}
-    .btn.ghost:hover{ border-color: var(--gold); color: var(--gold); }
-    .btn-sm { padding: 6px 12px; font-size: 0.7rem; }
+    nav a:hover{background:rgba(255,255,255,.06)}
+    nav a.active{color:var(--gold)}
+    nav a.active::after{
+      content:"";
+      position:absolute;
+      left:12px; right:12px; bottom:6px;
+      height:2px;
+      background:linear-gradient(90deg, var(--gold), rgba(245,192,91,0));
+    }
 
-    /* REVEAL */
-    .reveal{ opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1); }
-    .reveal.active{ opacity: 1; transform: translateY(0); }
+    /* --- Hero --- */
+    .hero{position:relative; isolation:isolate; padding-top:28px}
+    .hero-media{position:absolute; inset:0; z-index:-1; overflow:hidden}
+    .hero-media img{width:100%; height:100%; object-fit:cover; opacity:.18; transform:scale(1.05); filter:contrast(1.05) saturate(.9)}
+    .hero-media::before{content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(10,14,24,.55), rgba(10,14,24,.92));}
 
-    footer{ padding: 60px 0; border-top: 1px solid var(--stroke); text-align: center; color: var(--muted); font-size: 0.9rem; }
+    .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:34px; align-items:center}
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      nav{justify-content:flex-start}
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow2);
+      width:max-content;
+      font-weight:800;
+    }
+    .kicker .dot{width:10px; height:10px; border-radius:999px; background: linear-gradient(135deg, var(--gold), rgba(120,86,180,.9))}
+
+    h1{
+      font-family:'Playfair Display', serif;
+      font-size: clamp(34px, 5vw, 66px);
+      line-height:1.05;
+      margin:14px 0 12px;
+    }
+    .lede{color:rgba(182,191,211,.96); max-width:64ch; font-weight:600; margin:0 0 18px}
+
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:900;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow2);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{transform: translateY(-2px); box-shadow: 0 20px 55px rgba(0,0,0,.55)}
+    .btn.primary{background: linear-gradient(135deg, var(--gold), var(--gold2)); color:#24180a; border-color: transparent}
+    .btn.ghost{background: rgba(255,255,255,.06)}
+
+    .meta{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-top:18px}
+    @media (max-width:780px){.meta{grid-template-columns:1fr}}
+    .pill{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:14px}
+    .pill b{color:var(--gold); font-size:1.25rem}
+    .pill span{display:block; margin-top:6px; color:rgba(182,191,211,.96); font-weight:700}
+
+    /* Right panel */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:22px;
+    }
+    .panel h2{
+      font-family:'Playfair Display', serif;
+      margin:0 0 10px;
+      font-size: clamp(22px, 3vw, 34px);
+    }
+    .ref{display:inline-flex; margin-top:10px; padding:7px 10px; border-radius:999px; background: rgba(245,192,91,.14); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-weight:900; font-size:.82rem; letter-spacing:.3px}
+
+    /* --- Section headings --- */
+    .h2{font-family:'Playfair Display', serif; font-size:clamp(26px, 3.6vw, 44px); margin:0 0 10px}
+    .sub{margin:0 0 26px; color:rgba(182,191,211,.96); font-weight:700; max-width:70ch}
+
+    /* --- Resource cards / folders --- */
+    .grid{display:grid; gap:18px}
+    .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
+    @media (max-width:980px){.grid.cols-2{grid-template-columns:1fr}}
+
+    .card{
+      position:relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius2);
+      padding:22px;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .card:hover{transform: translateY(-6px); box-shadow: 0 26px 70px rgba(0,0,0,.55); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));}
+
+    /* Shine (purely visual) */
+    .card .shine{position:absolute; inset:-1px; background: radial-gradient(280px 160px at var(--mx, 0%) var(--my, 0%), rgba(245,192,91,.18), transparent 65%); pointer-events:none}
+
+    details{border-radius: var(--radius2)}
+    details > summary{list-style:none; cursor:pointer}
+    details > summary::-webkit-details-marker{display:none}
+
+    .folder-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+    .folder-left{display:flex; gap:14px; align-items:flex-start}
+    .folder-ico{width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background: rgba(245,192,91,.14); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-size:22px; flex:0 0 auto}
+    .folder-title{margin:0; font-family:'Playfair Display', serif; font-size:1.35rem}
+    .folder-hint{margin:4px 0 0; color:rgba(182,191,211,.96); font-weight:600; font-size:.95rem}
+
+    .chev{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); transition: transform .2s ease}
+    details[open] .chev{transform: rotate(180deg)}
+
+    .folder-content{margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,.10); display:grid; gap:10px}
+
+    .file-row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px; border-radius:14px; background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); transition: background .2s ease, border .2s ease}
+    .file-row:hover{background: rgba(255,255,255,.06); border-color: rgba(245,192,91,.18)}
+    .file-name{display:flex; align-items:center; gap:10px; font-weight:600; color:rgba(238,242,255,.96); font-size:.93rem; min-width:0}
+    .file-name span{color:rgba(182,191,211,.96); font-weight:700}
+    .file-name .wrap{overflow-wrap:anywhere}
+
+    .btn-sm{padding:8px 12px; border-radius:12px; font-size:.78rem; font-weight:900; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04)}
+    .btn-sm:hover{border-color: rgba(245,192,91,.28)}
+
+    /* --- Verse cards (always styled / no photos) --- */
+    .verse-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px}
+    @media (max-width:980px){.verse-grid{grid-template-columns:1fr}}
+
+    .verse-card{
+      position:relative;
+      padding:22px;
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(560px 240px at 20% 10%, rgba(245,192,91,.14), transparent 60%),
+        radial-gradient(560px 240px at 90% 30%, rgba(120,86,180,.22), transparent 60%),
+        rgba(255,255,255,.05);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .verse-card h3{margin:0 0 6px; font-family:'Playfair Display', serif; font-size:1.35rem}
+    .verse-card p{margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600}
+    .verse-card .ref{margin-top:12px}
+    .verse-mark{position:absolute; right:14px; top:14px; width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background: rgba(245,192,91,.12); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-size:22px}
+
+    /* --- Contact cards --- */
+    .contact-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px}
+    @media (max-width:980px){.contact-grid{grid-template-columns:1fr}}
+
+    /* --- Footer --- */
+    footer{padding:54px 0 74px; border-top:1px solid rgba(255,255,255,.10)}
+    .foot{
+      text-align:center;
+      padding:24px;
+      border-radius:22px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow2);
+      color:rgba(182,191,211,.96);
+      font-weight:700;
+    }
+    .foot p{margin:0 0 10px; font-family:'Playfair Display', serif; font-size:1.15rem; color:rgba(238,242,255,.96)}
+
+    /* --- Reveal animation --- */
+    .reveal{opacity:0; transform: translateY(16px); transition: opacity .85s ease, transform .85s ease}
+    .reveal.in{opacity:1; transform:none}
+
+    /* --- Progress bar --- */
+    .progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--gold), rgba(120,86,180,.9)); z-index:99}
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .reveal{transition:none}
+      .btn,.card{transition:none}
+    }
   </style>
 </head>
+
 <body>
+  <div class="bg-layer" aria-hidden="true"></div>
+  <div class="grain-layer" aria-hidden="true"></div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <div class="top-verse">
+    “He is the Rock, his works are perfect, and all his ways are just.” — <b>Deuteronomy 32:4</b>
+  </div>
 
   <header>
-    <div class="container nav-flex">
-      <div class="logo">RRJC</div>
+    <div class="container nav">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"><span>✚</span></div>
+        <div class="brand-title">RRJC | Riju Rincy Jolly in Christ</div>
+      </div>
       <nav aria-label="Primary">
-        <a href="#hero">Home</a>
-        <a href="#resources">Resources</a> 
-        <a href="#contact">Contact</a>
+        <a href="#home" class="navlink">Home</a>
+        <a href="#resources" class="navlink">Resources</a>
+        <a href="#word" class="navlink">Bible Word</a>
+        <a href="#worship" class="navlink">Worship</a>
+        <a href="#contact" class="navlink">Contact</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section id="hero" class="section" style="padding-top:200px; text-align:center;">
-      <div class="container">
-        <h1 class="h2 reveal">Riju Rincy Jolly in Christ</h1>
-        <p class="sub reveal" style="margin: 0 auto 40px;">Spreading the Word through digital resources.</p>
+    <!-- HERO -->
+    <section id="home" class="hero" style="padding-top: 44px;">
+      <div class="hero-media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=2400&q=80" alt="" />
+      </div>
+
+      <div class="container hero-grid">
         <div class="reveal">
-          <a href="#resources" class="btn primary">Browse Library</a>
+          <div class="kicker"><span class="dot"></span> Welcome Beloved</div>
+          <h1>Bible Word Source &amp; Amazing Worship</h1>
+          <p class="lede">Explore a premium, organized library of study notes and resources—designed for clarity, devotion, and a calm viewing experience.</p>
+
+          <div class="cta">
+            <a class="btn primary" href="#resources">Browse Library</a>
+            <a class="btn ghost" href="#word">Bible Word</a>
+            <a class="btn ghost" href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">Visit Website</a>
+          </div>
+
+          <div class="meta">
+            <div class="pill"><b data-count="2">0</b><span>Resource folders</span></div>
+            <div class="pill"><b data-count="4">0</b><span>Worship videos</span></div>
+            <div class="pill"><b data-count="3">0</b><span>Featured verses</span></div>
+          </div>
         </div>
+
+        <aside class="panel reveal">
+          <h2>Today’s Verse</h2>
+          <p style="margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600">“Peace I leave with you; my peace I give you.”</p>
+          <span class="ref">John 14:27</span>
+          <div style="height:16px"></div>
+          <p style="margin:0; color:rgba(182,191,211,.96); font-weight:600">Tip: Open a folder to view files. Click “View” to open documents in a new tab.</p>
+        </aside>
       </div>
     </section>
 
-    <section id="resources" class="section">
+    <!-- RESOURCES -->
+    <section id="resources">
       <div class="container">
         <h2 class="h2 reveal">Resources</h2>
-        <p class="sub reveal">Click on the folders below to access the documents.</p>
+        <p class="sub reveal">Click a folder to reveal documents. Everything is structured, responsive, and styled for a premium look.</p>
 
         <div class="grid cols-2">
-            
-            <article class="card reveal">
-                <details>
-                    <summary>
-                        <div class="icon">📁</div>
-                        <h3 style="display:inline-block; margin:0;">Bible Studies</h3>
-                        <p style="margin:0; font-size:0.8rem; color:var(--gold);">Open Folder</p>
-                    </summary>
-                    <div class="folder-content">
-                        <div class="file-row">
-                            <div class="file-name">📄 Genesis 1-11 Full</div>
-                            <a href="Documents/genesis_1-11_full.pdf" target="_blank" class="btn ghost btn-sm">View</a>
-                        </div>
-                        <div class="file-row">
-                            <div class="file-name">📄 Joshua, Judges, Ruth</div>
-                            <a href="Documents/the-books-of-joshua-judgesand-ruth.pdf" target="_blank" class="btn ghost btn-sm">View</a>
-                        </div>
+          <article class="card reveal">
+            <div class="shine" aria-hidden="true"></div>
+            <details>
+              <summary>
+                <div class="folder-head">
+                  <div class="folder-left">
+                    <div class="folder-ico" aria-hidden="true">📁</div>
+                    <div>
+                      <h3 class="folder-title">Bible Studies</h3>
+                      <p class="folder-hint">Open folder</p>
                     </div>
-                </details>
-            </article>
+                  </div>
+                  <div class="chev" aria-hidden="true">▾</div>
+                </div>
+              </summary>
 
-            <article class="card reveal">
-                <details>
-                    <summary>
-                        <div class="icon">📁</div>
-                        <h3 style="display:inline-block; margin:0;">Sermon Notes</h3>
-                        <p style="margin:0; font-size:0.8rem; color:var(--gold);">Open Folder</p>
-                    </summary>
-                    <div class="folder-content">
-                        <div class="file-row">
-                            <div class="file-name">📄 Isaiah 61:10 (2008)</div>
-                            <a href="Documents/December_14_2008_Isaiah61_10.pdf" target="_blank" class="btn ghost btn-sm">View</a>
-                        </div>
-                        <div class="file-row">
-                            <div class="file-name">📄 Parable of Moneylender</div>
-                            <a href="Documents/The-Parable-of-the-Moneylender-Pharisee-and-Tax-Collector-sermon-notes.pdf" target="_blank" class="btn ghost btn-sm">View</a>
-                        </div>
+              <div class="folder-content">
+                <div class="file-row">
+                  <div class="file-name"><span>📄</span><div class="wrap">Genesis 1–11 Full</div></div>
+                  <a class="btn-sm" href="Documents/genesis_1-11_full.pdf" target="_blank" rel="noopener">View</a>
+                </div>
+                <div class="file-row">
+                  <div class="file-name"><span>📄</span><div class="wrap">Joshua, Judges, Ruth</div></div>
+                  <a class="btn-sm" href="Documents/the-books-of-joshua-judgesand-ruth.pdf" target="_blank" rel="noopener">View</a>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <article class="card reveal">
+            <div class="shine" aria-hidden="true"></div>
+            <details>
+              <summary>
+                <div class="folder-head">
+                  <div class="folder-left">
+                    <div class="folder-ico" aria-hidden="true">📁</div>
+                    <div>
+                      <h3 class="folder-title">Sermon Notes</h3>
+                      <p class="folder-hint">Open folder</p>
                     </div>
-                </details>
-            </article>
+                  </div>
+                  <div class="chev" aria-hidden="true">▾</div>
+                </div>
+              </summary>
 
+              <div class="folder-content">
+                <div class="file-row">
+                  <div class="file-name"><span>📄</span><div class="wrap">Isaiah 61:10 (2008)</div></div>
+                  <a class="btn-sm" href="Documents/December_14_2008_Isaiah61_10.pdf" target="_blank" rel="noopener">View</a>
+                </div>
+                <div class="file-row">
+                  <div class="file-name"><span>📄</span><div class="wrap">Parable of the Moneylender</div></div>
+                  <a class="btn-sm" href="Documents/The-Parable-of-the-Moneylender-Pharisee-and-Tax-Collector-sermon-notes.pdf" target="_blank" rel="noopener">View</a>
+                </div>
+              </div>
+            </details>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <div class="container" style="text-align:center;">
-        <h2 class="h2 reveal">Contact</h2>
-        <p class="sub" style="margin:0 auto;">Reach out for inquiries or prayer.</p>
+    <!-- BIBLE WORD (styled verse cards, no photos) -->
+    <section id="word">
+      <div class="container">
+        <h2 class="h2 reveal">Bible Word</h2>
+        <p class="sub reveal">Always clean, premium verse cards (no external images). These load instantly and look consistent.</p>
+
+        <div class="verse-grid">
+          <div class="verse-card reveal">
+            <div class="verse-mark" aria-hidden="true">🕊</div>
+            <h3>Prince of Peace</h3>
+            <p>“Peace I leave with you; my peace I give you.”</p>
+            <span class="ref">John 14:27</span>
+          </div>
+          <div class="verse-card reveal">
+            <div class="verse-mark" aria-hidden="true">🐑</div>
+            <h3>The Good Shepherd</h3>
+            <p>“I know my sheep and my sheep know me.”</p>
+            <span class="ref">John 10:14</span>
+          </div>
+          <div class="verse-card reveal">
+            <div class="verse-mark" aria-hidden="true">👑</div>
+            <h3>King of Kings</h3>
+            <p>“KING OF KINGS.”</p>
+            <span class="ref">Revelation 19:16</span>
+          </div>
+        </div>
       </div>
     </section>
+
+    <!-- WORSHIP (videos) -->
+    <section id="worship">
+      <div class="container">
+        <h2 class="h2 reveal">Amazing Worship</h2>
+        <p class="sub reveal">Playable worship videos (YouTube). Requires internet access.</p>
+
+        <div class="grid cols-2">
+          <div class="card reveal" style="padding:0">
+            <div class="shine" aria-hidden="true"></div>
+            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
+              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/9SeQKSWAAK8" title="Worship video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
+            </div>
+          </div>
+          <div class="card reveal" style="padding:0">
+            <div class="shine" aria-hidden="true"></div>
+            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
+              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/zvoq7SL_BXg" title="Worship video 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
+            </div>
+          </div>
+          <div class="card reveal" style="padding:0">
+            <div class="shine" aria-hidden="true"></div>
+            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
+              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/kw-FIy8Shk0" title="Worship video 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
+            </div>
+          </div>
+          <div class="card reveal" style="padding:0">
+            <div class="shine" aria-hidden="true"></div>
+            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
+              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/rEfKzlE5XAQ" title="Worship video 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="h2 reveal">Contact</h2>
+        <p class="sub reveal">Reach out for inquiries or prayer.</p>
+
+        <div class="contact-grid">
+          <div class="card reveal">
+            <div class="shine" aria-hidden="true"></div>
+            <div class="folder-left">
+              <div class="folder-ico" aria-hidden="true">✉</div>
+              <div>
+                <h3 class="folder-title" style="margin:0">Email</h3>
+                <p class="folder-hint" style="margin-top:6px"><a href="mailto:riju@rrjc.site">riju@rrjc.site</a></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="shine" aria-hidden="true"></div>
+            <div class="folder-left">
+              <div class="folder-ico" aria-hidden="true">🔗</div>
+              <div>
+                <h3 class="folder-title" style="margin:0">Links</h3>
+                <p class="folder-hint" style="margin-top:6px"><a href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">https://rrjc-site.github.io/RRJC.site/</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="foot reveal">
+          <p>“Fear not, for I am with you; be not dismayed, for I am your God.” — Isaiah 41:10</p>
+          <small>© 2026 RRJC | Riju Rincy Jolly in Christ · Built for His Glory.</small>
+        </div>
+      </div>
+    </footer>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 RRJC. All rights reserved.</p>
-    </div>
-  </footer>
-
   <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) entry.target.classList.add('active');
+    // Progress bar
+    (function(){
+      const bar = document.getElementById('progress');
+      const onScroll = () => {
+        const h = document.documentElement;
+        const sc = h.scrollTop || document.body.scrollTop;
+        const max = (h.scrollHeight - h.clientHeight) || 1;
+        bar.style.width = (sc / max) * 100 + '%';
+      };
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    })();
+
+    // Reveal animations
+    (function(){
+      const io = new IntersectionObserver((entries)=>{
+        for(const e of entries){
+          if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+        }
+      }, {threshold:.14});
+      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    })();
+
+    // Card shine follow
+    document.querySelectorAll('.card').forEach(card=>{
+      card.addEventListener('pointermove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const mx = ((e.clientX - r.left)/r.width)*100;
+        const my = ((e.clientY - r.top)/r.height)*100;
+        card.style.setProperty('--mx', mx+'%');
+        card.style.setProperty('--my', my+'%');
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+
+    // Count-up (optional polish)
+    (function(){
+      const nums = document.querySelectorAll('[data-count]');
+      const run = (el)=>{
+        const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        const dur = 900;
+        const t0 = performance.now();
+        const step = (t)=>{
+          const p = Math.min((t - t0)/dur, 1);
+          const eased = 1 - Math.pow(1-p, 3);
+          el.textContent = Math.round(target*eased);
+          if(p<1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+      const io = new IntersectionObserver((entries)=>{
+        for(const e of entries){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } }
+      }, {threshold:.85});
+      nums.forEach(n=>io.observe(n));
+    })();
+
+    // Active nav link (scrollspy)
+    (function(){
+      const links = Array.from(document.querySelectorAll('.navlink'));
+      const ids = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            const id = '#' + e.target.id;
+            links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
+          }
+        });
+      }, {rootMargin: '-55% 0px -40% 0px', threshold: 0});
+      ids.forEach(sec=>io.observe(sec));
+    })();
+
+    // Make only one folder open at a time (premium UX)
+    (function(){
+      const folders = document.querySelectorAll('details');
+      folders.forEach(d => d.addEventListener('toggle', () => {
+        if(d.open){ folders.forEach(o => { if(o !== d) o.open = false; }); }
+      }));
+    })();
   </script>
 </body>
 </html>
