@@ -13,8 +13,8 @@
 
   <style>
     :root{
-      --bg0:#0a0e18;
-      --bg1:#0f1626;
+      --bg0:#070b14;
+      --bg1:#0c1426;
       --panel:rgba(255,255,255,.06);
       --panel2:rgba(255,255,255,.09);
       --stroke:rgba(255,255,255,.10);
@@ -23,12 +23,15 @@
       --muted:#b6bfd3;
       --gold:#f5c05b;
       --gold2:#d8a84a;
-      --shadow: 0 18px 50px rgba(0,0,0,.50);
-      --shadow2: 0 10px 24px rgba(0,0,0,.40);
+      --violet:#7a5cff;
+      --cyan:#34c3ff;
+      --pink:#ff6fae;
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --shadow2: 0 10px 24px rgba(0,0,0,.42);
       --radius: 18px;
       --radius2: 24px;
       --max: 1180px;
-      --navH: 76px;
+      --navH: 78px;
     }
 
     /* --- Base --- */
@@ -40,31 +43,49 @@
       font-family:Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
       background:
         radial-gradient(1200px 700px at 12% 10%, rgba(245,192,91,.12), transparent 60%),
-        radial-gradient(1000px 700px at 90% 0%, rgba(120,86,180,.22), transparent 60%),
+        radial-gradient(1000px 700px at 90% 0%, rgba(122,92,255,.22), transparent 60%),
         radial-gradient(900px 600px at 55% 110%, rgba(52,195,255,.10), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       background-attachment: fixed;
       overflow-x:hidden;
     }
 
-    /* Separate fixed layers (no overlap, no scroll height) */
-    .bg-layer, .grain-layer{position:fixed; inset:0; pointer-events:none;}
-    .bg-layer{z-index:-2; opacity:.95;
-      background:
-        radial-gradient(700px 520px at 25% 85%, rgba(255,111,174,.08), transparent 60%),
-        radial-gradient(900px 540px at 85% 35%, rgba(245,192,91,.10), transparent 60%);
+    /* Fixed ambient layers (never overlap content) */
+    .bg-layer,.grain-layer,.glow-ring{
+      position:fixed; inset:0; pointer-events:none;
     }
-    .grain-layer{z-index:-1; opacity:.18; mix-blend-mode:overlay;
+    .bg-layer{z-index:-4; opacity:.95;
+      background:
+        radial-gradient(760px 520px at 20% 88%, rgba(255,111,174,.08), transparent 60%),
+        radial-gradient(900px 540px at 85% 35%, rgba(245,192,91,.10), transparent 60%),
+        radial-gradient(760px 520px at 65% 20%, rgba(52,195,255,.08), transparent 62%);
+      animation: driftBg 18s ease-in-out infinite;
+    }
+    @keyframes driftBg{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-12px,0)}}
+
+    .grain-layer{z-index:-3; opacity:.16; mix-blend-mode:overlay;
       background-image:
         repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0, rgba(255,255,255,.03) 1px, transparent 1px, transparent 3px),
         repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0, rgba(255,255,255,.02) 1px, transparent 1px, transparent 4px);
     }
 
+    .glow-ring{z-index:-2; opacity:.65;
+      background:
+        radial-gradient(600px 360px at 50% 15%, rgba(245,192,91,.16), transparent 65%),
+        conic-gradient(from 180deg at 50% 50%, rgba(245,192,91,.15), rgba(122,92,255,.14), rgba(52,195,255,.12), rgba(255,111,174,.10), rgba(245,192,91,.15));
+      filter: blur(70px);
+      animation: spinRing 22s linear infinite;
+      transform: translateZ(0);
+    }
+    @keyframes spinRing{to{transform:rotate(360deg)}}
+
+    header, main, footer{position:relative; z-index:1}
+
     a{color:inherit; text-decoration:none}
     a:hover{color:var(--gold)}
 
     .container{max-width:var(--max); margin:0 auto; padding:0 20px}
-    section{padding:88px 0}
+    section{padding:92px 0}
 
     /* --- Top verse strip --- */
     .top-verse{
@@ -72,7 +93,7 @@
       text-align:center;
       padding:12px 16px;
       font-family:'Playfair Display', serif;
-      background: linear-gradient(90deg, rgba(245,192,91,.14), rgba(120,86,180,.18), rgba(245,192,91,.10));
+      background: linear-gradient(90deg, rgba(245,192,91,.14), rgba(122,92,255,.14), rgba(245,192,91,.10));
       border-bottom:1px solid rgba(255,255,255,.10);
       color: rgba(238,242,255,.96);
     }
@@ -84,7 +105,7 @@
       top:0;
       z-index:60;
       backdrop-filter: blur(12px) saturate(140%);
-      background: rgba(10,14,24,.70);
+      background: rgba(7,11,20,.70);
       border-bottom:1px solid rgba(255,255,255,.10);
     }
     .nav{
@@ -100,13 +121,14 @@
       display:grid; place-items:center;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.62), rgba(255,255,255,0) 40%),
-        linear-gradient(135deg, rgba(245,192,91,.95), rgba(120,86,180,.92));
+        linear-gradient(135deg, rgba(245,192,91,.95), rgba(122,92,255,.92));
       border:1px solid rgba(255,255,255,.10);
       box-shadow: 0 16px 40px rgba(0,0,0,.45);
       flex:0 0 auto;
     }
     .mark span{font-weight:900; color:#1b132c}
     .brand-title{font-family:'Playfair Display', serif; letter-spacing:.2px; font-size:1.05rem}
+
     nav{display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end}
     nav a{
       font-weight:800;
@@ -132,8 +154,10 @@
     /* --- Hero --- */
     .hero{position:relative; isolation:isolate; padding-top:28px}
     .hero-media{position:absolute; inset:0; z-index:-1; overflow:hidden}
-    .hero-media img{width:100%; height:100%; object-fit:cover; opacity:.18; transform:scale(1.05); filter:contrast(1.05) saturate(.9)}
-    .hero-media::before{content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(10,14,24,.55), rgba(10,14,24,.92));}
+    .hero-media img{width:100%; height:100%; object-fit:cover; opacity:.18; transform:scale(1.06); filter:contrast(1.05) saturate(.9)}
+    .hero-media::before{content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(7,11,20,.58), rgba(7,11,20,.93));}
+
+    #particles{position:absolute; inset:0; width:100%; height:100%; z-index:-1; opacity:.65}
 
     .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:34px; align-items:center}
     @media (max-width: 980px){
@@ -153,7 +177,7 @@
       width:max-content;
       font-weight:800;
     }
-    .kicker .dot{width:10px; height:10px; border-radius:999px; background: linear-gradient(135deg, var(--gold), rgba(120,86,180,.9))}
+    .kicker .dot{width:10px; height:10px; border-radius:999px; background: linear-gradient(135deg, var(--gold), rgba(122,92,255,.9))}
 
     h1{
       font-family:'Playfair Display', serif;
@@ -176,6 +200,18 @@
     .btn:hover{transform: translateY(-2px); box-shadow: 0 20px 55px rgba(0,0,0,.55)}
     .btn.primary{background: linear-gradient(135deg, var(--gold), var(--gold2)); color:#24180a; border-color: transparent}
     .btn.ghost{background: rgba(255,255,255,.06)}
+
+    /* Button glow pulse */
+    .btn.primary{position:relative; overflow:hidden}
+    .btn.primary::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background: conic-gradient(from 180deg, rgba(255,255,255,.0), rgba(255,255,255,.45), rgba(255,255,255,0));
+      opacity:.25;
+      animation: sheen 2.8s ease-in-out infinite;
+      transform: translateX(-45%);
+    }
+    @keyframes sheen{0%,100%{transform:translateX(-55%)}50%{transform:translateX(55%)}}
 
     .meta{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-top:18px}
     @media (max-width:780px){.meta{grid-template-columns:1fr}}
@@ -215,14 +251,30 @@
       padding:22px;
       box-shadow: var(--shadow2);
       overflow:hidden;
+      transform-style:preserve-3d;
       transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
     }
-    .card:hover{transform: translateY(-6px); box-shadow: 0 26px 70px rgba(0,0,0,.55); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));}
+    .card:hover{box-shadow: 0 26px 70px rgba(0,0,0,.55); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));}
+
+    /* Animated border glow */
+    .card::before{
+      content:"";
+      position:absolute; inset:0;
+      padding:1px;
+      border-radius: var(--radius2);
+      background: conic-gradient(from 210deg, rgba(245,192,91,.22), rgba(122,92,255,.20), rgba(52,195,255,.14), rgba(245,192,91,.22));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity:.0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+    .card:hover::before{opacity:.9}
 
     /* Shine (purely visual) */
-    .card .shine{position:absolute; inset:-1px; background: radial-gradient(280px 160px at var(--mx, 0%) var(--my, 0%), rgba(245,192,91,.18), transparent 65%); pointer-events:none}
+    .card .shine{position:absolute; inset:-1px; background: radial-gradient(280px 160px at var(--mx, 0%) var(--my, 0%), rgba(245,192,91,.20), transparent 65%); pointer-events:none}
 
-    details{border-radius: var(--radius2)}
     details > summary{list-style:none; cursor:pointer}
     details > summary::-webkit-details-marker{display:none}
 
@@ -235,10 +287,13 @@
     .chev{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); transition: transform .2s ease}
     details[open] .chev{transform: rotate(180deg)}
 
-    .folder-content{margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,.10); display:grid; gap:10px}
+    /* Smooth open animation */
+    .folder-content{margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,.10); display:grid; gap:10px; animation: folderIn .35s ease both}
+    details:not([open]) .folder-content{display:none}
+    @keyframes folderIn{from{opacity:0; transform:translateY(-8px)}to{opacity:1; transform:none}}
 
-    .file-row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px; border-radius:14px; background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); transition: background .2s ease, border .2s ease}
-    .file-row:hover{background: rgba(255,255,255,.06); border-color: rgba(245,192,91,.18)}
+    .file-row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px; border-radius:14px; background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); transition: background .2s ease, border .2s ease, transform .2s ease}
+    .file-row:hover{background: rgba(255,255,255,.06); border-color: rgba(245,192,91,.18); transform: translateY(-1px)}
     .file-name{display:flex; align-items:center; gap:10px; font-weight:600; color:rgba(238,242,255,.96); font-size:.93rem; min-width:0}
     .file-name span{color:rgba(182,191,211,.96); font-weight:700}
     .file-name .wrap{overflow-wrap:anywhere}
@@ -257,10 +312,18 @@
       border:1px solid rgba(255,255,255,.10);
       background:
         radial-gradient(560px 240px at 20% 10%, rgba(245,192,91,.14), transparent 60%),
-        radial-gradient(560px 240px at 90% 30%, rgba(120,86,180,.22), transparent 60%),
+        radial-gradient(560px 240px at 90% 30%, rgba(122,92,255,.22), transparent 60%),
         rgba(255,255,255,.05);
       box-shadow: var(--shadow2);
       overflow:hidden;
+      transform-style:preserve-3d;
+    }
+    .verse-card::after{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(400px 180px at var(--mx, 30%) var(--my, 20%), rgba(52,195,255,.12), transparent 65%);
+      opacity:.8;
+      pointer-events:none;
     }
     .verse-card h3{margin:0 0 6px; font-family:'Playfair Display', serif; font-size:1.35rem}
     .verse-card p{margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600}
@@ -286,16 +349,20 @@
     .foot p{margin:0 0 10px; font-family:'Playfair Display', serif; font-size:1.15rem; color:rgba(238,242,255,.96)}
 
     /* --- Reveal animation --- */
-    .reveal{opacity:0; transform: translateY(16px); transition: opacity .85s ease, transform .85s ease}
+    .reveal{opacity:0; transform: translateY(18px); transition: opacity .9s ease, transform .9s ease}
     .reveal.in{opacity:1; transform:none}
 
     /* --- Progress bar --- */
-    .progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--gold), rgba(120,86,180,.9)); z-index:99}
+    .progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--gold), rgba(122,92,255,.9)); z-index:99}
 
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
       .reveal{transition:none}
       .btn,.card{transition:none}
+      .bg-layer,.glow-ring{animation:none}
+      .btn.primary::after{animation:none}
+      #particles{display:none}
     }
   </style>
 </head>
@@ -303,6 +370,7 @@
 <body>
   <div class="bg-layer" aria-hidden="true"></div>
   <div class="grain-layer" aria-hidden="true"></div>
+  <div class="glow-ring" aria-hidden="true"></div>
   <div class="progress" id="progress" aria-hidden="true"></div>
 
   <div class="top-verse">
@@ -318,6 +386,7 @@
       <nav aria-label="Primary">
         <a href="#home" class="navlink">Home</a>
         <a href="#resources" class="navlink">Resources</a>
+        <a href="#books" class="navlink">Books</a>
         <a href="#word" class="navlink">Bible Word</a>
         <a href="#worship" class="navlink">Worship</a>
         <a href="#contact" class="navlink">Contact</a>
@@ -328,6 +397,7 @@
   <main>
     <!-- HERO -->
     <section id="home" class="hero" style="padding-top: 44px;">
+      <canvas id="particles" aria-hidden="true"></canvas>
       <div class="hero-media" aria-hidden="true">
         <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=2400&q=80" alt="" />
       </div>
@@ -340,14 +410,14 @@
 
           <div class="cta">
             <a class="btn primary" href="#resources">Browse Library</a>
-            <a class="btn ghost" href="#word">Bible Word</a>
+            <a class="btn ghost" href="#books">Books</a>
             <a class="btn ghost" href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">Visit Website</a>
           </div>
 
           <div class="meta">
-            <div class="pill"><b data-count="2">0</b><span>Resource folders</span></div>
+            <div class="pill"><b data-count="3">0</b><span>Resource folders</span></div>
+            <div class="pill"><b data-count="2">0</b><span>Book PDFs</span></div>
             <div class="pill"><b data-count="4">0</b><span>Worship videos</span></div>
-            <div class="pill"><b data-count="3">0</b><span>Featured verses</span></div>
           </div>
         </div>
 
@@ -368,7 +438,7 @@
         <p class="sub reveal">Click a folder to reveal documents. Everything is structured, responsive, and styled for a premium look.</p>
 
         <div class="grid cols-2">
-          <article class="card reveal">
+          <article class="card reveal" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <details>
               <summary>
@@ -397,7 +467,7 @@
             </details>
           </article>
 
-          <article class="card reveal">
+          <article class="card reveal" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <details>
               <summary>
@@ -425,6 +495,70 @@
               </div>
             </details>
           </article>
+
+          <!-- New: Books folder (also linked as section below) -->
+          <article class="card reveal" data-tilt>
+            <div class="shine" aria-hidden="true"></div>
+            <details>
+              <summary>
+                <div class="folder-head">
+                  <div class="folder-left">
+                    <div class="folder-ico" aria-hidden="true">📚</div>
+                    <div>
+                      <h3 class="folder-title">Books</h3>
+                      <p class="folder-hint">Open folder</p>
+                    </div>
+                  </div>
+                  <div class="chev" aria-hidden="true">▾</div>
+                </div>
+              </summary>
+
+              <div class="folder-content">
+                <div class="file-row">
+                  <div class="file-name"><span>📕</span><div class="wrap">Transforming the Inner Man — John Loren Sandford</div></div>
+                  <a class="btn-sm" href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" target="_blank" rel="noopener">View</a>
+                </div>
+                <div class="file-row">
+                  <div class="file-name"><span>📘</span><div class="wrap">Full Bible</div></div>
+                  <a class="btn-sm" href="Books/Full%20bible.pdf" target="_blank" rel="noopener">View</a>
+                </div>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOKS (Dedicated section) -->
+    <section id="books">
+      <div class="container">
+        <h2 class="h2 reveal">Books</h2>
+        <p class="sub reveal">Your added book PDFs—organized and ready to open in a new tab.</p>
+
+        <div class="grid cols-2">
+          <div class="card reveal" data-tilt>
+            <div class="shine" aria-hidden="true"></div>
+            <div class="folder-left">
+              <div class="folder-ico" aria-hidden="true">📕</div>
+              <div>
+                <h3 class="folder-title" style="margin:0">Transforming the Inner Man</h3>
+                <p class="folder-hint" style="margin-top:6px">John Loren Sandford</p>
+                <a class="btn" style="margin-top:14px; display:inline-flex" href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" target="_blank" rel="noopener">View PDF</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card reveal" data-tilt>
+            <div class="shine" aria-hidden="true"></div>
+            <div class="folder-left">
+              <div class="folder-ico" aria-hidden="true">📘</div>
+              <div>
+                <h3 class="folder-title" style="margin:0">Full Bible</h3>
+                <p class="folder-hint" style="margin-top:6px">Complete Bible PDF</p>
+                <a class="btn" style="margin-top:14px; display:inline-flex" href="Books/Full%20bible.pdf" target="_blank" rel="noopener">View PDF</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -436,19 +570,19 @@
         <p class="sub reveal">Always clean, premium verse cards (no external images). These load instantly and look consistent.</p>
 
         <div class="verse-grid">
-          <div class="verse-card reveal">
+          <div class="verse-card reveal" data-tilt>
             <div class="verse-mark" aria-hidden="true">🕊</div>
             <h3>Prince of Peace</h3>
             <p>“Peace I leave with you; my peace I give you.”</p>
             <span class="ref">John 14:27</span>
           </div>
-          <div class="verse-card reveal">
+          <div class="verse-card reveal" data-tilt>
             <div class="verse-mark" aria-hidden="true">🐑</div>
             <h3>The Good Shepherd</h3>
             <p>“I know my sheep and my sheep know me.”</p>
             <span class="ref">John 10:14</span>
           </div>
-          <div class="verse-card reveal">
+          <div class="verse-card reveal" data-tilt>
             <div class="verse-mark" aria-hidden="true">👑</div>
             <h3>King of Kings</h3>
             <p>“KING OF KINGS.”</p>
@@ -465,25 +599,25 @@
         <p class="sub reveal">Playable worship videos (YouTube). Requires internet access.</p>
 
         <div class="grid cols-2">
-          <div class="card reveal" style="padding:0">
+          <div class="card reveal" style="padding:0" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
               <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/9SeQKSWAAK8" title="Worship video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
             </div>
           </div>
-          <div class="card reveal" style="padding:0">
+          <div class="card reveal" style="padding:0" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
               <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/zvoq7SL_BXg" title="Worship video 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
             </div>
           </div>
-          <div class="card reveal" style="padding:0">
+          <div class="card reveal" style="padding:0" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
               <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/kw-FIy8Shk0" title="Worship video 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
             </div>
           </div>
-          <div class="card reveal" style="padding:0">
+          <div class="card reveal" style="padding:0" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
               <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/rEfKzlE5XAQ" title="Worship video 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
@@ -500,7 +634,7 @@
         <p class="sub reveal">Reach out for inquiries or prayer.</p>
 
         <div class="contact-grid">
-          <div class="card reveal">
+          <div class="card reveal" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <div class="folder-left">
               <div class="folder-ico" aria-hidden="true">✉</div>
@@ -511,7 +645,7 @@
             </div>
           </div>
 
-          <div class="card reveal">
+          <div class="card reveal" data-tilt>
             <div class="shine" aria-hidden="true"></div>
             <div class="folder-left">
               <div class="folder-ico" aria-hidden="true">🔗</div>
@@ -559,18 +693,41 @@
       document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     })();
 
-    // Card shine follow
-    document.querySelectorAll('.card').forEach(card=>{
-      card.addEventListener('pointermove', (e)=>{
-        const r = card.getBoundingClientRect();
-        const mx = ((e.clientX - r.left)/r.width)*100;
-        const my = ((e.clientY - r.top)/r.height)*100;
-        card.style.setProperty('--mx', mx+'%');
-        card.style.setProperty('--my', my+'%');
-      });
-    });
+    // Card shine + tilt (premium motion)
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced) return;
 
-    // Count-up (optional polish)
+      const tiltEls = document.querySelectorAll('[data-tilt]');
+      tiltEls.forEach(el => {
+        el.addEventListener('pointermove', (e)=>{
+          const r = el.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top) / r.height;
+          const rx = (0.5 - y) * 8;   // rotation X
+          const ry = (x - 0.5) * 10;  // rotation Y
+          el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+          el.style.setProperty('--mx', (x*100).toFixed(2) + '%');
+          el.style.setProperty('--my', (y*100).toFixed(2) + '%');
+        });
+        el.addEventListener('pointerleave', ()=>{
+          el.style.transform = '';
+        });
+      });
+
+      // Shine on all cards
+      document.querySelectorAll('.card, .verse-card').forEach(card=>{
+        card.addEventListener('pointermove', (e)=>{
+          const r = card.getBoundingClientRect();
+          const mx = ((e.clientX - r.left)/r.width)*100;
+          const my = ((e.clientY - r.top)/r.height)*100;
+          card.style.setProperty('--mx', mx+'%');
+          card.style.setProperty('--my', my+'%');
+        });
+      });
+    })();
+
+    // Count-up
     (function(){
       const nums = document.querySelectorAll('[data-count]');
       const run = (el)=>{
@@ -594,7 +751,7 @@
     // Active nav link (scrollspy)
     (function(){
       const links = Array.from(document.querySelectorAll('.navlink'));
-      const ids = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      const secs = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
       const io = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
           if(e.isIntersecting){
@@ -603,15 +760,55 @@
           }
         });
       }, {rootMargin: '-55% 0px -40% 0px', threshold: 0});
-      ids.forEach(sec=>io.observe(sec));
+      secs.forEach(s=>io.observe(s));
     })();
 
-    // Make only one folder open at a time (premium UX)
+    // Only one folder open at a time
     (function(){
       const folders = document.querySelectorAll('details');
       folders.forEach(d => d.addEventListener('toggle', () => {
         if(d.open){ folders.forEach(o => { if(o !== d) o.open = false; }); }
       }));
+    })();
+
+    // Hero particles (subtle gold dust)
+    (function(){
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced) return;
+
+      const c = document.getElementById('particles');
+      const ctx = c.getContext('2d');
+      let w=0,h=0,dpr=Math.min(window.devicePixelRatio||1,2);
+      const N = 80;
+      const pts = Array.from({length:N},()=>({x:Math.random(), y:Math.random(), r:Math.random()*2+0.6, v:Math.random()*0.25+0.08}));
+
+      function resize(){
+        const rect = c.getBoundingClientRect();
+        w = rect.width; h = rect.height;
+        c.width = Math.floor(w*dpr);
+        c.height = Math.floor(h*dpr);
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      new ResizeObserver(resize).observe(c);
+      resize();
+
+      function draw(t){
+        ctx.clearRect(0,0,w,h);
+        for(const p of pts){
+          p.y = (p.y + p.v*0.002) % 1;
+          const x = p.x*w + Math.sin((t*0.00015 + p.x)*6)*10;
+          const y = p.y*h;
+          const g = ctx.createRadialGradient(x,y,0,x,y,p.r*10);
+          g.addColorStop(0,'rgba(245,192,91,.70)');
+          g.addColorStop(1,'rgba(245,192,91,0)');
+          ctx.fillStyle=g;
+          ctx.beginPath();
+          ctx.arc(x,y,p.r*3,0,Math.PI*2);
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      requestAnimationFrame(draw);
     })();
   </script>
 </body>
