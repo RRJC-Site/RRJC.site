@@ -15,221 +15,58 @@
       --bg0:#070b14;
       --bg1:#0c1426;
       --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.09);
-      --stroke:rgba(255,255,255,.10);
-      --stroke2:rgba(245,192,91,.28);
       --text:#eef2ff;
       --muted:#b6bfd3;
       --gold:#f5c05b;
       --gold2:#d8a84a;
-      --violet:#7a5cff;
-      --cyan:#34c3ff;
-      --pink:#ff6fae;
       --shadow: 0 18px 50px rgba(0,0,0,.55);
       --shadow2: 0 10px 24px rgba(0,0,0,.42);
-      --radius: 18px;
       --radius2: 24px;
       --max: 1180px;
       --navH: 78px;
     }
 
-    /* --- Base --- */
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;
       color:var(--text);
-      font-family:Montserrat, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
-      background:
-        radial-gradient(1200px 700px at 12% 10%, rgba(245,192,91,.12), transparent 60%),
-        radial-gradient(1000px 700px at 90% 0%, rgba(122,92,255,.22), transparent 60%),
-        radial-gradient(900px 600px at 55% 110%, rgba(52,195,255,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+      font-family:Montserrat, sans-serif;
+      background: linear-gradient(180deg, var(--bg0), var(--bg1));
       background-attachment: fixed;
-      overflow-x:hidden;
     }
-
-    /* Fixed ambient layers */
-    .bg-layer,.grain-layer,.glow-ring{
-      position:fixed; inset:0; pointer-events:none;
-    }
-    .bg-layer{z-index:-4; opacity:.95;
-      background:
-        radial-gradient(760px 520px at 20% 88%, rgba(255,111,174,.08), transparent 60%),
-        radial-gradient(900px 540px at 85% 35%, rgba(245,192,91,.10), transparent 60%),
-        radial-gradient(760px 520px at 65% 20%, rgba(52,195,255,.08), transparent 62%);
-      animation: driftBg 18s ease-in-out infinite;
-    }
-    @keyframes driftBg{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-12px,0)}}
-
-    .grain-layer{z-index:-3; opacity:.16; mix-blend-mode:overlay;
-      background-image:
-        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0, rgba(255,255,255,.03) 1px, transparent 1px, transparent 3px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0, rgba(255,255,255,.02) 1px, transparent 1px, transparent 4px);
-    }
-
-    .glow-ring{z-index:-2; opacity:.65;
-      background:
-        radial-gradient(600px 360px at 50% 15%, rgba(245,192,91,.16), transparent 65%),
-        conic-gradient(from 180deg at 50% 50%, rgba(245,192,91,.15), rgba(122,92,255,.14), rgba(52,195,255,.12), rgba(255,111,174,.10), rgba(245,192,91,.15));
-      filter: blur(70px);
-      animation: spinRing 22s linear infinite;
-      transform: translateZ(0);
-    }
-    @keyframes spinRing{to{transform:rotate(360deg)}}
-
-    header, main, footer{position:relative; z-index:1}
-
-    a{color:inherit; text-decoration:none}
-    a:hover{color:var(--gold)}
 
     .container{max-width:var(--max); margin:0 auto; padding:0 20px}
-    section{padding:92px 0}
+    section{padding:80px 0}
 
-    /* --- Top verse strip --- */
-    .top-verse{
-      position:relative; z-index:50;
-      text-align:center;
-      padding:12px 16px;
-      font-family:'Playfair Display', serif;
-      background: linear-gradient(90deg, rgba(245,192,91,.14), rgba(122,92,255,.14), rgba(245,192,91,.10));
-      border-bottom:1px solid rgba(255,255,255,.10);
-      color: rgba(238,242,255,.96);
-    }
-    .top-verse b{color:var(--gold)}
-
-    /* --- Nav --- */
     header{
-      position:sticky;
-      top:0;
-      z-index:60;
-      backdrop-filter: blur(12px) saturate(140%);
+      position:sticky; top:0; z-index:60;
+      backdrop-filter: blur(12px);
       background: rgba(7,11,20,.70);
       border-bottom:1px solid rgba(255,255,255,.10);
     }
-    .nav{
-      height: var(--navH);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-    }
-    .brand{display:flex; align-items:center; gap:12px}
-    .mark{
-      width:44px; height:44px; border-radius:14px;
-      display:grid; place-items:center;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.62), rgba(255,255,255,0) 40%),
-        linear-gradient(135deg, rgba(245,192,91,.95), rgba(122,92,255,.92));
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
-      flex:0 0 auto;
-    }
-    .mark span{font-weight:900; color:#1b132c}
-    .brand-title{font-family:'Playfair Display', serif; letter-spacing:.2px; font-size:1.05rem}
-
-    nav{display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end}
-    nav a{
-      font-weight:800;
-      color:rgba(238,242,255,.90);
-      padding:10px 12px;
-      border-radius:12px;
-      position:relative;
-      transition: background .2s ease, color .2s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size:.82rem;
-    }
-    nav a:hover{background:rgba(255,255,255,.06)}
+    .nav{height: var(--navH); display:flex; align-items:center; justify-content:space-between}
+    nav a{font-weight:800; padding:10px; font-size:.82rem; text-transform:uppercase; margin-left:10px}
     nav a.active{color:var(--gold)}
-    nav a.active::after{
-      content:"";
-      position:absolute;
-      left:12px; right:12px; bottom:6px;
-      height:2px;
-      background:linear-gradient(90deg, var(--gold), rgba(245,192,91,0));
-    }
 
-    /* --- Hero --- */
-    .hero{position:relative; isolation:isolate; padding-top:28px}
-    .hero-media{position:absolute; inset:0; z-index:-1; overflow:hidden}
-    .hero-media img{width:100%; height:100%; object-fit:cover; opacity:.18; transform:scale(1.06); filter:contrast(1.05) saturate(.9)}
-    .hero-media::before{content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(7,11,20,.58), rgba(7,11,20,.93));}
+    .hero{padding-top:40px; text-align:center}
+    h1{font-family:'Playfair Display', serif; font-size: clamp(34px, 5vw, 60px); margin:10px 0}
 
-    #particles{position:absolute; inset:0; width:100%; height:100%; z-index:-1; opacity:.65}
-
-    .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:34px; align-items:center}
-    @media (max-width: 980px){
-      .hero-grid{grid-template-columns:1fr}
-      nav{justify-content:flex-start}
-    }
-
-    .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 12px;
-      border-radius:999px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow2);
-      width:max-content;
-      font-weight:800;
-    }
-    .kicker .dot{width:10px; height:10px; border-radius:999px; background: linear-gradient(135deg, var(--gold), rgba(122,92,255,.9))}
-
-    h1{
-      font-family:'Playfair Display', serif;
-      font-size: clamp(34px, 5vw, 66px);
-      line-height:1.05;
-      margin:14px 0 12px;
-    }
-    .lede{color:rgba(182,191,211,.96); max-width:64ch; font-weight:600; margin:0 0 18px}
-
-    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:12px 16px;
-      border-radius:14px;
-      font-weight:900;
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: var(--shadow2);
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-    .btn:hover{transform: translateY(-2px); box-shadow: 0 20px 55px rgba(0,0,0,.55)}
-    .btn.primary{background: linear-gradient(135deg, var(--gold), var(--gold2)); color:#24180a; border-color: transparent}
-    .btn.ghost{background: rgba(255,255,255,.06)}
-
-    .meta{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-top:18px}
-    @media (max-width:780px){.meta{grid-template-columns:1fr}}
-    .pill{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:14px}
-    .pill b{color:var(--gold); font-size:1.25rem}
-    .pill span{display:block; margin-top:6px; color:rgba(182,191,211,.96); font-weight:700}
-
-    /* Right panel */
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
-      border:1px solid rgba(255,255,255,.10);
+    .grid{display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))}
+    .card{
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
       border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      padding:22px;
+      padding: 20px;
+      transition: transform 0.3s ease;
     }
-    .panel h2{
-      font-family:'Playfair Display', serif;
-      margin:0 0 10px;
-      font-size: clamp(22px, 3vw, 34px);
-    }
-    .ref{display:inline-flex; margin-top:10px; padding:7px 10px; border-radius:999px; background: rgba(245,192,91,.14); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-weight:900; font-size:.82rem; letter-spacing:.3px}
+    .card:hover{transform: translateY(-5px)}
 
-    /* --- Section headings --- */
-    .h2{font-family:'Playfair Display', serif; font-size:clamp(26px, 3.6vw, 44px); margin:0 0 10px}
-    .sub{margin:0 0 26px; color:rgba(182,191,211,.96); font-weight:700; max-width:70ch}
-
-    /* --- Gallery styling --- */
+    /* Gallery Specific Styles */
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
       margin-top: 15px;
     }
     .gallery-item {
@@ -237,386 +74,106 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,.1);
-      background: rgba(0,0,0,.2);
     }
     .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 100%; height: 100%; object-fit: cover;
       transition: transform .3s ease;
-      cursor: zoom-in;
     }
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
+    .gallery-item:hover img { transform: scale(1.1); }
 
-    /* --- Folders / Cards --- */
-    .grid{display:grid; gap:18px}
-    .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
-    @media (max-width:980px){.grid.cols-2{grid-template-columns:1fr}}
-
-    .card{
-      position:relative;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius2);
-      padding:22px;
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      transform-style:preserve-3d;
-      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-    }
-    .card:hover{box-shadow: 0 26px 70px rgba(0,0,0,.55); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));}
-
-    .folder-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
-    .folder-left{display:flex; gap:14px; align-items:flex-start}
-    .folder-ico{width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background: rgba(245,192,91,.14); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-size:22px; flex:0 0 auto}
-    .folder-title{margin:0; font-family:'Playfair Display', serif; font-size:1.35rem}
-    .folder-hint{margin:4px 0 0; color:rgba(182,191,211,.96); font-weight:600; font-size:.95rem}
-
-    .chev{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); transition: transform .2s ease}
-    details[open] .chev{transform: rotate(180deg)}
-
-    .folder-content{margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,.10); display:grid; gap:10px; animation: folderIn .35s ease both}
-    details:not([open]) .folder-content{display:none}
-    @keyframes folderIn{from{opacity:0; transform:translateY(-8px)}to{opacity:1; transform:none}}
-
-    .file-row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px; border-radius:14px; background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); transition: background .2s ease, border .2s ease, transform .2s ease}
-    .file-row:hover{background: rgba(255,255,255,.06); border-color: rgba(245,192,91,.18); transform: translateY(-1px)}
-    .file-name{display:flex; align-items:center; gap:10px; font-weight:600; color:rgba(238,242,255,.96); font-size:.93rem; min-width:0}
-
-    .btn-sm{padding:8px 12px; border-radius:12px; font-size:.78rem; font-weight:900; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04)}
-
-    /* Verse cards */
-    .verse-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px}
-    @media (max-width:980px){.verse-grid{grid-template-columns:1fr}}
-
-    .verse-card{
-      position:relative;
-      padding:22px;
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-
-    footer{padding:54px 0 74px; border-top:1px solid rgba(255,255,255,.10)}
-    .foot{text-align:center; padding:24px; border-radius:22px; background: rgba(255,255,255,.06); color:rgba(182,191,211,.96); font-weight:700;}
-
-    .reveal{opacity:0; transform: translateY(18px); transition: opacity .9s ease, transform .9s ease}
-    .reveal.in{opacity:1; transform:none}
-    .progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--gold), rgba(122,92,255,.9)); z-index:99}
+    .folder-ico{font-size: 24px; margin-bottom: 10px}
+    details summary{cursor: pointer; list-style: none; font-weight: bold; font-size: 1.2rem}
+    .file-row{display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05)}
+    .btn-sm{background: var(--gold); color: #000; padding: 5px 10px; border-radius: 8px; font-weight: bold}
   </style>
 </head>
 
 <body>
-  <div class="bg-layer" aria-hidden="true"></div>
-  <div class="grain-layer" aria-hidden="true"></div>
-  <div class="glow-ring" aria-hidden="true"></div>
-  <div class="progress" id="progress" aria-hidden="true"></div>
-
-  <div class="top-verse">
-    “He is the Rock, his works are perfect, and all his ways are just.” — <b>Deuteronomy 32:4</b>
-  </div>
-
   <header>
     <div class="container nav">
-      <div class="brand">
-        <div class="mark" aria-hidden="true"><span>✚</span></div>
-        <div class="brand-title">RRJC | Riju Rincy Jolly in Christ</div>
-      </div>
-      <nav aria-label="Primary">
-        <a href="#home" class="navlink">Home</a>
-        <a href="#resources" class="navlink">Resources</a>
-        <a href="#gallery" class="navlink">Gallery</a>
-        <a href="#books" class="navlink">Books</a>
-        <a href="#word" class="navlink">Bible Word</a>
-        <a href="#worship" class="navlink">Worship</a>
+      <div class="brand"><strong>RRJC</strong></div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#resources">Resources</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#books">Books</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section id="home" class="hero" style="padding-top: 44px;">
-      <canvas id="particles" aria-hidden="true"></canvas>
-      <div class="hero-media" aria-hidden="true">
-        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=2400&q=80" alt="" />
-      </div>
-
-      <div class="container hero-grid">
-        <div class="reveal">
-          <div class="kicker"><span class="dot"></span> Welcome Beloved</div>
-          <h1>Bible Word Source &amp; Amazing Worship</h1>
-          <p class="lede">Explore our expanded library of study notes, books, and now a visual gallery of worship and inspiration.</p>
-
-          <div class="cta">
-            <a class="btn primary" href="#resources">Browse Library</a>
-            <a class="btn ghost" href="#gallery">View Photos</a>
-          </div>
-
-          <div class="meta">
-            <div class="pill"><b data-count="5">0</b><span>Folders</span></div>
-            <div class="pill"><b data-count="34">0</b><span>Photos</span></div>
-            <div class="pill"><b data-count="2">0</b><span>Books</span></div>
-          </div>
-        </div>
-
-        <aside class="panel reveal">
-          <h2>Latest Addition</h2>
-          <p style="margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600">“The Gallery is now live! Browse through AI-generated visuals and worship highlights below.”</p>
-          <span class="ref">Updates 2026</span>
-        </aside>
-      </div>
+  <main class="container">
+    <section id="home" class="hero">
+      <h1>Bible Word Source & Worship</h1>
+      <p>Your premium library of spiritual resources and visuals.</p>
     </section>
 
     <section id="resources">
-      <div class="container">
-        <h2 class="h2 reveal">Resources & Folders</h2>
-        <div class="grid cols-2">
-          
-          <article class="card reveal" data-tilt>
-            <details>
-              <summary>
-                <div class="folder-head">
-                  <div class="folder-left">
-                    <div class="folder-ico">📁</div>
-                    <div>
-                      <h3 class="folder-title">Bible Studies</h3>
-                      <p class="folder-hint">2 Files</p>
-                    </div>
-                  </div>
-                  <div class="chev">▾</div>
-                </div>
-              </summary>
-              <div class="folder-content">
-                <div class="file-row">
-                  <div class="file-name"><span>📄</span> Genesis 1–11 Full</div>
-                  <a class="btn-sm" href="Documents/genesis_1-11_full.pdf" target="_blank">View</a>
-                </div>
-                <div class="file-row">
-                  <div class="file-name"><span>📄</span> Joshua, Judges, Ruth</div>
-                  <a class="btn-sm" href="Documents/the-books-of-joshua-judgesand-ruth.pdf" target="_blank">View</a>
-                </div>
-              </div>
-            </details>
-          </article>
-
-          <article class="card reveal" data-tilt>
-            <details>
-              <summary>
-                <div class="folder-head">
-                  <div class="folder-left">
-                    <div class="folder-ico">📁</div>
-                    <div>
-                      <h3 class="folder-title">Sermon Notes</h3>
-                      <p class="folder-hint">2 Files</p>
-                    </div>
-                  </div>
-                  <div class="chev">▾</div>
-                </div>
-              </summary>
-              <div class="folder-content">
-                <div class="file-row">
-                  <div class="file-name"><span>📄</span> Isaiah 61:10 (2008)</div>
-                  <a class="btn-sm" href="Documents/December_14_2008_Isaiah61_10.pdf" target="_blank">View</a>
-                </div>
-                <div class="file-row">
-                  <div class="file-name"><span>📄</span> Parable of the Moneylender</div>
-                  <a class="btn-sm" href="Documents/The-Parable-of-the-Moneylender-Pharisee-and-Tax-Collector-sermon-notes.pdf" target="_blank">View</a>
-                </div>
-              </div>
-            </details>
-          </article>
+      <h2>Resources</h2>
+      <div class="grid">
+        <div class="card">
+          <details>
+            <summary>📁 Bible Studies</summary>
+            <div class="file-row"><span>Genesis 1–11</span> <a href="Documents/genesis_1-11_full.pdf" class="btn-sm">View</a></div>
+            <div class="file-row"><span>Joshua, Judges, Ruth</span> <a href="Documents/the-books-of-joshua-judgesand-ruth.pdf" class="btn-sm">View</a></div>
+          </details>
         </div>
       </div>
     </section>
 
     <section id="gallery">
-      <div class="container">
-        <h2 class="h2 reveal">Photo Gallery</h2>
-        <p class="sub reveal">A collection of spiritual visuals and ministry highlights.</p>
-        
-        <div class="grid cols-2">
-          
-          <article class="card reveal" data-tilt>
-            <details>
-              <summary>
-                <div class="folder-head">
-                  <div class="folder-left">
-                    <div class="folder-ico">🖼️</div>
-                    <div>
-                      <h3 class="folder-title">AI Visuals</h3>
-                      <p class="folder-hint">4 Concepts</p>
-                    </div>
-                  </div>
-                  <div class="chev">▾</div>
-                </div>
-              </summary>
-              <div class="folder-content">
-                <div class="gallery-grid">
-                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImage44iab644iab644ia.png" alt="Concept 1" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageldljenldljenldlj.png" alt="Concept 2" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageqm6vtvqm6vtvqm6v.png" alt="Concept 3" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImagexlb70uxlb70uxlb7.png" alt="Concept 4" loading="lazy"></div>
-                </div>
-              </div>
-            </details>
-          </article>
+      <h2>Photo Gallery</h2>
+      <div class="grid">
+        <div class="card">
+          <details>
+            <summary>🖼️ AI Visuals</summary>
+            <div class="gallery-grid">
+              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImage44iab644iab644ia.png" alt="AI 1"></div>
+              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageldljenldljenldlj.png" alt="AI 2"></div>
+              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageqm6vtvqm6vtvqm6v.png" alt="AI 3"></div>
+              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImagexlb70uxlb70uxlb7.png" alt="AI 4"></div>
+            </div>
+          </details>
+        </div>
 
-          <article class="card reveal" data-tilt>
-            <details>
-              <summary>
-                <div class="folder-head">
-                  <div class="folder-left">
-                    <div class="folder-ico">📸</div>
-                    <div>
-                      <h3 class="folder-title">Worship Highlights</h3>
-                      <p class="folder-hint">30 Photos</p>
-                    </div>
-                  </div>
-                  <div class="chev">▾</div>
-                </div>
-              </summary>
-              <div class="folder-content">
-                <div class="gallery-grid">
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 8.31.40 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.46 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.51 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.56 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.06 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.11 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM (2).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM (3).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.14 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.14 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.15 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.15 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.16 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.16 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.16 PM (2).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.17 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.17 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.18 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.18 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.19 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.19 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.21 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.21 PM (1).jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.22 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.59 PM.jpeg" loading="lazy"></div>
-                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.59 PM (1).jpeg" loading="lazy"></div>
-                </div>
+        <div class="card">
+          <details>
+            <summary>📸 Worship Highlights</summary>
+            <div class="gallery-grid">
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 8.31.40 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.46 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.51 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM (1).jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.56 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.06 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.11 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM.jpeg"></div>
+              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.59 PM.jpeg"></div>
               </div>
-            </details>
-          </article>
+          </details>
         </div>
       </div>
     </section>
 
     <section id="books">
-      <div class="container">
-        <h2 class="h2 reveal">Books</h2>
-        <div class="grid cols-2">
-          <div class="card reveal" data-tilt>
-            <div class="folder-left">
-              <div class="folder-ico">📕</div>
-              <div>
-                <h3 class="folder-title">Transforming the Inner Man</h3>
-                <p class="folder-hint">John Loren Sandford</p>
-                <a class="btn primary" style="margin-top:14px" href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" target="_blank">View PDF</a>
-              </div>
-            </div>
-          </div>
-          <div class="card reveal" data-tilt>
-            <div class="folder-left">
-              <div class="folder-ico">📘</div>
-              <div>
-                <h3 class="folder-title">Full Bible</h3>
-                <p class="folder-hint">Complete Bible PDF</p>
-                <a class="btn primary" style="margin-top:14px" href="Books/Full%20bible.pdf" target="_blank">View PDF</a>
-              </div>
-            </div>
-          </div>
+      <h2>Books</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="folder-ico">📕</div>
+          <h3>Transforming the Inner Man</h3>
+          <a href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" class="btn-sm">Open PDF</a>
+        </div>
+        <div class="card">
+          <div class="folder-ico">📘</div>
+          <h3>Full Bible</h3>
+          <a href="Books/Full%20bible.pdf" class="btn-sm">Open PDF</a>
         </div>
       </div>
     </section>
-
-    <section id="word">
-      <div class="container">
-        <h2 class="h2 reveal">Bible Word</h2>
-        <div class="verse-grid">
-          <div class="verse-card reveal" data-tilt><h3>Prince of Peace</h3><p>“Peace I leave with you; my peace I give you.”</p><span class="ref">John 14:27</span></div>
-          <div class="verse-card reveal" data-tilt><h3>The Good Shepherd</h3><p>“I know my sheep and my sheep know me.”</p><span class="ref">John 10:14</span></div>
-          <div class="verse-card reveal" data-tilt><h3>King of Kings</h3><p>“KING OF KINGS.”</p><span class="ref">Revelation 19:16</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="worship">
-      <div class="container">
-        <h2 class="h2 reveal">Amazing Worship</h2>
-        <div class="grid cols-2">
-          <div class="card reveal" style="padding:0"><iframe src="https://www.youtube-nocookie.com/embed/9SeQKSWAAK8" style="width:100%; aspect-ratio:16/9; border:0; border-radius:24px;"></iframe></div>
-          <div class="card reveal" style="padding:0"><iframe src="https://www.youtube-nocookie.com/embed/zvoq7SL_BXg" style="width:100%; aspect-ratio:16/9; border:0; border-radius:24px;"></iframe></div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">
-        <div class="foot reveal">
-          <p>“Fear not, for I am with you; be not dismayed, for I am your God.” — Isaiah 41:10</p>
-          <small>© 2026 RRJC | Riju Rincy Jolly in Christ · Built for His Glory.</small>
-        </div>
-      </div>
-    </footer>
   </main>
 
-  <script>
-    // Reveal & Count animations
-    (function(){
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e => {
-          if(e.isIntersecting){
-            e.target.classList.add('in');
-            if(e.target.hasAttribute('data-count')) runCount(e.target);
-          }
-        });
-      }, {threshold:.1});
-      document.querySelectorAll('.reveal, [data-count]').forEach(el=>io.observe(el));
-
-      function runCount(el){
-        const target = parseInt(el.getAttribute('data-count'));
-        let count = 0;
-        const speed = 2000 / target;
-        const timer = setInterval(() => {
-          count++;
-          el.textContent = count;
-          if(count >= target) clearInterval(timer);
-        }, speed);
-      }
-    })();
-
-    // Progress bar
-    window.addEventListener('scroll', () => {
-      const h = document.documentElement;
-      const st = h.scrollTop || document.body.scrollTop;
-      const sh = h.scrollHeight || document.body.scrollHeight;
-      const percent = (st / (sh - h.clientHeight)) * 100;
-      document.getElementById('progress').style.width = percent + '%';
-    });
-
-    // Folder Logic (one open at a time)
-    document.querySelectorAll('details').forEach(d => {
-      d.addEventListener('toggle', () => {
-        if(d.open) document.querySelectorAll('details').forEach(o => { if(o!==d) o.open=false; });
-      });
-    });
-  </script>
+  <footer style="text-align: center; padding: 40px; opacity: 0.6">
+    <p>© 2026 RRJC | Riju Rincy Jolly in Christ</p>
+  </footer>
 </body>
 </html>
