@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -50,7 +49,7 @@
       overflow-x:hidden;
     }
 
-    /* Fixed ambient layers (never overlap content) */
+    /* Fixed ambient layers */
     .bg-layer,.grain-layer,.glow-ring{
       position:fixed; inset:0; pointer-events:none;
     }
@@ -201,18 +200,6 @@
     .btn.primary{background: linear-gradient(135deg, var(--gold), var(--gold2)); color:#24180a; border-color: transparent}
     .btn.ghost{background: rgba(255,255,255,.06)}
 
-    /* Button glow pulse */
-    .btn.primary{position:relative; overflow:hidden}
-    .btn.primary::after{
-      content:"";
-      position:absolute; inset:-2px;
-      background: conic-gradient(from 180deg, rgba(255,255,255,.0), rgba(255,255,255,.45), rgba(255,255,255,0));
-      opacity:.25;
-      animation: sheen 2.8s ease-in-out infinite;
-      transform: translateX(-45%);
-    }
-    @keyframes sheen{0%,100%{transform:translateX(-55%)}50%{transform:translateX(55%)}}
-
     .meta{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-top:18px}
     @media (max-width:780px){.meta{grid-template-columns:1fr}}
     .pill{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:14px}
@@ -238,7 +225,32 @@
     .h2{font-family:'Playfair Display', serif; font-size:clamp(26px, 3.6vw, 44px); margin:0 0 10px}
     .sub{margin:0 0 26px; color:rgba(182,191,211,.96); font-weight:700; max-width:70ch}
 
-    /* --- Resource cards / folders --- */
+    /* --- Gallery styling --- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(0,0,0,.2);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s ease;
+      cursor: zoom-in;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* --- Folders / Cards --- */
     .grid{display:grid; gap:18px}
     .grid.cols-2{grid-template-columns:repeat(2, minmax(0,1fr))}
     @media (max-width:980px){.grid.cols-2{grid-template-columns:1fr}}
@@ -256,28 +268,6 @@
     }
     .card:hover{box-shadow: 0 26px 70px rgba(0,0,0,.55); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));}
 
-    /* Animated border glow */
-    .card::before{
-      content:"";
-      position:absolute; inset:0;
-      padding:1px;
-      border-radius: var(--radius2);
-      background: conic-gradient(from 210deg, rgba(245,192,91,.22), rgba(122,92,255,.20), rgba(52,195,255,.14), rgba(245,192,91,.22));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity:.0;
-      transition: opacity .25s ease;
-      pointer-events:none;
-    }
-    .card:hover::before{opacity:.9}
-
-    /* Shine (purely visual) */
-    .card .shine{position:absolute; inset:-1px; background: radial-gradient(280px 160px at var(--mx, 0%) var(--my, 0%), rgba(245,192,91,.20), transparent 65%); pointer-events:none}
-
-    details > summary{list-style:none; cursor:pointer}
-    details > summary::-webkit-details-marker{display:none}
-
     .folder-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
     .folder-left{display:flex; gap:14px; align-items:flex-start}
     .folder-ico{width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background: rgba(245,192,91,.14); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-size:22px; flex:0 0 auto}
@@ -287,7 +277,6 @@
     .chev{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); transition: transform .2s ease}
     details[open] .chev{transform: rotate(180deg)}
 
-    /* Smooth open animation */
     .folder-content{margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,.10); display:grid; gap:10px; animation: folderIn .35s ease both}
     details:not([open]) .folder-content{display:none}
     @keyframes folderIn{from{opacity:0; transform:translateY(-8px)}to{opacity:1; transform:none}}
@@ -295,13 +284,10 @@
     .file-row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px; border-radius:14px; background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); transition: background .2s ease, border .2s ease, transform .2s ease}
     .file-row:hover{background: rgba(255,255,255,.06); border-color: rgba(245,192,91,.18); transform: translateY(-1px)}
     .file-name{display:flex; align-items:center; gap:10px; font-weight:600; color:rgba(238,242,255,.96); font-size:.93rem; min-width:0}
-    .file-name span{color:rgba(182,191,211,.96); font-weight:700}
-    .file-name .wrap{overflow-wrap:anywhere}
 
     .btn-sm{padding:8px 12px; border-radius:12px; font-size:.78rem; font-weight:900; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04)}
-    .btn-sm:hover{border-color: rgba(245,192,91,.28)}
 
-    /* --- Verse cards (always styled / no photos) --- */
+    /* Verse cards */
     .verse-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px}
     @media (max-width:980px){.verse-grid{grid-template-columns:1fr}}
 
@@ -310,60 +296,17 @@
       padding:22px;
       border-radius: var(--radius2);
       border:1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(560px 240px at 20% 10%, rgba(245,192,91,.14), transparent 60%),
-        radial-gradient(560px 240px at 90% 30%, rgba(122,92,255,.22), transparent 60%),
-        rgba(255,255,255,.05);
+      background: rgba(255,255,255,.05);
       box-shadow: var(--shadow2);
       overflow:hidden;
-      transform-style:preserve-3d;
     }
-    .verse-card::after{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(400px 180px at var(--mx, 30%) var(--my, 20%), rgba(52,195,255,.12), transparent 65%);
-      opacity:.8;
-      pointer-events:none;
-    }
-    .verse-card h3{margin:0 0 6px; font-family:'Playfair Display', serif; font-size:1.35rem}
-    .verse-card p{margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600}
-    .verse-card .ref{margin-top:12px}
-    .verse-mark{position:absolute; right:14px; top:14px; width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background: rgba(245,192,91,.12); border:1px solid rgba(245,192,91,.22); color:var(--gold); font-size:22px}
 
-    /* --- Contact cards --- */
-    .contact-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px}
-    @media (max-width:980px){.contact-grid{grid-template-columns:1fr}}
-
-    /* --- Footer --- */
     footer{padding:54px 0 74px; border-top:1px solid rgba(255,255,255,.10)}
-    .foot{
-      text-align:center;
-      padding:24px;
-      border-radius:22px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow2);
-      color:rgba(182,191,211,.96);
-      font-weight:700;
-    }
-    .foot p{margin:0 0 10px; font-family:'Playfair Display', serif; font-size:1.15rem; color:rgba(238,242,255,.96)}
+    .foot{text-align:center; padding:24px; border-radius:22px; background: rgba(255,255,255,.06); color:rgba(182,191,211,.96); font-weight:700;}
 
-    /* --- Reveal animation --- */
     .reveal{opacity:0; transform: translateY(18px); transition: opacity .9s ease, transform .9s ease}
     .reveal.in{opacity:1; transform:none}
-
-    /* --- Progress bar --- */
     .progress{position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg, var(--gold), rgba(122,92,255,.9)); z-index:99}
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      html{scroll-behavior:auto}
-      .reveal{transition:none}
-      .btn,.card{transition:none}
-      .bg-layer,.glow-ring{animation:none}
-      .btn.primary::after{animation:none}
-      #particles{display:none}
-    }
   </style>
 </head>
 
@@ -386,16 +329,15 @@
       <nav aria-label="Primary">
         <a href="#home" class="navlink">Home</a>
         <a href="#resources" class="navlink">Resources</a>
+        <a href="#gallery" class="navlink">Gallery</a>
         <a href="#books" class="navlink">Books</a>
         <a href="#word" class="navlink">Bible Word</a>
         <a href="#worship" class="navlink">Worship</a>
-        <a href="#contact" class="navlink">Contact</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- HERO -->
     <section id="home" class="hero" style="padding-top: 44px;">
       <canvas id="particles" aria-hidden="true"></canvas>
       <div class="hero-media" aria-hidden="true">
@@ -406,121 +348,82 @@
         <div class="reveal">
           <div class="kicker"><span class="dot"></span> Welcome Beloved</div>
           <h1>Bible Word Source &amp; Amazing Worship</h1>
-          <p class="lede">Explore a premium, organized library of study notes and resources—designed for clarity, devotion, and a calm viewing experience.</p>
+          <p class="lede">Explore our expanded library of study notes, books, and now a visual gallery of worship and inspiration.</p>
 
           <div class="cta">
             <a class="btn primary" href="#resources">Browse Library</a>
-            <a class="btn ghost" href="#books">Books</a>
-            <a class="btn ghost" href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">Visit Website</a>
+            <a class="btn ghost" href="#gallery">View Photos</a>
           </div>
 
           <div class="meta">
-            <div class="pill"><b data-count="3">0</b><span>Resource folders</span></div>
-            <div class="pill"><b data-count="2">0</b><span>Book PDFs</span></div>
-            <div class="pill"><b data-count="4">0</b><span>Worship videos</span></div>
+            <div class="pill"><b data-count="5">0</b><span>Folders</span></div>
+            <div class="pill"><b data-count="34">0</b><span>Photos</span></div>
+            <div class="pill"><b data-count="2">0</b><span>Books</span></div>
           </div>
         </div>
 
         <aside class="panel reveal">
-          <h2>Today’s Verse</h2>
-          <p style="margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600">“Peace I leave with you; my peace I give you.”</p>
-          <span class="ref">John 14:27</span>
-          <div style="height:16px"></div>
-          <p style="margin:0; color:rgba(182,191,211,.96); font-weight:600">Tip: Open a folder to view files. Click “View” to open documents in a new tab.</p>
+          <h2>Latest Addition</h2>
+          <p style="margin:0; color:rgba(182,191,211,.96); font-style:italic; font-weight:600">“The Gallery is now live! Browse through AI-generated visuals and worship highlights below.”</p>
+          <span class="ref">Updates 2026</span>
         </aside>
       </div>
     </section>
 
-    <!-- RESOURCES -->
     <section id="resources">
       <div class="container">
-        <h2 class="h2 reveal">Resources</h2>
-        <p class="sub reveal">Click a folder to reveal documents. Everything is structured, responsive, and styled for a premium look.</p>
-
+        <h2 class="h2 reveal">Resources & Folders</h2>
         <div class="grid cols-2">
+          
           <article class="card reveal" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
             <details>
               <summary>
                 <div class="folder-head">
                   <div class="folder-left">
-                    <div class="folder-ico" aria-hidden="true">📁</div>
+                    <div class="folder-ico">📁</div>
                     <div>
                       <h3 class="folder-title">Bible Studies</h3>
-                      <p class="folder-hint">Open folder</p>
+                      <p class="folder-hint">2 Files</p>
                     </div>
                   </div>
-                  <div class="chev" aria-hidden="true">▾</div>
+                  <div class="chev">▾</div>
                 </div>
               </summary>
-
               <div class="folder-content">
                 <div class="file-row">
-                  <div class="file-name"><span>📄</span><div class="wrap">Genesis 1–11 Full</div></div>
-                  <a class="btn-sm" href="Documents/genesis_1-11_full.pdf" target="_blank" rel="noopener">View</a>
+                  <div class="file-name"><span>📄</span> Genesis 1–11 Full</div>
+                  <a class="btn-sm" href="Documents/genesis_1-11_full.pdf" target="_blank">View</a>
                 </div>
                 <div class="file-row">
-                  <div class="file-name"><span>📄</span><div class="wrap">Joshua, Judges, Ruth</div></div>
-                  <a class="btn-sm" href="Documents/the-books-of-joshua-judgesand-ruth.pdf" target="_blank" rel="noopener">View</a>
+                  <div class="file-name"><span>📄</span> Joshua, Judges, Ruth</div>
+                  <a class="btn-sm" href="Documents/the-books-of-joshua-judgesand-ruth.pdf" target="_blank">View</a>
                 </div>
               </div>
             </details>
           </article>
 
           <article class="card reveal" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
             <details>
               <summary>
                 <div class="folder-head">
                   <div class="folder-left">
-                    <div class="folder-ico" aria-hidden="true">📁</div>
+                    <div class="folder-ico">📁</div>
                     <div>
                       <h3 class="folder-title">Sermon Notes</h3>
-                      <p class="folder-hint">Open folder</p>
+                      <p class="folder-hint">2 Files</p>
                     </div>
                   </div>
-                  <div class="chev" aria-hidden="true">▾</div>
+                  <div class="chev">▾</div>
                 </div>
               </summary>
-
               <div class="folder-content">
                 <div class="file-row">
-                  <div class="file-name"><span>📄</span><div class="wrap">Isaiah 61:10 (2008)</div></div>
-                  <a class="btn-sm" href="Documents/December_14_2008_Isaiah61_10.pdf" target="_blank" rel="noopener">View</a>
+                  <div class="file-name"><span>📄</span> Isaiah 61:10 (2008)</div>
+                  <a class="btn-sm" href="Documents/December_14_2008_Isaiah61_10.pdf" target="_blank">View</a>
                 </div>
                 <div class="file-row">
-                  <div class="file-name"><span>📄</span><div class="wrap">Parable of the Moneylender</div></div>
-                  <a class="btn-sm" href="Documents/The-Parable-of-the-Moneylender-Pharisee-and-Tax-Collector-sermon-notes.pdf" target="_blank" rel="noopener">View</a>
-                </div>
-              </div>
-            </details>
-          </article>
-
-          <!-- New: Books folder (also linked as section below) -->
-          <article class="card reveal" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
-            <details>
-              <summary>
-                <div class="folder-head">
-                  <div class="folder-left">
-                    <div class="folder-ico" aria-hidden="true">📚</div>
-                    <div>
-                      <h3 class="folder-title">Books</h3>
-                      <p class="folder-hint">Open folder</p>
-                    </div>
-                  </div>
-                  <div class="chev" aria-hidden="true">▾</div>
-                </div>
-              </summary>
-
-              <div class="folder-content">
-                <div class="file-row">
-                  <div class="file-name"><span>📕</span><div class="wrap">Transforming the Inner Man — John Loren Sandford</div></div>
-                  <a class="btn-sm" href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" target="_blank" rel="noopener">View</a>
-                </div>
-                <div class="file-row">
-                  <div class="file-name"><span>📘</span><div class="wrap">Full Bible</div></div>
-                  <a class="btn-sm" href="Books/Full%20bible.pdf" target="_blank" rel="noopener">View</a>
+                  <div class="file-name"><span>📄</span> Parable of the Moneylender</div>
+                  <a class="btn-sm" href="Documents/The-Parable-of-the-Moneylender-Pharisee-and-Tax-Collector-sermon-notes.pdf" target="_blank">View</a>
                 </div>
               </div>
             </details>
@@ -529,33 +432,113 @@
       </div>
     </section>
 
-    <!-- BOOKS (Dedicated section) -->
+    <section id="gallery">
+      <div class="container">
+        <h2 class="h2 reveal">Photo Gallery</h2>
+        <p class="sub reveal">A collection of spiritual visuals and ministry highlights.</p>
+        
+        <div class="grid cols-2">
+          
+          <article class="card reveal" data-tilt>
+            <details>
+              <summary>
+                <div class="folder-head">
+                  <div class="folder-left">
+                    <div class="folder-ico">🖼️</div>
+                    <div>
+                      <h3 class="folder-title">AI Visuals</h3>
+                      <p class="folder-hint">4 Concepts</p>
+                    </div>
+                  </div>
+                  <div class="chev">▾</div>
+                </div>
+              </summary>
+              <div class="folder-content">
+                <div class="gallery-grid">
+                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImage44iab644iab644ia.png" alt="Concept 1" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageldljenldljenldlj.png" alt="Concept 2" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageqm6vtvqm6vtvqm6v.png" alt="Concept 3" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImagexlb70uxlb70uxlb7.png" alt="Concept 4" loading="lazy"></div>
+                </div>
+              </div>
+            </details>
+          </article>
+
+          <article class="card reveal" data-tilt>
+            <details>
+              <summary>
+                <div class="folder-head">
+                  <div class="folder-left">
+                    <div class="folder-ico">📸</div>
+                    <div>
+                      <h3 class="folder-title">Worship Highlights</h3>
+                      <p class="folder-hint">30 Photos</p>
+                    </div>
+                  </div>
+                  <div class="chev">▾</div>
+                </div>
+              </summary>
+              <div class="folder-content">
+                <div class="gallery-grid">
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 8.31.40 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.46 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.51 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.56 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.06 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.11 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM (2).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM (3).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.14 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.14 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.15 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.15 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.16 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.16 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.16 PM (2).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.17 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.17 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.18 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.18 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.19 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.19 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.21 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.21 PM (1).jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.22 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.59 PM.jpeg" loading="lazy"></div>
+                  <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.59 PM (1).jpeg" loading="lazy"></div>
+                </div>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="books">
       <div class="container">
         <h2 class="h2 reveal">Books</h2>
-        <p class="sub reveal">Your added book PDFs—organized and ready to open in a new tab.</p>
-
         <div class="grid cols-2">
           <div class="card reveal" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
             <div class="folder-left">
-              <div class="folder-ico" aria-hidden="true">📕</div>
+              <div class="folder-ico">📕</div>
               <div>
-                <h3 class="folder-title" style="margin:0">Transforming the Inner Man</h3>
-                <p class="folder-hint" style="margin-top:6px">John Loren Sandford</p>
-                <a class="btn" style="margin-top:14px; display:inline-flex" href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" target="_blank" rel="noopener">View PDF</a>
+                <h3 class="folder-title">Transforming the Inner Man</h3>
+                <p class="folder-hint">John Loren Sandford</p>
+                <a class="btn primary" style="margin-top:14px" href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" target="_blank">View PDF</a>
               </div>
             </div>
           </div>
-
           <div class="card reveal" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
             <div class="folder-left">
-              <div class="folder-ico" aria-hidden="true">📘</div>
+              <div class="folder-ico">📘</div>
               <div>
-                <h3 class="folder-title" style="margin:0">Full Bible</h3>
-                <p class="folder-hint" style="margin-top:6px">Complete Bible PDF</p>
-                <a class="btn" style="margin-top:14px; display:inline-flex" href="Books/Full%20bible.pdf" target="_blank" rel="noopener">View PDF</a>
+                <h3 class="folder-title">Full Bible</h3>
+                <p class="folder-hint">Complete Bible PDF</p>
+                <a class="btn primary" style="margin-top:14px" href="Books/Full%20bible.pdf" target="_blank">View PDF</a>
               </div>
             </div>
           </div>
@@ -563,98 +546,23 @@
       </div>
     </section>
 
-    <!-- BIBLE WORD (styled verse cards, no photos) -->
     <section id="word">
       <div class="container">
         <h2 class="h2 reveal">Bible Word</h2>
-        <p class="sub reveal">Always clean, premium verse cards (no external images). These load instantly and look consistent.</p>
-
         <div class="verse-grid">
-          <div class="verse-card reveal" data-tilt>
-            <div class="verse-mark" aria-hidden="true">🕊</div>
-            <h3>Prince of Peace</h3>
-            <p>“Peace I leave with you; my peace I give you.”</p>
-            <span class="ref">John 14:27</span>
-          </div>
-          <div class="verse-card reveal" data-tilt>
-            <div class="verse-mark" aria-hidden="true">🐑</div>
-            <h3>The Good Shepherd</h3>
-            <p>“I know my sheep and my sheep know me.”</p>
-            <span class="ref">John 10:14</span>
-          </div>
-          <div class="verse-card reveal" data-tilt>
-            <div class="verse-mark" aria-hidden="true">👑</div>
-            <h3>King of Kings</h3>
-            <p>“KING OF KINGS.”</p>
-            <span class="ref">Revelation 19:16</span>
-          </div>
+          <div class="verse-card reveal" data-tilt><h3>Prince of Peace</h3><p>“Peace I leave with you; my peace I give you.”</p><span class="ref">John 14:27</span></div>
+          <div class="verse-card reveal" data-tilt><h3>The Good Shepherd</h3><p>“I know my sheep and my sheep know me.”</p><span class="ref">John 10:14</span></div>
+          <div class="verse-card reveal" data-tilt><h3>King of Kings</h3><p>“KING OF KINGS.”</p><span class="ref">Revelation 19:16</span></div>
         </div>
       </div>
     </section>
 
-    <!-- WORSHIP (videos) -->
     <section id="worship">
       <div class="container">
         <h2 class="h2 reveal">Amazing Worship</h2>
-        <p class="sub reveal">Playable worship videos (YouTube). Requires internet access.</p>
-
         <div class="grid cols-2">
-          <div class="card reveal" style="padding:0" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
-            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
-              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/9SeQKSWAAK8" title="Worship video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
-            </div>
-          </div>
-          <div class="card reveal" style="padding:0" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
-            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
-              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/zvoq7SL_BXg" title="Worship video 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
-            </div>
-          </div>
-          <div class="card reveal" style="padding:0" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
-            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
-              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/kw-FIy8Shk0" title="Worship video 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
-            </div>
-          </div>
-          <div class="card reveal" style="padding:0" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
-            <div style="aspect-ratio:16/9; border-radius:24px; overflow:hidden">
-              <iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/rEfKzlE5XAQ" title="Worship video 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%; height:100%"></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="container">
-        <h2 class="h2 reveal">Contact</h2>
-        <p class="sub reveal">Reach out for inquiries or prayer.</p>
-
-        <div class="contact-grid">
-          <div class="card reveal" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
-            <div class="folder-left">
-              <div class="folder-ico" aria-hidden="true">✉</div>
-              <div>
-                <h3 class="folder-title" style="margin:0">Email</h3>
-                <p class="folder-hint" style="margin-top:6px"><a href="mailto:riju@rrjc.site">riju@rrjc.site</a></p>
-              </div>
-            </div>
-          </div>
-
-          <div class="card reveal" data-tilt>
-            <div class="shine" aria-hidden="true"></div>
-            <div class="folder-left">
-              <div class="folder-ico" aria-hidden="true">🔗</div>
-              <div>
-                <h3 class="folder-title" style="margin:0">Links</h3>
-                <p class="folder-hint" style="margin-top:6px"><a href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">https://rrjc-site.github.io/RRJC.site/</a></p>
-              </div>
-            </div>
-          </div>
+          <div class="card reveal" style="padding:0"><iframe src="https://www.youtube-nocookie.com/embed/9SeQKSWAAK8" style="width:100%; aspect-ratio:16/9; border:0; border-radius:24px;"></iframe></div>
+          <div class="card reveal" style="padding:0"><iframe src="https://www.youtube-nocookie.com/embed/zvoq7SL_BXg" style="width:100%; aspect-ratio:16/9; border:0; border-radius:24px;"></iframe></div>
         </div>
       </div>
     </section>
@@ -670,146 +578,45 @@
   </main>
 
   <script>
-    // Progress bar
-    (function(){
-      const bar = document.getElementById('progress');
-      const onScroll = () => {
-        const h = document.documentElement;
-        const sc = h.scrollTop || document.body.scrollTop;
-        const max = (h.scrollHeight - h.clientHeight) || 1;
-        bar.style.width = (sc / max) * 100 + '%';
-      };
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
-    })();
-
-    // Reveal animations
+    // Reveal & Count animations
     (function(){
       const io = new IntersectionObserver((entries)=>{
-        for(const e of entries){
-          if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-        }
-      }, {threshold:.14});
-      document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-    })();
-
-    // Card shine + tilt (premium motion)
-    (function(){
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(prefersReduced) return;
-
-      const tiltEls = document.querySelectorAll('[data-tilt]');
-      tiltEls.forEach(el => {
-        el.addEventListener('pointermove', (e)=>{
-          const r = el.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width;
-          const y = (e.clientY - r.top) / r.height;
-          const rx = (0.5 - y) * 8;   // rotation X
-          const ry = (x - 0.5) * 10;  // rotation Y
-          el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
-          el.style.setProperty('--mx', (x*100).toFixed(2) + '%');
-          el.style.setProperty('--my', (y*100).toFixed(2) + '%');
-        });
-        el.addEventListener('pointerleave', ()=>{
-          el.style.transform = '';
-        });
-      });
-
-      // Shine on all cards
-      document.querySelectorAll('.card, .verse-card').forEach(card=>{
-        card.addEventListener('pointermove', (e)=>{
-          const r = card.getBoundingClientRect();
-          const mx = ((e.clientX - r.left)/r.width)*100;
-          const my = ((e.clientY - r.top)/r.height)*100;
-          card.style.setProperty('--mx', mx+'%');
-          card.style.setProperty('--my', my+'%');
-        });
-      });
-    })();
-
-    // Count-up
-    (function(){
-      const nums = document.querySelectorAll('[data-count]');
-      const run = (el)=>{
-        const target = parseInt(el.getAttribute('data-count'), 10) || 0;
-        const dur = 900;
-        const t0 = performance.now();
-        const step = (t)=>{
-          const p = Math.min((t - t0)/dur, 1);
-          const eased = 1 - Math.pow(1-p, 3);
-          el.textContent = Math.round(target*eased);
-          if(p<1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-      };
-      const io = new IntersectionObserver((entries)=>{
-        for(const e of entries){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } }
-      }, {threshold:.85});
-      nums.forEach(n=>io.observe(n));
-    })();
-
-    // Active nav link (scrollspy)
-    (function(){
-      const links = Array.from(document.querySelectorAll('.navlink'));
-      const secs = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
+        entries.forEach(e => {
           if(e.isIntersecting){
-            const id = '#' + e.target.id;
-            links.forEach(a=>a.classList.toggle('active', a.getAttribute('href')===id));
+            e.target.classList.add('in');
+            if(e.target.hasAttribute('data-count')) runCount(e.target);
           }
         });
-      }, {rootMargin: '-55% 0px -40% 0px', threshold: 0});
-      secs.forEach(s=>io.observe(s));
-    })();
+      }, {threshold:.1});
+      document.querySelectorAll('.reveal, [data-count]').forEach(el=>io.observe(el));
 
-    // Only one folder open at a time
-    (function(){
-      const folders = document.querySelectorAll('details');
-      folders.forEach(d => d.addEventListener('toggle', () => {
-        if(d.open){ folders.forEach(o => { if(o !== d) o.open = false; }); }
-      }));
-    })();
-
-    // Hero particles (subtle gold dust)
-    (function(){
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(prefersReduced) return;
-
-      const c = document.getElementById('particles');
-      const ctx = c.getContext('2d');
-      let w=0,h=0,dpr=Math.min(window.devicePixelRatio||1,2);
-      const N = 80;
-      const pts = Array.from({length:N},()=>({x:Math.random(), y:Math.random(), r:Math.random()*2+0.6, v:Math.random()*0.25+0.08}));
-
-      function resize(){
-        const rect = c.getBoundingClientRect();
-        w = rect.width; h = rect.height;
-        c.width = Math.floor(w*dpr);
-        c.height = Math.floor(h*dpr);
-        ctx.setTransform(dpr,0,0,dpr,0,0);
+      function runCount(el){
+        const target = parseInt(el.getAttribute('data-count'));
+        let count = 0;
+        const speed = 2000 / target;
+        const timer = setInterval(() => {
+          count++;
+          el.textContent = count;
+          if(count >= target) clearInterval(timer);
+        }, speed);
       }
-      new ResizeObserver(resize).observe(c);
-      resize();
-
-      function draw(t){
-        ctx.clearRect(0,0,w,h);
-        for(const p of pts){
-          p.y = (p.y + p.v*0.002) % 1;
-          const x = p.x*w + Math.sin((t*0.00015 + p.x)*6)*10;
-          const y = p.y*h;
-          const g = ctx.createRadialGradient(x,y,0,x,y,p.r*10);
-          g.addColorStop(0,'rgba(245,192,91,.70)');
-          g.addColorStop(1,'rgba(245,192,91,0)');
-          ctx.fillStyle=g;
-          ctx.beginPath();
-          ctx.arc(x,y,p.r*3,0,Math.PI*2);
-          ctx.fill();
-        }
-        requestAnimationFrame(draw);
-      }
-      requestAnimationFrame(draw);
     })();
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const st = h.scrollTop || document.body.scrollTop;
+      const sh = h.scrollHeight || document.body.scrollHeight;
+      const percent = (st / (sh - h.clientHeight)) * 100;
+      document.getElementById('progress').style.width = percent + '%';
+    });
+
+    // Folder Logic (one open at a time)
+    document.querySelectorAll('details').forEach(d => {
+      d.addEventListener('toggle', () => {
+        if(d.open) document.querySelectorAll('details').forEach(o => { if(o!==d) o.open=false; });
+      });
+    });
   </script>
 </body>
 </html>
