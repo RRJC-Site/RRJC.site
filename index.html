@@ -4,176 +4,1392 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RRJC | Riju Rincy Jolly in Christ</title>
-  <meta name="description" content="RRJC — Bible Word Source & Amazing Worship. Digital resources for study and devotion." />
+  <meta name="description" content="RRJC — Bible Word source and amazing worship." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#070b14;
-      --bg1:#0c1426;
-      --panel:rgba(255,255,255,.06);
-      --text:#eef2ff;
-      --muted:#b6bfd3;
+      --bg0:#0a0e17;
+      --bg1:#0f1422;
+      --bg2:#141928;
+      --surface:rgba(255,255,255,.06);
+      --surface2:rgba(255,255,255,.09);
+      --surface3:rgba(255,255,255,.12);
+      --stroke:rgba(255,255,255,.12);
+      --stroke2:rgba(255,255,255,.18);
+      --text:#f1f5ff;
+      --text2:#e8eeff;
+      --muted:#aab5cc;
+      --muted2:#8a96b0;
       --gold:#f5c05b;
-      --gold2:#d8a84a;
-      --shadow: 0 18px 50px rgba(0,0,0,.55);
-      --shadow2: 0 10px 24px rgba(0,0,0,.42);
-      --radius2: 24px;
-      --max: 1180px;
-      --navH: 78px;
+      --gold2:#e8b14d;
+      --gold-light:#ffd87a;
+      --purple:#8b7cdb;
+      --purple-light:#a094e8;
+      --cyan:#4dd4ff;
+      --pink:#ff6fb8;
+      --shadow: 0 20px 60px rgba(0,0,0,.5);
+      --shadow2: 0 12px 28px rgba(0,0,0,.4);
+      --shadow3: 0 4px 12px rgba(0,0,0,.3);
+      --radius: 20px;
+      --radius-sm: 14px;
+      --max: 1200px;
+      --transition: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    *{box-sizing:border-box; margin:0; padding:0}
+    html{scroll-behavior:smooth; font-size:16px}
     body{
-      margin:0;
+      position:relative;
+      font-family:'Inter', 'Montserrat', system-ui, -apple-system, sans-serif;
       color:var(--text);
-      font-family:Montserrat, sans-serif;
-      background: linear-gradient(180deg, var(--bg0), var(--bg1));
-      background-attachment: fixed;
+      background: var(--bg0);
+      overflow-x:hidden;
+      line-height:1.6;
     }
 
-    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
-    section{padding:80px 0}
-
-    header{
-      position:sticky; top:0; z-index:60;
-      backdrop-filter: blur(12px);
-      background: rgba(7,11,20,.70);
-      border-bottom:1px solid rgba(255,255,255,.10);
+    /* Animated background */
+    .animated-bg{
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      background:
+        radial-gradient(1200px 700px at 15% 5%, rgba(245,192,91,.14), transparent 65%),
+        radial-gradient(1100px 650px at 85% 15%, rgba(139,124,219,.22), transparent 65%),
+        radial-gradient(900px 550px at 50% 95%, rgba(77,212,255,.12), transparent 70%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 50%, var(--bg2));
+      animation: bgPulse 20s ease-in-out infinite alternate;
     }
-    .nav{height: var(--navH); display:flex; align-items:center; justify-content:space-between}
-    nav a{font-weight:800; padding:10px; font-size:.82rem; text-transform:uppercase; margin-left:10px}
-    nav a.active{color:var(--gold)}
 
-    .hero{padding-top:40px; text-align:center}
-    h1{font-family:'Playfair Display', serif; font-size: clamp(34px, 5vw, 60px); margin:10px 0}
+    @keyframes bgPulse {
+      0%, 100% { opacity: .95; }
+      50% { opacity: 1; }
+    }
 
-    .grid{display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))}
+    /* Floating particles */
+    .particles{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      overflow:hidden;
+      pointer-events:none;
+    }
+    .particle{
+      position:absolute;
+      width:4px;
+      height:4px;
+      background:radial-gradient(circle, var(--gold-light), transparent);
+      border-radius:50%;
+      opacity:0;
+      animation: floatParticle 15s ease-in-out infinite;
+    }
+    .particle:nth-child(1) { left:10%; animation-delay:0s; animation-duration:12s; }
+    .particle:nth-child(2) { left:25%; animation-delay:2s; animation-duration:14s; }
+    .particle:nth-child(3) { left:45%; animation-delay:4s; animation-duration:16s; }
+    .particle:nth-child(4) { left:65%; animation-delay:1s; animation-duration:13s; }
+    .particle:nth-child(5) { left:80%; animation-delay:3s; animation-duration:15s; }
+    .particle:nth-child(6) { left:35%; animation-delay:5s; animation-duration:11s; }
+    .particle:nth-child(7) { left:55%; animation-delay:2.5s; animation-duration:14.5s; }
+    .particle:nth-child(8) { left:75%; animation-delay:4.5s; animation-duration:12.5s; }
+
+    @keyframes floatParticle {
+      0% { transform:translateY(100vh) scale(0); opacity:0; }
+      10% { opacity:.6; }
+      90% { opacity:.4; }
+      100% { transform:translateY(-100vh) scale(1.2); opacity:0; }
+    }
+
+    /* Grain overlay */
+    .grain-layer{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0, rgba(255,255,255,.025) 1px, transparent 1px, transparent 3px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0, rgba(255,255,255,.02) 1px, transparent 1px, transparent 4px);
+      mix-blend-mode: overlay;
+      opacity:.2;
+      animation: grainMove 8s steps(4) infinite;
+    }
+
+    @keyframes grainMove {
+      0%, 100% { transform:translate(0, 0); }
+      25% { transform:translate(-2px, -2px); }
+      50% { transform:translate(2px, 1px); }
+      75% { transform:translate(-1px, 2px); }
+    }
+
+    header, main, footer{position:relative; z-index:1}
+
+    .container{max-width:var(--max); margin:0 auto; padding:0 24px}
+    section{padding:100px 0; position:relative}
+
+    /* Progress bar - enhanced */
+    .progress-bar{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:3px;
+      z-index:100;
+      background:var(--surface);
+    }
+    .progress-fill{
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg, var(--gold), var(--purple-light), var(--cyan));
+      background-size:200% 100%;
+      animation: progressGradient 3s linear infinite;
+      transition:width .1s ease-out;
+      box-shadow:0 0 20px rgba(245,192,91,.5);
+    }
+
+    @keyframes progressGradient {
+      0% { background-position:0% 50%; }
+      100% { background-position:200% 50%; }
+    }
+
+    /* Enhanced top banner */
+    .top{
+      position:relative;
+      z-index:50;
+      text-align:center;
+      padding:14px 20px;
+      font-family:'Playfair Display', serif;
+      background: linear-gradient(135deg, rgba(245,192,91,.15), rgba(139,124,219,.25), rgba(77,212,255,.12));
+      border-bottom:1px solid rgba(255,255,255,.15);
+      color: var(--text2);
+      font-size:15px;
+      overflow:hidden;
+    }
+    .top::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+      transform:translateX(-100%);
+      animation: shimmer 3s infinite;
+    }
+    .top b{
+      color:var(--gold-light);
+      font-weight:700;
+      text-shadow:0 0 20px rgba(245,192,91,.4);
+    }
+
+    @keyframes shimmer {
+      0% { transform:translateX(-100%); }
+      100% { transform:translateX(100%); }
+    }
+
+    /* Enhanced navigation */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:60;
+      backdrop-filter: blur(16px) saturate(150%);
+      background: rgba(10,14,23,.75);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      box-shadow:0 4px 24px rgba(0,0,0,.2);
+      transition:all .3s var(--transition);
+    }
+    .nav.scrolled{
+      background: rgba(10,14,23,.85);
+      box-shadow:0 8px 32px rgba(0,0,0,.3);
+    }
+    .nav-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:14px 24px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-weight:800;
+      font-size:20px;
+      text-decoration:none;
+      color:var(--text);
+      transition:transform .3s var(--transition);
+    }
+    .brand:hover{
+      transform:scale(1.03);
+    }
+    .logo{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      background:linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+      box-shadow:0 6px 20px rgba(245,192,91,.35), inset 0 -2px 8px rgba(0,0,0,.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      position:relative;
+      overflow:hidden;
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+    .logo::before{
+      content:'';
+      position:absolute;
+      inset:-50%;
+      background:linear-gradient(45deg, transparent, rgba(255,255,255,.3), transparent);
+      animation: logoShine 4s linear infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform:translateY(0) rotate(0deg); }
+      50% { transform:translateY(-3px) rotate(2deg); }
+    }
+
+    @keyframes logoShine {
+      0% { transform:rotate(0deg) translateX(-100%); }
+      100% { transform:rotate(0deg) translateX(100%); }
+    }
+
+    .nav-links{
+      display:flex;
+      gap:8px;
+      list-style:none;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .nav-links a{
+      color:var(--muted);
+      text-decoration:none;
+      padding:10px 18px;
+      border-radius:12px;
+      font-weight:600;
+      font-size:14px;
+      transition:all .3s var(--transition);
+      position:relative;
+      overflow:hidden;
+    }
+    .nav-links a::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:var(--surface2);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .3s var(--transition);
+      border-radius:12px;
+      z-index:-1;
+    }
+    .nav-links a:hover{
+      color:var(--text);
+    }
+    .nav-links a:hover::before{
+      transform:scaleX(1);
+    }
+    .nav-links a.active{
+      color:var(--gold);
+      background:var(--surface);
+    }
+
+    /* Hero section - completely redesigned */
+    .hero{
+      min-height:90vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      padding:140px 0 100px;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(800px 600px at 50% 40%, rgba(245,192,91,.15), transparent 70%),
+        radial-gradient(600px 500px at 30% 60%, rgba(139,124,219,.12), transparent 65%);
+      animation: heroGlow 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroGlow {
+      0%, 100% { opacity:.8; }
+      50% { opacity:1; }
+    }
+
+    .hero-content{
+      text-align:center;
+      position:relative;
+      z-index:2;
+      max-width:900px;
+    }
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 20px;
+      background:var(--surface2);
+      border:1px solid var(--stroke2);
+      border-radius:50px;
+      font-size:13px;
+      font-weight:600;
+      color:var(--gold);
+      margin-bottom:28px;
+      animation: fadeInUp .8s var(--transition) .2s both;
+      box-shadow:0 4px 16px rgba(0,0,0,.2);
+    }
+    .hero-badge::before{
+      content:'✨';
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { transform:scale(1) rotate(0deg); }
+      50% { transform:scale(1.2) rotate(180deg); }
+    }
+
+    .hero h1{
+      font-family:'Playfair Display', serif;
+      font-size:clamp(48px, 8vw, 86px);
+      font-weight:800;
+      line-height:1.1;
+      margin:0 0 24px;
+      background:linear-gradient(135deg, var(--text) 0%, var(--gold-light) 50%, var(--purple-light) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation: fadeInUp .8s var(--transition) .4s both, textGlow 3s ease-in-out infinite;
+      position:relative;
+    }
+
+    @keyframes textGlow {
+      0%, 100% { filter:drop-shadow(0 0 20px rgba(245,192,91,.3)); }
+      50% { filter:drop-shadow(0 0 40px rgba(245,192,91,.5)); }
+    }
+
+    .hero p{
+      font-size:clamp(18px, 3vw, 22px);
+      color:var(--muted);
+      max-width:700px;
+      margin:0 auto 40px;
+      font-weight:400;
+      line-height:1.7;
+      animation: fadeInUp .8s var(--transition) .6s both;
+    }
+
+    .hero-cta{
+      display:flex;
+      gap:16px;
+      justify-content:center;
+      flex-wrap:wrap;
+      animation: fadeInUp .8s var(--transition) .8s both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    /* Enhanced buttons */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:16px 32px;
+      border-radius:14px;
+      font-weight:700;
+      font-size:15px;
+      text-decoration:none;
+      transition:all .3s var(--transition);
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+      border:none;
+      font-family:inherit;
+    }
+    .btn::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(45deg, transparent, rgba(255,255,255,.1), transparent);
+      transform:translateX(-100%) rotate(45deg);
+      transition:transform .6s;
+    }
+    .btn:hover::before{
+      transform:translateX(100%) rotate(45deg);
+    }
+    .btn-primary{
+      background:linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+      color:#0a0e17;
+      box-shadow:0 8px 24px rgba(245,192,91,.35), inset 0 -2px 8px rgba(0,0,0,.15);
+    }
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 12px 32px rgba(245,192,91,.45), inset 0 -2px 8px rgba(0,0,0,.2);
+    }
+    .btn-primary:active{
+      transform:translateY(-1px);
+    }
+    .btn-secondary{
+      background:var(--surface2);
+      color:var(--text);
+      border:1px solid var(--stroke2);
+      box-shadow:0 4px 16px rgba(0,0,0,.2);
+    }
+    .btn-secondary:hover{
+      background:var(--surface3);
+      transform:translateY(-2px);
+      box-shadow:0 8px 24px rgba(0,0,0,.3);
+    }
+
+    /* Enhanced stats */
+    .stats{
+      background:var(--bg1);
+      border-top:1px solid var(--stroke);
+      border-bottom:1px solid var(--stroke);
+      padding:60px 0;
+    }
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:40px;
+    }
+    .stat{
+      text-align:center;
+      position:relative;
+      animation: fadeInUp .8s var(--transition) both;
+    }
+    .stat:nth-child(1) { animation-delay:.2s; }
+    .stat:nth-child(2) { animation-delay:.3s; }
+    .stat:nth-child(3) { animation-delay:.4s; }
+    .stat:nth-child(4) { animation-delay:.5s; }
+    .stat::before{
+      content:'';
+      position:absolute;
+      top:-20px;
+      left:50%;
+      transform:translateX(-50%);
+      width:60px;
+      height:3px;
+      background:linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius:2px;
+    }
+    .stat-num{
+      font-size:clamp(42px, 6vw, 56px);
+      font-weight:800;
+      background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      display:block;
+      margin-bottom:8px;
+      font-family:'Playfair Display', serif;
+    }
+    .stat-label{
+      color:var(--muted);
+      font-size:15px;
+      font-weight:600;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+    }
+
+    /* Section headers */
+    .h2{
+      font-family:'Playfair Display', serif;
+      font-size:clamp(36px, 6vw, 52px);
+      font-weight:800;
+      margin:0 0 16px;
+      text-align:center;
+      background:linear-gradient(135deg, var(--text) 0%, var(--gold-light) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .sub{
+      text-align:center;
+      color:var(--muted);
+      font-size:18px;
+      max-width:600px;
+      margin:0 auto 60px;
+      line-height:1.6;
+    }
+
+    /* Enhanced cards */
+    .grid{
+      display:grid;
+      gap:32px;
+    }
+    .cols-2{
+      grid-template-columns:repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    }
+    .cols-3{
+      grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    }
+
     .card{
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius2);
-      padding: 20px;
-      transition: transform 0.3s ease;
+      position:relative;
+      padding:36px;
+      background:var(--surface);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow2);
+      transition:all .4s var(--transition);
+      overflow:hidden;
+      --mx:50%;
+      --my:50%;
     }
-    .card:hover{transform: translateY(-5px)}
+    .card::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:radial-gradient(600px circle at var(--mx) var(--my), rgba(245,192,91,.08), transparent 40%);
+      opacity:0;
+      transition:opacity .4s;
+      pointer-events:none;
+    }
+    .card:hover{
+      transform:translateY(-8px);
+      box-shadow:var(--shadow);
+      border-color:var(--stroke2);
+    }
+    .card:hover::before{
+      opacity:1;
+    }
 
-    /* Gallery Specific Styles */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
-      margin-top: 15px;
+    /* Shine effect */
+    .shine{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, transparent 0%, rgba(255,255,255,.06) 50%, transparent 100%);
+      transform:translateX(-100%) rotate(45deg);
+      transition:transform .6s;
+      pointer-events:none;
     }
-    .gallery-item {
-      aspect-ratio: 1;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.1);
+    .card:hover .shine{
+      transform:translateX(100%) rotate(45deg);
     }
-    .gallery-item img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .3s ease;
-    }
-    .gallery-item:hover img { transform: scale(1.1); }
 
-    .folder-ico{font-size: 24px; margin-bottom: 10px}
-    details summary{cursor: pointer; list-style: none; font-weight: bold; font-size: 1.2rem}
-    .file-row{display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05)}
-    .btn-sm{background: var(--gold); color: #000; padding: 5px 10px; border-radius: 8px; font-weight: bold}
+    .icon{
+      width:64px;
+      height:64px;
+      background:linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:32px;
+      margin-bottom:24px;
+      box-shadow:0 8px 24px rgba(245,192,91,.3), inset 0 -2px 6px rgba(0,0,0,.15);
+      animation: iconBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes iconBounce {
+      0%, 100% { transform:translateY(0); }
+      50% { transform:translateY(-5px); }
+    }
+
+    .card h3{
+      font-family:'Playfair Display', serif;
+      font-size:24px;
+      margin:0 0 12px;
+      color:var(--text);
+    }
+    .card p{
+      color:var(--muted);
+      line-height:1.7;
+      margin:0;
+    }
+
+    /* Bible Verse Card */
+    .verse-card{
+      background:linear-gradient(135deg, var(--surface2), var(--surface));
+      border:2px solid var(--stroke2);
+      padding:40px;
+      border-radius:var(--radius);
+      text-align:center;
+      box-shadow:var(--shadow2);
+      margin-top:40px;
+    }
+    .verse-text{
+      font-family:'Playfair Display', serif;
+      font-size:clamp(20px, 4vw, 28px);
+      font-style:italic;
+      color:var(--text);
+      line-height:1.6;
+      margin-bottom:20px;
+    }
+    .verse-reference{
+      color:var(--gold);
+      font-weight:700;
+      font-size:16px;
+      letter-spacing:1px;
+    }
+
+    /* Video cards */
+    .video-card{
+      position:relative;
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:var(--surface);
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow2);
+      transition:all .4s var(--transition);
+    }
+    .video-card:hover{
+      transform:translateY(-8px);
+      box-shadow:var(--shadow);
+      border-color:var(--gold);
+    }
+    .video-thumbnail{
+      width:100%;
+      aspect-ratio:16/9;
+      object-fit:cover;
+      display:block;
+    }
+    .video-info{
+      padding:20px;
+    }
+    .video-info h3{
+      font-family:'Playfair Display', serif;
+      font-size:20px;
+      margin:0 0 8px;
+      color:var(--text);
+    }
+    .video-info p{
+      color:var(--muted);
+      font-size:14px;
+      margin:0;
+    }
+
+    /* Enhanced gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap:24px;
+      margin-top:60px;
+    }
+    .gallery img{
+      width:100%;
+      height:280px;
+      object-fit:cover;
+      border-radius:var(--radius);
+      cursor:pointer;
+      transition:all .4s var(--transition);
+      box-shadow:var(--shadow2);
+      border:1px solid var(--stroke);
+    }
+    .gallery img:hover{
+      transform:scale(1.05) rotate(1deg);
+      box-shadow:var(--shadow);
+      border-color:var(--gold);
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(10,14,23,.95);
+      backdrop-filter:blur(20px);
+      z-index:999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+      cursor:pointer;
+      animation: fadeIn .3s;
+    }
+    .lightbox.open{
+      display:flex;
+    }
+    .lightbox img{
+      max-width:90%;
+      max-height:90vh;
+      border-radius:var(--radius);
+      box-shadow:0 24px 80px rgba(0,0,0,.6);
+      border:2px solid var(--stroke2);
+      animation: zoomIn .3s var(--transition);
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; }
+      to { opacity:1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform:scale(.9); opacity:0; }
+      to { transform:scale(1); opacity:1; }
+    }
+
+    /* Footer */
+    footer{
+      background:var(--bg0);
+      border-top:1px solid var(--stroke);
+      padding:60px 0 40px;
+    }
+    .foot{
+      text-align:center;
+    }
+    .foot p{
+      font-family:'Playfair Display', serif;
+      font-size:20px;
+      font-style:italic;
+      color:var(--muted);
+      margin:0 0 24px;
+      line-height:1.6;
+    }
+    .foot small{
+      color:var(--muted2);
+      font-size:14px;
+    }
+
+    /* Links */
+    a{
+      color:var(--gold);
+      transition:color .3s;
+    }
+    a:hover{
+      color:var(--gold-light);
+    }
+
+    /* Reveal animation */
+    .reveal{
+      opacity:0;
+      transform:translateY(40px);
+      transition:all .8s var(--transition);
+    }
+    .reveal.in{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator{
+      position:absolute;
+      bottom:40px;
+      left:50%;
+      transform:translateX(-50%);
+      animation: scrollBounce 2s ease-in-out infinite;
+      cursor:pointer;
+    }
+    .scroll-indicator svg{
+      width:32px;
+      height:32px;
+      stroke:var(--gold);
+      stroke-width:2;
+      fill:none;
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform:translateX(-50%) translateY(0); }
+      50% { transform:translateX(-50%) translateY(10px); }
+    }
+
+    /* Responsive */
+    @media(max-width:768px){
+      section{padding:70px 0}
+      .hero{min-height:80vh; padding:120px 0 80px}
+      .nav-inner{padding:12px 20px}
+      .brand{font-size:18px}
+      .logo{width:42px; height:42px; font-size:20px}
+      .nav-links{gap:4px}
+      .nav-links a{padding:8px 14px; font-size:13px}
+      .card{padding:28px}
+      .icon{width:56px; height:56px; font-size:28px}
+      .gallery img{height:240px}
+      .hero-cta{flex-direction:column; align-items:stretch}
+      .btn{justify-content:center}
+      .verse-card{padding:28px}
+    }
+
+    @media(max-width:480px){
+      .container{padding:0 16px}
+      .top{font-size:13px; padding:12px 16px}
+      .stats-grid{gap:32px}
+      .gallery{gap:16px}
+    }
+
+    /* Performance optimizations */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
-
 <body>
+  <!-- Animated background layers -->
+  <div class="animated-bg"></div>
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  <div class="grain-layer"></div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress"></div>
+  </div>
+
   <header>
-    <div class="container nav">
-      <div class="brand"><strong>RRJC</strong></div>
-      <nav>
-        <a href="#home">Home</a>
-        <a href="#resources">Resources</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#books">Books</a>
-      </nav>
+    <div class="top">
+      Welcome to <b>RRJC</b> — where faith meets fellowship in Christ 🙏
     </div>
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="brand">
+          <div class="logo">✝</div>
+          <span>RRJC</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#about" class="active">About</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#bible">Bible</a></li>
+          <li><a href="#worship">Worship</a></li>
+          <li><a href="#verses">Verses</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
-  <main class="container">
-    <section id="home" class="hero">
-      <h1>Bible Word Source & Worship</h1>
-      <p>Your premium library of spiritual resources and visuals.</p>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            Faith • Hope • Love
+          </div>
+          <h1>Riju Rincy Jolly<br>in Christ</h1>
+          <p>
+            A sacred space for Bible study, worship, and Christian fellowship. 
+            Join our community as we grow together in faith and share God's love.
+          </p>
+          <div class="hero-cta">
+            <a href="#about" class="btn btn-primary">
+              <span>Explore Our Mission</span>
+              <span>→</span>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>Get in Touch</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 10l5 5 5-5"/>
+        </svg>
+      </div>
     </section>
 
-    <section id="resources">
-      <h2>Resources</h2>
-      <div class="grid">
-        <div class="card">
-          <details>
-            <summary>📁 Bible Studies</summary>
-            <div class="file-row"><span>Genesis 1–11</span> <a href="Documents/genesis_1-11_full.pdf" class="btn-sm">View</a></div>
-            <div class="file-row"><span>Joshua, Judges, Ruth</span> <a href="Documents/the-books-of-joshua-judgesand-ruth.pdf" class="btn-sm">View</a></div>
-          </details>
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat reveal">
+            <span class="stat-num" data-count="1000">0</span>
+            <span class="stat-label">Members</span>
+          </div>
+          <div class="stat reveal">
+            <span class="stat-num" data-count="500">0</span>
+            <span class="stat-label">Bible Studies</span>
+          </div>
+          <div class="stat reveal">
+            <span class="stat-num" data-count="200">0</span>
+            <span class="stat-label">Worship Events</span>
+          </div>
+          <div class="stat reveal">
+            <span class="stat-num" data-count="50">0</span>
+            <span class="stat-label">Countries</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="gallery">
-      <h2>Photo Gallery</h2>
-      <div class="grid">
-        <div class="card">
-          <details>
-            <summary>🖼️ AI Visuals</summary>
-            <div class="gallery-grid">
-              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImage44iab644iab644ia.png" alt="AI 1"></div>
-              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageldljenldljenldlj.png" alt="AI 2"></div>
-              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImageqm6vtvqm6vtvqm6v.png" alt="AI 3"></div>
-              <div class="gallery-item"><img src="Documents/Photos/GeminiGeneratedImagexlb70uxlb70uxlb7.png" alt="AI 4"></div>
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <h2 class="h2 reveal">Our Mission</h2>
+        <p class="sub reveal">
+          Building a community rooted in Christ's love, dedicated to spiritual growth and fellowship.
+        </p>
+        <div class="grid cols-3">
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">📖</div>
+            <h3>Bible Study</h3>
+            <p>Deep dive into Scripture with guided studies, helping you understand God's Word and apply it to daily life.</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">🎵</div>
+            <h3>Worship & Praise</h3>
+            <p>Experience powerful worship sessions that bring us closer to God through music, prayer, and celebration.</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">🤝</div>
+            <h3>Fellowship</h3>
+            <p>Connect with believers worldwide, share testimonies, and build lasting relationships in Christ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+      <div class="container">
+        <h2 class="h2 reveal">What We Offer</h2>
+        <p class="sub reveal">
+          Discover the resources and community support to strengthen your faith journey.
+        </p>
+        <div class="grid cols-2">
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">🙏</div>
+            <h3>Daily Devotionals</h3>
+            <p>Start each day with inspiring messages and Scripture readings that encourage spiritual growth and reflection.</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">💬</div>
+            <h3>Prayer Support</h3>
+            <p>Share prayer requests and receive support from our caring community. We believe in the power of united prayer.</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">📚</div>
+            <h3>Resource Library</h3>
+            <p>Access sermons, teachings, and Christian resources to deepen your understanding of faith and theology.</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">🌟</div>
+            <h3>Testimonies</h3>
+            <p>Read and share powerful testimonies of God's grace, miracles, and transformative work in people's lives.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bible Resources Section -->
+    <section id="bible">
+      <div class="container">
+        <h2 class="h2 reveal">Bible Resources</h2>
+        <p class="sub reveal">
+          Access the complete Word of God and explore His teachings through our comprehensive Bible resources.
+        </p>
+        <div class="grid cols-3">
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">📕</div>
+            <h3>Holy Bible - Full Version</h3>
+            <p>Download the complete Bible in PDF format for offline reading and study. Available in multiple translations.</p>
+            <a href="https://rrjc-site.github.io/RRJC.site/" class="btn btn-primary" style="margin-top:20px; width:100%; justify-content:center;" target="_blank" rel="noopener">
+              <span>Download Bible PDF</span>
+              <span>📥</span>
+            </a>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">🔍</div>
+            <h3>Bible Study Tools</h3>
+            <p>Interactive study guides, concordances, and commentaries to help you understand Scripture deeper.</p>
+            <a href="https://rrjc-site.github.io/RRJC.site/" class="btn btn-secondary" style="margin-top:20px; width:100%; justify-content:center;" target="_blank" rel="noopener">
+              <span>Explore Tools</span>
+            </a>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">📖</div>
+            <h3>Daily Scripture</h3>
+            <p>Receive daily Bible verses and devotionals delivered to inspire and strengthen your faith journey.</p>
+            <a href="https://rrjc-site.github.io/RRJC.site/" class="btn btn-secondary" style="margin-top:20px; width:100%; justify-content:center;" target="_blank" rel="noopener">
+              <span>Subscribe</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Worship Videos Section -->
+    <section id="worship">
+      <div class="container">
+        <h2 class="h2 reveal">Worship & Praise</h2>
+        <p class="sub reveal">
+          Experience powerful worship through music and praise that glorifies God.
+        </p>
+        <div class="grid cols-3">
+          <div class="video-card reveal">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" alt="Worship Session 1" class="video-thumbnail" onerror="this.src='https://via.placeholder.com/800x450/1a1f2e/f5c05b?text=Worship+Session'" />
+            <div class="video-info">
+              <h3>Sunday Morning Worship</h3>
+              <p>Join us for uplifting praise and worship</p>
+              <a href="https://rrjc-site.github.io/RRJC.site/" class="btn btn-secondary" style="margin-top:16px; width:100%; justify-content:center;" target="_blank" rel="noopener">
+                <span>Watch Now</span>
+                <span>▶</span>
+              </a>
             </div>
-          </details>
+          </div>
+          <div class="video-card reveal">
+            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80" alt="Worship Session 2" class="video-thumbnail" onerror="this.src='https://via.placeholder.com/800x450/1a1f2e/f5c05b?text=Praise+Night'" />
+            <div class="video-info">
+              <h3>Evening Praise Night</h3>
+              <p>Powerful worship and testimonies</p>
+              <a href="https://rrjc-site.github.io/RRJC.site/" class="btn btn-secondary" style="margin-top:16px; width:100%; justify-content:center;" target="_blank" rel="noopener">
+                <span>Watch Now</span>
+                <span>▶</span>
+              </a>
+            </div>
+          </div>
+          <div class="video-card reveal">
+            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80" alt="Worship Session 3" class="video-thumbnail" onerror="this.src='https://via.placeholder.com/800x450/1a1f2e/f5c05b?text=Worship+Collection'" />
+            <div class="video-info">
+              <h3>Worship Collection</h3>
+              <p>Best worship songs and hymns</p>
+              <a href="https://rrjc-site.github.io/RRJC.site/" class="btn btn-secondary" style="margin-top:16px; width:100%; justify-content:center;" target="_blank" rel="noopener">
+                <span>Watch Now</span>
+                <span>▶</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bible Verses Section -->
+    <section id="verses">
+      <div class="container">
+        <h2 class="h2 reveal">Featured Bible Verses</h2>
+        <p class="sub reveal">
+          Find comfort, strength, and guidance through God's eternal Word.
+        </p>
+        
+        <div class="verse-card reveal">
+          <p class="verse-text">
+            "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
+          </p>
+          <p class="verse-reference">— John 3:16</p>
         </div>
 
-        <div class="card">
-          <details>
-            <summary>📸 Worship Highlights</summary>
-            <div class="gallery-grid">
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 8.31.40 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.46 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.51 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.54 PM (1).jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.17.56 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.06 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.11 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.12 PM.jpeg"></div>
-              <div class="gallery-item"><img src="Documents/Photos/WhatsApp Image 2026-01-24 at 9.18.59 PM.jpeg"></div>
-              </div>
-          </details>
+        <div class="grid cols-2" style="margin-top:40px;">
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">💝</div>
+            <h3>Love & Grace</h3>
+            <p class="verse-text" style="font-size:18px; margin:16px 0;">
+              "And now these three remain: faith, hope and love. But the greatest of these is love."
+            </p>
+            <p class="verse-reference">1 Corinthians 13:13</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">💪</div>
+            <h3>Strength & Courage</h3>
+            <p class="verse-text" style="font-size:18px; margin:16px 0;">
+              "I can do all things through Christ who strengthens me."
+            </p>
+            <p class="verse-reference">Philippians 4:13</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">☮️</div>
+            <h3>Peace & Comfort</h3>
+            <p class="verse-text" style="font-size:18px; margin:16px 0;">
+              "Peace I leave with you; my peace I give you. I do not give to you as the world gives."
+            </p>
+            <p class="verse-reference">John 14:27</p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">🌟</div>
+            <h3>Hope & Promise</h3>
+            <p class="verse-text" style="font-size:18px; margin:16px 0;">
+              "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you."
+            </p>
+            <p class="verse-reference">Jeremiah 29:11</p>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:50px;">
+          <a href="https://rrjc-site.github.io/RRJC.site/" class="btn btn-primary reveal" target="_blank" rel="noopener">
+            <span>Explore More Verses</span>
+            <span>→</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <section id="books">
-      <h2>Books</h2>
-      <div class="grid">
-        <div class="card">
-          <div class="folder-ico">📕</div>
-          <h3>Transforming the Inner Man</h3>
-          <a href="Books/Transforming-the-Inner-Man_-God-John-Loren-Sandford.pdf" class="btn-sm">Open PDF</a>
+    <!-- Gallery Section -->
+    <section id="gallery">
+      <div class="container">
+        <h2 class="h2 reveal">Our Journey</h2>
+        <p class="sub reveal">
+          Moments of faith, hope, and love captured through our community's journey with Christ.
+        </p>
+        <div class="gallery">
+          <img class="reveal" src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1400&q=80" alt="Faith" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=1400&q=80" alt="Hope" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1400&q=80" alt="Path" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=80" alt="Mountains" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1400&q=80" alt="Nature" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1502139214982-d0ad755818d8?auto=format&fit=crop&w=1400&q=80" alt="Sunrise" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1400&q=80" alt="Light" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80" alt="Journey" loading="lazy" />
+          <img class="reveal" src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1400&q=80" alt="Worship" loading="lazy" />
         </div>
-        <div class="card">
-          <div class="folder-ico">📘</div>
-          <h3>Full Bible</h3>
-          <a href="Books/Full%20bible.pdf" class="btn-sm">Open PDF</a>
+
+        <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+          <img alt="Expanded view">
         </div>
       </div>
     </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="h2 reveal">Get in Touch</h2>
+        <p class="sub reveal">
+          We'd love to hear from you. Reach out anytime for questions, prayer requests, or fellowship.
+        </p>
+        <div class="grid cols-2">
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">✉</div>
+            <h3>Email</h3>
+            <p style="margin-top:16px; font-size:18px; font-weight:600;">
+              <a href="mailto:riju@rrjc.site">riju@rrjc.site</a>
+            </p>
+          </div>
+          <div class="card reveal">
+            <div class="shine"></div>
+            <div class="icon">🔗</div>
+            <h3>Website</h3>
+            <p style="margin-top:16px; font-size:18px; font-weight:600;">
+              <a href="https://rrjc-site.github.io/RRJC.site/" target="_blank" rel="noopener">Visit RRJC.site</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="foot reveal">
+          <p>"Fear not, for I am with you; be not dismayed, for I am your God." — Isaiah 41:10</p>
+          <small>© 2025 RRJC | Riju Rincy Jolly in Christ · Built for His Glory</small>
+        </div>
+      </div>
+    </footer>
   </main>
 
-  <footer style="text-align: center; padding: 40px; opacity: 0.6">
-    <p>© 2026 RRJC | Riju Rincy Jolly in Christ</p>
-  </footer>
+  <script>
+    // Progress bar with smooth animation
+    (function(){
+      const fill = document.getElementById('progress');
+      let ticking = false;
+      
+      const updateProgress = () => {
+        const h = document.documentElement;
+        const scrolled = h.scrollTop || document.body.scrollTop;
+        const max = (h.scrollHeight - h.clientHeight) || 1;
+        fill.style.width = (scrolled / max) * 100 + '%';
+        ticking = false;
+      };
+
+      const onScroll = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateProgress);
+          ticking = true;
+        }
+      };
+
+      window.addEventListener('scroll', onScroll, {passive:true});
+      updateProgress();
+    })();
+
+    // Navbar scroll effect
+    (function(){
+      const nav = document.getElementById('nav');
+      let lastScroll = 0;
+      
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > 100) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        lastScroll = currentScroll;
+      }, {passive:true});
+    })();
+
+    // Intersection Observer for reveal animations
+    (function(){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+      });
+
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    })();
+
+    // Enhanced card hover effect with mouse tracking
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
+      });
+      
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--mx', '50%');
+        card.style.setProperty('--my', '50%');
+      });
+    });
+
+    // Lightbox functionality
+    (function(){
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = lightbox.querySelector('img');
+      
+      document.querySelectorAll('.gallery img').forEach(img => {
+        img.addEventListener('click', () => {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightbox.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      const closeLightbox = () => {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      };
+
+      lightbox.addEventListener('click', closeLightbox);
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+
+    // Animated counter for stats
+    (function(){
+      const counters = document.querySelectorAll('[data-count]');
+      
+      const animateCounter = (element) => {
+        const target = parseInt(element.getAttribute('data-count'), 10);
+        const duration = 2000;
+        const increment = target / (duration / 16);
+        let current = 0;
+        
+        const updateCounter = () => {
+          current += increment;
+          if (current < target) {
+            element.textContent = Math.floor(current);
+            requestAnimationFrame(updateCounter);
+          } else {
+            element.textContent = target;
+          }
+        };
+        
+        updateCounter();
+      };
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      counters.forEach(counter => io.observe(counter));
+    })();
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const navHeight = document.querySelector('.nav').offsetHeight;
+          const targetPosition = target.offsetTop - navHeight - 20;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+
+          // Update active nav link
+          document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+          });
+          this.classList.add('active');
+        }
+      });
+    });
+
+    // Scroll indicator
+    document.querySelector('.scroll-indicator')?.addEventListener('click', () => {
+      const aboutSection = document.getElementById('about');
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Active section highlighting in navigation
+    (function(){
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      
+      const highlightNav = () => {
+        const scrollPos = window.pageYOffset + 200;
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute('id');
+          
+          if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${sectionId}`) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      };
+      
+      window.addEventListener('scroll', highlightNav, {passive:true});
+    })();
+  </script>
 </body>
 </html>
